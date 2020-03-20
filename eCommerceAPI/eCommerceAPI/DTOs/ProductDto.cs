@@ -19,7 +19,7 @@ namespace farmersAPi.DTOs
 
         public ProductUserDto user { get; set; }
 
-        public ICollection<ToxinsDto> toxins { get; set; }
+        
                
     }
 }

@@ -181,11 +181,7 @@ namespace farmersAPi.Servces
 
 
 
-            u.ZipCode = user.ZipCode;
-
-
-            u.Account = user.Account;
-            u.State = user.State;
+          
             //add error checking 
 
             _context.Users.Update(u);

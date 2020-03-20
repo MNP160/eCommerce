@@ -22,12 +22,9 @@ namespace farmersAPi.Utility
 
         [Required]
         public string Password { get; set; }
-        [Required]
-        public int ZipCode { get; set; }
-        [Required]
-        public Province State { get; set; }
-        [Required]
-        public AccountType Account { get; set; }
+      
+      
+       
 
     }
 }

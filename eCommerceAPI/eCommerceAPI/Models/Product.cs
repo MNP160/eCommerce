@@ -23,16 +23,11 @@ namespace farmersAPi.Models
         public int? CathegoryId { get; set; }
         public virtual Cathegory Cathegory { get; set; }
 
-        [ForeignKey("User")]
-        public int? UserId { get; set; }
+        }
 
-        public virtual Users User { get; set; }
-
-        public virtual ICollection<Toxins> Toxins { get; set; }
-
-        //public int UserId{get; set;}     //need to decide where user stuff will be
-        //public User User{get; set;}
+       
 
 
-    }
+
+    
 }

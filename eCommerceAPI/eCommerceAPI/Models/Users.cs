@@ -1,4 +1,5 @@
-﻿using farmersAPi.Interfaces;
+﻿using eCommerceAPI.Models;
+using farmersAPi.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace farmersAPi.Models
 {
-    public class Users :IEntity
+    public class Users : IEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -19,14 +20,9 @@ namespace farmersAPi.Models
         public byte[] PasswordSalt { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int ZipCode { get; set; }
-        public int TransactionCount { get; set; }
-        public Province State { get; set; }
-        public AccountType Account { get; set; }
-        public enum Province { Sofia, Varna, Pleven }
-        public enum AccountType { Farmer, Customer, Premium }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Orders> Orders { get; set; }
+       
 
     }
 }
