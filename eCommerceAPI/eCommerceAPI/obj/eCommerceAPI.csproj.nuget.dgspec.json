@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Programming\\Projects\\eCommerce\\eCommerceAPI\\eCommerceAPI\\eCommerceAPI.csproj": {}
+    "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceAPI\\eCommerceAPI.csproj": {}
   },
   "projects": {
-    "D:\\Programming\\Projects\\eCommerce\\eCommerceAPI\\eCommerceAPI\\eCommerceAPI.csproj": {
+    "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceAPI\\eCommerceAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Programming\\Projects\\eCommerce\\eCommerceAPI\\eCommerceAPI\\eCommerceAPI.csproj",
+        "projectUniqueName": "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceAPI\\eCommerceAPI.csproj",
         "projectName": "eCommerceAPI",
-        "projectPath": "D:\\Programming\\Projects\\eCommerce\\eCommerceAPI\\eCommerceAPI\\eCommerceAPI.csproj",
+        "projectPath": "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceAPI\\eCommerceAPI.csproj",
         "packagesPath": "C:\\Users\\mpene\\.nuget\\packages\\",
-        "outputPath": "D:\\Programming\\Projects\\eCommerce\\eCommerceAPI\\eCommerceAPI\\obj\\",
+        "outputPath": "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

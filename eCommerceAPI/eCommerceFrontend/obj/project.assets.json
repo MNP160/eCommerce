@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Programming\\Projects\\eCommerce\\eCommerceAPI\\eCommerceFrontend\\eCommerceFrontend.csproj",
+      "projectUniqueName": "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceFrontend\\eCommerceFrontend.csproj",
       "projectName": "eCommerceFrontend",
-      "projectPath": "D:\\Programming\\Projects\\eCommerce\\eCommerceAPI\\eCommerceFrontend\\eCommerceFrontend.csproj",
+      "projectPath": "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceFrontend\\eCommerceFrontend.csproj",
       "packagesPath": "C:\\Users\\mpene\\.nuget\\packages\\",
-      "outputPath": "D:\\Programming\\Projects\\eCommerce\\eCommerceAPI\\eCommerceFrontend\\obj\\",
+      "outputPath": "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceFrontend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
