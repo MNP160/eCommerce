@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using eCommerceFrontend.Models;
+using eCommerceFrontend.Models.REST.Manager;
+using System.Net.Http;
 
 namespace eCommerceFrontend.Controllers
 {
