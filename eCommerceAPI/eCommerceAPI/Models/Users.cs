@@ -20,6 +20,7 @@ namespace farmersAPi.Models
         public byte[] PasswordSalt { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        
 
         public virtual ICollection<Orders> Orders { get; set; }
        

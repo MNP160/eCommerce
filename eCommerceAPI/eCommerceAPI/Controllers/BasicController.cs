@@ -25,10 +25,26 @@ namespace farmersAPi.Controllers
 
         [HttpGet("")]
 
-        public async Task<ActionResult<PagedCollectionResponce<IEnumerable<TEntity>>>> Get([FromQuery] BasicFilter filter)
+        public async Task<ActionResult<PagedCollectionResponce<TDto>>> Get([FromQuery] BasicFilter filter)
         {
+            var results = new PagedCollectionResponce<TDto>
+            {
+                Items = await _repository.Select(filter)
+            };
 
-            return Ok( await _repository.Select(filter));
+            BasicFilter nextFilter = filter.Clone() as BasicFilter;
+            nextFilter.Page += 1;
+            string nextUrl = results.Items.Count() <= 0 ? null : this.Url.Action("Get", null, nextFilter, Request.Scheme);
+
+            
+            BasicFilter previousFilter = filter.Clone() as BasicFilter;
+            previousFilter.Page -= 1;
+            string previousUrl = previousFilter.Page <= 0 ? null : this.Url.Action("Get", null, previousFilter, Request.Scheme);
+
+            results.NextPage = !string.IsNullOrWhiteSpace(nextUrl) ? new Uri(nextUrl) : null;
+            results.PreviousPage = !string.IsNullOrWhiteSpace(previousUrl) ? new Uri(previousUrl) : null;
+
+            return Ok( results);
         }
 
 
