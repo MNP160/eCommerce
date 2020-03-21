@@ -10,5 +10,7 @@ namespace eCommerceAPI.DTOs
     {
 
         public int Id { get; set; }
+
+        public ICollection<OrderItemsDto> orderItems { get; set; }
     }
 }

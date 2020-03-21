@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using eCommerceAPI.Filtering;
+using eCommerceAPI.Extensions;
 using eCommerceAPI.Interfaces;
+using eCommerceAPI.QueryParameters;
 using farmersAPi.Interfaces;
 
 using Microsoft.EntityFrameworkCore;
@@ -64,16 +65,12 @@ namespace farmersAPi.Repositories
         }
            
 
-      public  async Task<IEnumerable<TDto>> Select(BasicFilter basicFilter)
+      public  async Task<PagedList<TDto>> Select(GenericParameters parameters)
         {
-           // var entities = await _context.Set<TEntity>().ToListAsync();
-            var entities2= await _context.Set<TEntity>()
-               
-                .Skip((basicFilter.Page - 1) * basicFilter.Limit)
-                .Take(basicFilter.Limit)
-                .ToListAsync();
-            IList<TDto> dtos = mapper.Map<IList<TDto>>(entities2);
-            return dtos;
+            // var entities = await _context.Set<TEntity>().ToListAsync();
+            //var entities2 =
+            //IList<TDto> dtos = mapper.Map<IList<TDto>>(entities2);
+            return PagedList<TDto>.ToPagedList(FindAll(), parameters.PageNumber, parameters.PageSize); 
         }
 
      public  async Task<TEntity> Update(TEntity value)
@@ -84,6 +81,13 @@ namespace farmersAPi.Repositories
             await _context.SaveChangesAsync();
             return value;
 
+        }
+
+        public IQueryable<TDto> FindAll()
+        {
+            var entities = _context.Set<TEntity>();
+            var dtos = mapper.Map<IQueryable<TDto>>(entities);
+            return dtos;
         }
 
 

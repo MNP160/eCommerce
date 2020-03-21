@@ -1,6 +1,8 @@
-﻿using eCommerceAPI.Filtering;
+﻿
+using eCommerceAPI.QueryParameters;
 using farmersAPi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,26 +27,22 @@ namespace farmersAPi.Controllers
 
         [HttpGet("")]
 
-        public async Task<ActionResult<PagedCollectionResponce<TDto>>> Get([FromQuery] BasicFilter filter)
+        public async Task<ActionResult<List<TEntity>>> Get([FromQuery] GenericParameters parameters)
         {
-            var results = new PagedCollectionResponce<TDto>
+            var values = await _repository.Select(parameters);
+
+            var metadata = new
             {
-                Items = await _repository.Select(filter)
+                values.TotalCount,
+                values.PageSize,
+                values.CurrentPage,
+                values.TotalPages,
+                values.HasNext,
+                values.HasPrevious
             };
 
-            BasicFilter nextFilter = filter.Clone() as BasicFilter;
-            nextFilter.Page += 1;
-            string nextUrl = results.Items.Count() <= 0 ? null : this.Url.Action("Get", null, nextFilter, Request.Scheme);
-
-            
-            BasicFilter previousFilter = filter.Clone() as BasicFilter;
-            previousFilter.Page -= 1;
-            string previousUrl = previousFilter.Page <= 0 ? null : this.Url.Action("Get", null, previousFilter, Request.Scheme);
-
-            results.NextPage = !string.IsNullOrWhiteSpace(nextUrl) ? new Uri(nextUrl) : null;
-            results.PreviousPage = !string.IsNullOrWhiteSpace(previousUrl) ? new Uri(previousUrl) : null;
-
-            return Ok( results);
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+            return Ok(values);
         }
 
 

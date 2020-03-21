@@ -1,4 +1,8 @@
-﻿using eCommerceAPI.Utility;
+﻿using AutoMapper;
+using eCommerceAPI.Extensions;
+using eCommerceAPI.QueryParameters;
+using eCommerceAPI.Utility;
+using farmersAPi.DTOs;
 using farmersAPi.Interfaces;
 using farmersAPi.Models;
 using System;
@@ -13,9 +17,12 @@ namespace farmersAPi.Servces
     public class UserService :IUserService
     {
         private APIContext _context;
-        public UserService(APIContext context)
+        private IMapper mapper; 
+        public UserService(APIContext context, IMapper map)
         {
             _context = context;
+            mapper = map;
+
         }
 
         public Users Authenticate(string email, string password)
@@ -70,9 +77,15 @@ namespace farmersAPi.Servces
             return user;
         }
 
-        public IEnumerable<Users> GetAll()
+        public PagedList<UserDto> GetAll(GenericParameters parameters)
         {
-            return _context.Users.AsEnumerable();
+           //var users2= 
+          //  var users = _context.Users.AsEnumerable();
+                        
+            //var dtos = mapper.Map<IList<UserDto>>(users2);
+            return PagedList<UserDto>.ToPagedList(FindAll(),
+        parameters.PageNumber,
+        parameters.PageSize);
         }
 
         public Users GetById(int id)
@@ -209,7 +222,12 @@ namespace farmersAPi.Servces
 
             return user;
         }
-
+        public IQueryable<UserDto> FindAll()
+        {
+            var entities = _context.Set<Users>();
+            var dtos = mapper.Map<IQueryable<UserDto>>(entities);
+            return dtos;
+        }
 
     }
 }

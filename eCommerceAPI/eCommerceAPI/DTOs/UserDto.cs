@@ -1,4 +1,5 @@
-﻿using farmersAPi.Interfaces;
+﻿using eCommerceAPI.DTOs;
+using farmersAPi.Interfaces;
 using farmersAPi.Models;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace farmersAPi.DTOs
         public string LastName { get; set; }
       
         public string Role { get; set; }
+
+        public ICollection<OrdersDto> Orders { get; set; }
       
      
 

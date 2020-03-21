@@ -22,7 +22,7 @@
   },
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "farmersAPi/1.0.0": {
+      "eCommerceAPI/1.0.0": {
         "dependencies": {
           "AutoMapper": "9.0.0",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "7.0.0",
@@ -309,10 +309,10 @@
           "WindowsBase": "4.0.0.0"
         },
         "runtime": {
-          "farmersAPi.dll": {}
+          "eCommerceAPI.dll": {}
         },
         "compile": {
-          "farmersAPi.dll": {}
+          "eCommerceAPI.dll": {}
         }
       },
       "AutoMapper/9.0.0": {
@@ -509,6 +509,12 @@
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
           "Microsoft.EntityFrameworkCore.Relational": "3.1.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Design.dll": {
+            "assemblyVersion": "3.1.2.0",
+            "fileVersion": "3.100.220.6703"
+          }
         }
       },
       "Microsoft.EntityFrameworkCore.Proxies/3.1.2": {
@@ -3515,7 +3521,7 @@
     }
   },
   "libraries": {
-    "farmersAPi/1.0.0": {
+    "eCommerceAPI/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

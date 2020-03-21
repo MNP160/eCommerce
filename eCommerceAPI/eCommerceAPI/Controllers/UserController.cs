@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using eCommerceAPI.QueryParameters;
 using farmersAPi.DTOs;
 using farmersAPi.Interfaces;
 using farmersAPi.Models;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -72,8 +74,8 @@ namespace farmersAPi.Controllers
 
             return Ok(new
             {
-                Id = user.Id,
-                Username = user.Email,
+                
+                Email = user.Email,
                 Token = tokenString,
 
 
@@ -104,12 +106,24 @@ namespace farmersAPi.Controllers
 
         [HttpGet("")]
 
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery]GenericParameters parameters)
         {
-            var users = userService.GetAll();
-            var dtos = mapper.Map<IList<UserDto>>(users);
+            var users = userService.GetAll(parameters);
+            
+            var metadata = new
+            {
+                users.TotalCount,
+                users.PageSize,
+                users.CurrentPage,
+                users.TotalPages,
+                users.HasNext,
+                users.HasPrevious
+            };
 
-            return Ok(dtos);
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+
+
+            return Ok(users);
         }
 
         [HttpGet("{id}")]

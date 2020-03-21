@@ -1,4 +1,5 @@
-﻿using farmersAPi.Interfaces;
+﻿using farmersAPi.DTOs;
+using farmersAPi.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace eCommerceAPI.DTOs
     {
 
         public int Id { get; set; }
+
+        public ICollection<ProductDto> Products { get; set; }
     }
 }
