@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace eCommerceFrontend.Models.REST.Manager
 {
-    public class AuthenticationManager: RESTManager<AuthenticationResponse>
+    public class AuthenticationManager: RESTManager<AuthenticationResponse, AuthenticationRequest>
     {
         private readonly IHttpClientFactory _clientFactory;
 
@@ -18,7 +18,7 @@ namespace eCommerceFrontend.Models.REST.Manager
 
         public AuthenticationResponse Post(string email, string password)
         {
-            return base.Authenticate(email, password).Result;
+            return base.Post(new AuthenticationRequest { Email = email, Password = password }, "User", "Authenticate").Result;
         }
     }
 }

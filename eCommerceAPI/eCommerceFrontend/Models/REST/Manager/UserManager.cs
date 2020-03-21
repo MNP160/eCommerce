@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace eCommerceFrontend.Models.REST.Manager
 {
-    public class UserManager : RESTManager<User>
+    public class UserManager : RESTManager<UserResponse, UserRequest>
     {
         private readonly IHttpClientFactory _clientFactory;
 
@@ -16,27 +16,27 @@ namespace eCommerceFrontend.Models.REST.Manager
             _clientFactory = clientFactory;
         }
 
-        public new User Get(string id)
+        public UserResponse Get(string id)
         {
             return base.Get("User", id).Result;
         }
 
-        public new List<User> Get()
+        public List<UserResponse> Get()
         {
             return base.Get("User").Result.ToList();
         }
 
-        public new User Post(User user)
+        public UserResponse Post(UserRequest user, string id = null)
         {
-            return base.Post(user, "User").Result;
+            return base.Post(user, "User", id).Result;
         }
 
-        public new User Put(User user, string id)
+        public UserResponse Put(UserRequest user)
         {
-            return base.Put(user, "User", id).Result;
+            return base.Put(user, "User").Result;
         }
 
-        public new User Delete(string id)
+        public UserResponse Delete(string id)
         {
             return base.Delete("User", id).Result;
         }

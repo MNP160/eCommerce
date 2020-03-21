@@ -27,7 +27,6 @@ namespace eCommerceFrontend.Controllers
 
         public IActionResult Index()
         {
-            RESTManager<User> rm = new RESTManager<User>(_clientFactory);
             UserManager um = new UserManager(_clientFactory);
             return View();
         }

@@ -23,12 +23,12 @@ namespace eCommerceFrontend.Utility
         public string LoginUser(string email, string password)
         {
             AuthenticationManager authenticationManager = new AuthenticationManager(_clientFactory);
-            var response = authenticationManager.Authenticate(email, password);
+            var response = authenticationManager.Post(email, password);
 
             if (response == null)
                 return null;
             else
-                return response.Result.Token;
+                return response.Token.ToString();
         }
     }
 }
