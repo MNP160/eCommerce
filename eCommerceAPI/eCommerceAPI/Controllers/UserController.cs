@@ -46,22 +46,14 @@ namespace farmersAPi.Controllers
                 return BadRequest("User does not exist");
             }
 
-            var claims = new Dictionary<string, object>();
-            if (user.Email == "admin@gmail.com")
-            {
-               claims.Add(user.Id.ToString(), new Claim(ClaimTypes.Role, "admin"));
-            }
-            else
-            {
-                claims.Add(user.Id.ToString(), new Claim(ClaimTypes.Role, "user"));
-            }
+            
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_secret.secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]{
                     new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    
+                     new Claim(ClaimTypes.Role, user.Role)
                 }
                     ),
                 Expires = DateTime.UtcNow.AddDays(1),
@@ -69,7 +61,7 @@ namespace farmersAPi.Controllers
                 IssuedAt = DateTime.UtcNow,
                 Issuer = "usersAPI",
                 Audience = "everybody",
-                Claims=claims
+                
 
             };
 

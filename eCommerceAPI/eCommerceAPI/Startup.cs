@@ -64,22 +64,7 @@ namespace farmersAPi
 
             ).AddJwtBearer(x =>
             {
-            x.Events = new JwtBearerEvents
-            {
-                OnTokenValidated = context =>
-                {
-                    var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
-                    var userId = int.Parse(context.Principal.Identity.Name);
-                    System.Diagnostics.Debug.WriteLine(userId);
-                    var user = userService.GetById(userId);
-                    if (user == null)
-                    {
-                        context.Fail("Unauthorized");
-                    }
-
-                    return Task.CompletedTask;
-                }
-            };
+           
             x.RequireHttpsMetadata = false;
             x.SaveToken = true;
             x.TokenValidationParameters = new TokenValidationParameters

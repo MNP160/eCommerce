@@ -1,4 +1,5 @@
 ﻿using eCommerceAPI.Filtering;
+using eCommerceAPI.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -17,13 +17,12 @@ namespace farmersAPi.DTOs
         public byte[] PasswordSalt { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int ZipCode { get; set; }
-        public int TransactionCount { get; set; }
-        public string State { get; set; }
-        public string Account { get; set; }
+      
+        public string Role { get; set; }
+      
      
 
-        public List<ProductDto> products { get; set; }
+        
      
 
     }

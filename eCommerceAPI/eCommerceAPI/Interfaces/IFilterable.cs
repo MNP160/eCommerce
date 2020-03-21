@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace eCommerceAPI.Interfaces
 {
-    public class IFilterable
+    public interface IFilterable
     {
+        public string Name { get; set; }
     }
 }

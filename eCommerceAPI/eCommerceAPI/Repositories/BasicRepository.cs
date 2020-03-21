@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using eCommerceAPI.Filtering;
+using eCommerceAPI.Interfaces;
 using farmersAPi.Interfaces;
 
 using Microsoft.EntityFrameworkCore;
@@ -65,16 +66,17 @@ namespace farmersAPi.Repositories
 
       public  async Task<IEnumerable<TDto>> Select(BasicFilter basicFilter)
         {
-            var entities = await _context.Set<TEntity>().ToListAsync();
+           // var entities = await _context.Set<TEntity>().ToListAsync();
             var entities2= await _context.Set<TEntity>()
+               
                 .Skip((basicFilter.Page - 1) * basicFilter.Limit)
                 .Take(basicFilter.Limit)
                 .ToListAsync();
-            IList<TDto> dtos = mapper.Map<IList<TDto>>(entities);
+            IList<TDto> dtos = mapper.Map<IList<TDto>>(entities2);
             return dtos;
         }
 
-     public    async Task<TEntity> Update(TEntity value)
+     public  async Task<TEntity> Update(TEntity value)
         {
             var editedEntity = _context.Set<TEntity>().FirstOrDefault(e => e.Id == value.Id);
             editedEntity = value;

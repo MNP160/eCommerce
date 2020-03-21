@@ -1,4 +1,5 @@
-﻿using farmersAPi.Interfaces;
+﻿using eCommerceAPI.Utility;
+using farmersAPi.Interfaces;
 using farmersAPi.Models;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,14 @@ namespace farmersAPi.Servces
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+            if (user.Email == "admin2@gmail.com")  //change this later to real admin email
+            {                                       //which will probably come from hosting
+                user.Role = Role.Admin;
+            }
+            else
+            {
+                user.Role = Role.User;
+            }
 
             _context.Users.Add(user);
             _context.SaveChanges();
