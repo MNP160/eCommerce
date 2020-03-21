@@ -10,8 +10,8 @@ using farmersAPi.Models;
 namespace eCommerceAPI.Migrations
 {
     [DbContext(typeof(APIContext))]
-    [Migration("20200321005003_fixingModel")]
-    partial class fixingModel
+    [Migration("20200321012112_smallChanges")]
+    partial class smallChanges
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,9 +27,6 @@ namespace eCommerceAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<int?>("OrdersId")
                         .HasColumnType("int");
@@ -53,9 +50,6 @@ namespace eCommerceAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<double>("TotalAmount")
                         .HasColumnType("float");
 
@@ -75,9 +69,6 @@ namespace eCommerceAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -99,9 +90,6 @@ namespace eCommerceAPI.Migrations
 
                     b.Property<int?>("CathegoryId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -128,9 +116,6 @@ namespace eCommerceAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");

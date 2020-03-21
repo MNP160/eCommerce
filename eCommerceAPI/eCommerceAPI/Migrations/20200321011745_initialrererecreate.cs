@@ -2,7 +2,7 @@
 
 namespace eCommerceAPI.Migrations
 {
-    public partial class fixingModel : Migration
+    public partial class initialrererecreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

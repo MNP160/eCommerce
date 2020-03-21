@@ -10,8 +10,8 @@ using farmersAPi.Models;
 namespace eCommerceAPI.Migrations
 {
     [DbContext(typeof(APIContext))]
-    [Migration("20200320201919_Initial")]
-    partial class Initial
+    [Migration("20200321011745_initialrererecreate")]
+    partial class initialrererecreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,6 +29,7 @@ namespace eCommerceAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("OrdersId")
@@ -54,6 +55,7 @@ namespace eCommerceAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<double>("TotalAmount")
@@ -77,6 +79,7 @@ namespace eCommerceAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -101,6 +104,7 @@ namespace eCommerceAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")

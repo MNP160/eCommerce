@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eCommerceAPI.Migrations
 {
-    public partial class Initial : Migration
+    public partial class plsWork : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
