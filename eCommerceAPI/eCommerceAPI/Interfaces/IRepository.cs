@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eCommerceAPI.Filtering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace farmersAPi.Interfaces
     {
        
 
-       Task<IList<TDto>> Select();
+       Task<IEnumerable<TDto>> Select(BasicFilter basicFilter);
         Task<TDto> SelectbyId(int Id);
        Task<TEntity> Update(TEntity value);
         Task<TEntity> Delete(TEntity value);

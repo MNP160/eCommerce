@@ -1,4 +1,5 @@
-﻿using farmersAPi.Interfaces;
+﻿using eCommerceAPI.Filtering;
+using farmersAPi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -24,10 +25,10 @@ namespace farmersAPi.Controllers
 
         [HttpGet("")]
 
-        public async Task<ActionResult<List<TEntity>>> Get()
+        public async Task<ActionResult<PagedCollectionResponce<IEnumerable<TEntity>>>> Get([FromQuery] BasicFilter filter)
         {
 
-            return Ok( await _repository.Select());
+            return Ok( await _repository.Select(filter));
         }
 
 
