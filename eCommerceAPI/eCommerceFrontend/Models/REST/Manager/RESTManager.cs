@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using eCommerceFrontend.Models.REST.Objects;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -13,18 +15,20 @@ namespace eCommerceFrontend.Models.REST.Manager
     {
         private readonly IHttpClientFactory _clientFactory;
 
-        public RESTManager(IHttpClientFactory clientFactory)
+        protected internal RESTManager(IHttpClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
         }
 
         [HttpGet]
-        public async Task<T> Get(string controller, string action, string id)
+        protected internal async Task<T> Get(string controller, string id = null)
         {
             T result = null;
 
+
             var client = _clientFactory.CreateClient("ecoproduce");
-            var response = await client.GetAsync($"{controller}//{action}//{id}");
+            string path = id != null ? $"api/{controller}/{id}" : $"api/{controller}";
+            var response = await client.GetAsync(path);
 
             await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
             {
@@ -37,14 +41,35 @@ namespace eCommerceFrontend.Models.REST.Manager
             return result;
         }
 
+        [HttpGet]
+        protected internal async Task<IEnumerable<T>> Get(string controller)
+        {
+            IEnumerable<T> result = null;
+
+            var client = _clientFactory.CreateClient("ecoproduce");
+            string path = $"api/{controller}";
+            var response = await client.GetAsync(path);
+
+            await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
+            {
+                if (x.IsFaulted)
+                    throw x.Exception;
+
+                result = JsonConvert.DeserializeObject<IEnumerable<T>>(x.Result);
+            });
+
+            return result;
+        }
+
         [HttpPost]
-        public async Task<T> Post(string controller, string action, string id, T postObject)
+        protected internal async Task<T> Post(T postObject, string controller, string id = null)
         {
             T result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce");
             var content = new StringContent(postObject.ToString());
-            var response = await client.PostAsync($"{controller}//{action}//{id}", content).ConfigureAwait(false);
+            string path = id != null ? $"api/{controller}/{id}" : $"api/{controller}";
+            var response = await client.PostAsync(path, content).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
             await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
@@ -58,14 +83,16 @@ namespace eCommerceFrontend.Models.REST.Manager
             return result;
         }
 
+
         [HttpPut]
-        public async Task<T> Put(string controller, string action, string id, T putObject)
+        protected internal async Task<T> Put(T putObject, string controller)
         {
             T result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce");
             var content = new StringContent(putObject.ToString());
-            var response = await client.PutAsync($"{controller}//{action}//{id}", content).ConfigureAwait(false);
+            string path = $"api/{controller}";
+            var response = await client.PutAsync(path, content).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
             await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
@@ -80,12 +107,35 @@ namespace eCommerceFrontend.Models.REST.Manager
         }
 
         [HttpDelete]
-        public async Task<T> Delete(string controller, string action, string id)
+        protected internal async Task<T> Delete(string controller, string id)
         {
             T result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce");
-            var response = await client.DeleteAsync($"{controller}//{action}//{id}").ConfigureAwait(false);
+            string path = $"api/{controller}/{id}";
+            var response = await client.DeleteAsync(path).ConfigureAwait(false);
+            response.EnsureSuccessStatusCode();
+
+            await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
+            {
+                if (x.IsFaulted)
+                    throw x.Exception;
+
+                result = JsonConvert.DeserializeObject<T>(x.Result);
+            });
+
+            return result;
+        }
+
+        [HttpPost]
+        protected internal async Task<T> Authenticate(string email, string password)
+        {
+            T result = null;
+
+            var client = _clientFactory.CreateClient("ecoproduce");
+            var content = new StringContent(new AuthenticationRequest { Email = email, Password = password }.ToString());
+            string path = $"api/User/Authenticate";
+            var response = await client.PostAsync(path, content).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
             await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
