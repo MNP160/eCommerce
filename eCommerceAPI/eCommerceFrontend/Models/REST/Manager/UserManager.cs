@@ -16,7 +16,7 @@ namespace eCommerceFrontend.Models.REST.Manager
             _clientFactory = clientFactory;
         }
 
-        public UserResponse Get(string id)
+        public new UserResponse Get(string id)
         {
             return base.Get("User", id).Result;
         }

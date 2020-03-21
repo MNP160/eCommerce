@@ -50,6 +50,8 @@ namespace eCommerceFrontend.Models.REST.Manager
             string path = $"api/{controller}";
             var response = await client.GetAsync(path);
 
+            System.Diagnostics.Debug.WriteLine($"URL: {response.ToString()}");
+
             await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
             {
                 if (x.IsFaulted)

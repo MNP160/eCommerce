@@ -27,6 +27,8 @@ namespace eCommerceFrontend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc().AddSessionStateTempDataProvider();
+            services.AddSession();
 
             // Key to encrypt and decerypt token.
             var secretKey = Encoding.ASCII.GetBytes("");
@@ -63,9 +65,10 @@ namespace eCommerceFrontend
             services.AddHttpClient(); // Http Client Factory
             services.AddHttpClient("ecoproduce", c =>
             {
-                c.BaseAddress = new Uri("https://ecoproduce.com/");
-                c.DefaultRequestHeaders.Add("Accept", "");
-                c.DefaultRequestHeaders.Add("User-Agent", "");
+                c.BaseAddress = new Uri("http://ecoproduce.eu/");
+                c.DefaultRequestHeaders.Add("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjMiLCJuYmYiOjE1ODQ3OTc1NTgsImV4cCI6MTU4NDg4Mzk1OCwiaWF0IjoxNTg0Nzk3NTU4LCJpc3MiOiJ1c2Vyc0FQSSIsImF1ZCI6ImV2ZXJ5Ym9keSJ9.VI7vIw2tvwdEIB2U0wXetLgedHgsrsm_prG7WsmsBIk");
+                //c.DefaultRequestHeaders.Add("Accept", "");
+                //c.DefaultRequestHeaders.Add("User-Agent", "");
             });
         }
 

@@ -28,6 +28,7 @@ namespace eCommerceFrontend.Controllers
         public IActionResult Index()
         {
             UserManager um = new UserManager(_clientFactory);
+            System.Diagnostics.Debug.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(um.Get("1"), Newtonsoft.Json.Formatting.Indented));
             return View();
         }
 
