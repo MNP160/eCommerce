@@ -13,9 +13,14 @@ namespace eCommerceAPI.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("OrderId")]
+
         public int Id { get; set; }
         
         public double TotalAmount { get; set; }
+        public int Phone { get; set; }
+        public string City { get; set; }
+        public string Address { get; set; }
 
 
         [ForeignKey("User")]

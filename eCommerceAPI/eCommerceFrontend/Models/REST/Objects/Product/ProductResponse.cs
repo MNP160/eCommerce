@@ -19,8 +19,15 @@ namespace eCommerceFrontend.Models.REST.Objects
         [Required]
         [DataType(DataType.Text)]
         public string Description { get; set; }
+        public int Discount { get; set; }
 
-        #nullable enable
+        public int SCount { get; set; } = 0;
+        public int MCount { get; set; } = 0;
+        public int LCount { get; set; } = 0;
+        public int XLCount { get; set; } = 0;
+
+
+#nullable enable
         public string? ImagePath { get; set; }
         #nullable disable
 

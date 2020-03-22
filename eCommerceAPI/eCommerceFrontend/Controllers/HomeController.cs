@@ -31,7 +31,10 @@ namespace eCommerceFrontend.Controllers
         {
             LoginUser("admin3@gmail.com", "bestPassword");
             UserManager um = new UserManager(_clientFactory);
-            System.Diagnostics.Debug.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(um.Get("1"), Newtonsoft.Json.Formatting.Indented));
+            System.Diagnostics.Debug.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(um.Get(), Newtonsoft.Json.Formatting.Indented));
+            OrderManager om = new OrderManager(_clientFactory);
+            System.Diagnostics.Debug.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(om.Get(), Newtonsoft.Json.Formatting.Indented));
+
             return View();
         }
 

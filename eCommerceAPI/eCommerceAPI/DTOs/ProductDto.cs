@@ -15,11 +15,18 @@ namespace farmersAPi.DTOs
         public string ImagePath { get; set; }
         public int Price { get; set; }
 
+        public int Discount { get; set; }
+
+        public int SCount { get; set; } = 0;
+        public int MCount { get; set; } = 0;
+        public int LCount { get; set; } = 0;
+        public int XLCount { get; set; } = 0;
+
         //public CathegoryDto cathegory { get; set; }
 
-        
 
-        
-               
+
+
+
     }
 }

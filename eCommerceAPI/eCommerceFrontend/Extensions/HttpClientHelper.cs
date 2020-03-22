@@ -18,6 +18,17 @@ namespace eCommerceFrontend.Utility
             }
             return client;
         }
+
+        public static bool IsLoggedIn(string token="token")
+        {
+            if (eCommerceFrontend.Utility.AppContext.Current.Session.Get<string>(token) != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
     }
   
 }

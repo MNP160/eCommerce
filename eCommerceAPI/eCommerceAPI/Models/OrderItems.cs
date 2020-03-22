@@ -20,6 +20,7 @@ namespace eCommerceAPI.Models
         public virtual Product Product { get; set; }
 
         [ForeignKey("Order")]
+        [Column("OrderId")]
         public int Id { get; set; }
 
         public virtual Orders Order { get; set; }

@@ -13,6 +13,7 @@ namespace farmersAPi.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("CategoryId")]
         public int Id { get; set; }
        
         public string Name { get; set; }
