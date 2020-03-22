@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace farmersAPi.Migrations
+namespace eCommerceAPI.Migrations
 {
-    public partial class imageUrls : Migration
+    public partial class rerereCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

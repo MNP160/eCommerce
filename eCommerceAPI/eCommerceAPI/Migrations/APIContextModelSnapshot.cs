@@ -22,6 +22,7 @@ namespace eCommerceAPI.Migrations
             modelBuilder.Entity("eCommerceAPI.Models.OrderItems", b =>
                 {
                     b.Property<int>("Id")
+                        .HasColumnName("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
@@ -38,6 +39,7 @@ namespace eCommerceAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("OrderId")
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -76,6 +78,7 @@ namespace eCommerceAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("ProductId")
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 

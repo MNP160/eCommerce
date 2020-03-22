@@ -13,6 +13,7 @@ namespace eCommerceAPI.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("OrderId")]
         public int Id { get; set; }
         
         public double TotalAmount { get; set; }

@@ -10,8 +10,8 @@ using farmersAPi.Models;
 namespace eCommerceAPI.Migrations
 {
     [DbContext(typeof(APIContext))]
-    [Migration("20200321012112_smallChanges")]
-    partial class smallChanges
+    [Migration("20200322153238_moreChangesToNaming")]
+    partial class moreChangesToNaming
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,19 +24,13 @@ namespace eCommerceAPI.Migrations
             modelBuilder.Entity("eCommerceAPI.Models.OrderItems", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("OrdersId")
+                        .HasColumnName("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrdersId");
+                    b.HasKey("Id", "ProductId");
 
                     b.HasIndex("ProductId");
 
@@ -47,6 +41,7 @@ namespace eCommerceAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("OrderId")
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -85,6 +80,7 @@ namespace eCommerceAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("ProductId")
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -132,6 +128,9 @@ namespace eCommerceAPI.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
@@ -139,13 +138,17 @@ namespace eCommerceAPI.Migrations
 
             modelBuilder.Entity("eCommerceAPI.Models.OrderItems", b =>
                 {
-                    b.HasOne("eCommerceAPI.Models.Orders", null)
+                    b.HasOne("eCommerceAPI.Models.Orders", "Order")
                         .WithMany("OrderItems")
-                        .HasForeignKey("OrdersId");
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("farmersAPi.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
+                        .WithMany("OrderItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("eCommerceAPI.Models.Orders", b =>

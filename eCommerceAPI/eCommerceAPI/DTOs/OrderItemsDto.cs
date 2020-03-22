@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace eCommerceAPI.DTOs
 {
-    public class OrderItemsDto :IDto
+    public class OrderItemsDto :IBasicDto
     {
+      
+       
 
-        public int Id { get; set; }
-
-        public ICollection<OrderItemProductDto> Products { get; set; }
+        public ProductDto Product { get; set; }
     }
 }

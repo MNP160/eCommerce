@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eCommerceAPI.DTOs
 {
-    public class OrdersDto :IDto
+    public class OrdersDto :IDto, IBasicDto
     {
 
         public int Id { get; set; }
