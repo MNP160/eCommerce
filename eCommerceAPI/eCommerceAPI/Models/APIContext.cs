@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using eCommerceAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,8 @@ namespace farmersAPi.Models
         public DbSet<Cathegory> Cathegory { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Users> Users { get; set; }
-        public DbSet<Toxins> Toxins { get; set; }
-        public DbSet<UserToxins> UserToxins { get; set; }
+        public DbSet<Orders> Orders { get; set; }
+        public DbSet<OrderItems> OrderItems { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,15 +26,10 @@ namespace farmersAPi.Models
             modelBuilder.Entity<Cathegory>().ToTable("Cathegories");
             modelBuilder.Entity<Product>().ToTable("Products");
             modelBuilder.Entity<Users>().ToTable("Users");
-            modelBuilder.Entity<Users>().Property(x => x.Account).HasConversion<string>();
-            modelBuilder.Entity<Users>().Property(x => x.State).HasConversion<string>();
+            modelBuilder.Entity<Orders>().ToTable("Orders");
+            modelBuilder.Entity<OrderItems>().ToTable("OrderItems");
 
-            modelBuilder.Entity<Toxins>().ToTable("Toxins");
-            modelBuilder.Entity<UserToxins>().ToTable("USerToxins");
 
-            modelBuilder.Entity<Toxins>().Property(x => x.Type).HasConversion<string>();
-            modelBuilder.Entity<UserToxins>().Property(x => x.Type).HasConversion<string>();
-           
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

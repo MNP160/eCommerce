@@ -1,4 +1,9 @@
-﻿using farmersAPi.Interfaces;
+﻿using AutoMapper;
+using eCommerceAPI.Extensions;
+using eCommerceAPI.QueryParameters;
+using eCommerceAPI.Utility;
+using farmersAPi.DTOs;
+using farmersAPi.Interfaces;
 using farmersAPi.Models;
 using System;
 using System.Collections.Generic;
@@ -12,9 +17,12 @@ namespace farmersAPi.Servces
     public class UserService :IUserService
     {
         private APIContext _context;
-        public UserService(APIContext context)
+        private IMapper mapper; 
+        public UserService(APIContext context, IMapper map)
         {
             _context = context;
+            mapper = map;
+
         }
 
         public Users Authenticate(string email, string password)
@@ -54,6 +62,14 @@ namespace farmersAPi.Servces
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+            if (user.Email == "admin2@gmail.com")  //change this later to real admin email
+            {                                       //which will probably come from hosting
+                user.Role = Role.Admin;
+            }
+            else
+            {
+                user.Role = Role.User;
+            }
 
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -61,9 +77,15 @@ namespace farmersAPi.Servces
             return user;
         }
 
-        public IEnumerable<Users> GetAll()
+        public PagedList<UserDto> GetAll(GenericParameters parameters)
         {
-            return _context.Users.AsEnumerable();
+           //var users2= 
+          //  var users = _context.Users.AsEnumerable();
+                        
+            //var dtos = mapper.Map<IList<UserDto>>(users2);
+            return PagedList<UserDto>.ToPagedList(FindAll(),
+        parameters.PageNumber,
+        parameters.PageSize);
         }
 
         public Users GetById(int id)
@@ -181,11 +203,7 @@ namespace farmersAPi.Servces
 
 
 
-            u.ZipCode = user.ZipCode;
-
-
-            u.Account = user.Account;
-            u.State = user.State;
+          
             //add error checking 
 
             _context.Users.Update(u);
@@ -204,7 +222,12 @@ namespace farmersAPi.Servces
 
             return user;
         }
-
+        public IQueryable<UserDto> FindAll()
+        {
+            var entities = _context.Set<Users>().AsQueryable();
+            var dtos = mapper.Map<IList<UserDto>>(entities);
+            return dtos.AsQueryable();
+        }
 
     }
 }

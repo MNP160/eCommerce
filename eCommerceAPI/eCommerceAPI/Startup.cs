@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using eCommerceAPI.Repositories;
 using farmersAPi.Interfaces;
 using farmersAPi.Models;
 using farmersAPi.Repositories;
@@ -63,22 +64,7 @@ namespace farmersAPi
 
             ).AddJwtBearer(x =>
             {
-            x.Events = new JwtBearerEvents
-            {
-                OnTokenValidated = context =>
-                {
-                    var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
-                    var userId = int.Parse(context.Principal.Identity.Name);
-                    System.Diagnostics.Debug.WriteLine(userId);
-                    var user = userService.GetById(userId);
-                    if (user == null)
-                    {
-                        context.Fail("Unauthorized");
-                    }
-
-                    return Task.CompletedTask;
-                }
-            };
+           
             x.RequireHttpsMetadata = false;
             x.SaveToken = true;
             x.TokenValidationParameters = new TokenValidationParameters
@@ -99,12 +85,12 @@ namespace farmersAPi
                 
                                               
                                           
-            services.AddSwaggerGen(c=>c.SwaggerDoc("v1", new OpenApiInfo { Title="farmersAPI", Version="v1"}));
+            services.AddSwaggerGen(c=>c.SwaggerDoc("v1", new OpenApiInfo { Title="eCommerceAPI", Version="v1"}));
             services.AddDbContext<APIContext>(options => options.UseSqlServer(Configuration.GetConnectionString("APIContext")));
             services.AddScoped<CathegoryRepository>();
             services.AddScoped<ProductRepository>();
-            services.AddScoped<ToxinsRepository>();
-            services.AddScoped<UserToxinsRepository>();
+            services.AddScoped<OrdersRepository>();
+            services.AddScoped<OrderItemsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -127,14 +113,14 @@ namespace farmersAPi
                 RequestPath = new PathString("/images")
             }
                 ) ;
-
+            app.UseCors(x =>
+                  x.AllowAnyOrigin()
+                 .AllowAnyMethod()
+               .AllowAnyHeader()
+             );
             app.UseAuthorization();
-            app.UseCors(x => 
-            x.AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader()
-               );
-            app.UseSwaggerUI(c=>c.SwaggerEndpoint("/swagger/v1/swagger.json", "farmersAPI"));
+          
+            app.UseSwaggerUI(c=>c.SwaggerEndpoint("/swagger/v1/swagger.json", "eCommerceAPI"));
 
             app.UseEndpoints(endpoints =>
             {

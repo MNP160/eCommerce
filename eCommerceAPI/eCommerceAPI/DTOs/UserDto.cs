@@ -1,4 +1,5 @@
-﻿using farmersAPi.Interfaces;
+﻿using eCommerceAPI.DTOs;
+using farmersAPi.Interfaces;
 using farmersAPi.Models;
 using System;
 using System.Collections.Generic;
@@ -17,13 +18,14 @@ namespace farmersAPi.DTOs
         public byte[] PasswordSalt { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int ZipCode { get; set; }
-        public int TransactionCount { get; set; }
-        public string State { get; set; }
-        public string Account { get; set; }
+      
+        public string Role { get; set; }
+
+        //public ICollection<OrdersDto> Orders { get; set; }
+      
      
 
-        public List<ProductDto> products { get; set; }
+        
      
 
     }

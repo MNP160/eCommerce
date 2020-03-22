@@ -1,5 +1,8 @@
-﻿using farmersAPi.Interfaces;
+﻿
+using eCommerceAPI.QueryParameters;
+using farmersAPi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,10 +27,22 @@ namespace farmersAPi.Controllers
 
         [HttpGet("")]
 
-        public async Task<ActionResult<List<TEntity>>> Get()
+        public async Task<ActionResult<List<TEntity>>> Get([FromQuery] GenericParameters parameters)
         {
+            var values = await _repository.Select(parameters);
 
-            return Ok( await _repository.Select());
+            var metadata = new
+            {
+                values.TotalCount,
+                values.PageSize,
+                values.CurrentPage,
+                values.TotalPages,
+                values.HasNext,
+                values.HasPrevious
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+            return Ok(values);
         }
 
 

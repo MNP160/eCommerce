@@ -1,4 +1,8 @@
-﻿using System;
+﻿
+using eCommerceAPI.Extensions;
+using eCommerceAPI.Interfaces;
+using eCommerceAPI.QueryParameters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +14,7 @@ namespace farmersAPi.Interfaces
     {
        
 
-       Task<IList<TDto>> Select();
+       Task<PagedList<TDto>> Select(GenericParameters parameters);
         Task<TDto> SelectbyId(int Id);
        Task<TEntity> Update(TEntity value);
         Task<TEntity> Delete(TEntity value);

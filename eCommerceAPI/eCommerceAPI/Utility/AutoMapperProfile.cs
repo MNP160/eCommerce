@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using eCommerceAPI.DTOs;
+using eCommerceAPI.Models;
 using farmersAPi.DTOs;
 using farmersAPi.Models;
 using System;
@@ -21,8 +23,8 @@ namespace farmersAPi.Utility
             CreateMap<Product, ProductDto>();
             CreateMap<ProductDto, Product>();
 
-            CreateMap<Toxins, ToxinsDto>();
-            CreateMap<ToxinsDto, Toxins>();
+            CreateMap<Orders, OrdersDto>();
+            CreateMap<OrdersDto, Orders>();
 
             CreateMap<Cathegory, CathegoryDto>();
             CreateMap<CathegoryDto, Cathegory>();
@@ -30,8 +32,9 @@ namespace farmersAPi.Utility
             CreateMap<ProductModel, Product>();
             CreateMap<Product, ProductModel>();
 
-            CreateMap<UserToxins, UserToxinsDto>();
-            CreateMap<UserToxinsDto, UserToxins>();
+
+            CreateMap<OrderItems, OrderItemsDto>();
+            CreateMap<OrderItemsDto,OrderItems>();
 
             CreateMap<Users, ProductUserDto>();
             CreateMap<ProductUserDto, Users>();

@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lyubo\\Source\\Repos\\eCommerce\\eCommerceAPI\\eCommerceAPI\\eCommerceAPI.csproj": {}
+    "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceAPI\\eCommerceAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lyubo\\Source\\Repos\\eCommerce\\eCommerceAPI\\eCommerceAPI\\eCommerceAPI.csproj": {
+    "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceAPI\\eCommerceAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lyubo\\Source\\Repos\\eCommerce\\eCommerceAPI\\eCommerceAPI\\eCommerceAPI.csproj",
+        "projectUniqueName": "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceAPI\\eCommerceAPI.csproj",
         "projectName": "eCommerceAPI",
-        "projectPath": "C:\\Users\\lyubo\\Source\\Repos\\eCommerce\\eCommerceAPI\\eCommerceAPI\\eCommerceAPI.csproj",
-        "packagesPath": "C:\\Users\\lyubo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lyubo\\Source\\Repos\\eCommerce\\eCommerceAPI\\eCommerceAPI\\obj\\",
+        "projectPath": "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceAPI\\eCommerceAPI.csproj",
+        "packagesPath": "C:\\Users\\mpene\\.nuget\\packages\\",
+        "outputPath": "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceAPI\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\lyubo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mpene\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -72,10 +75,6 @@
               "target": "Package",
               "version": "[3.1.2, )"
             },
-            "RestSharp": {
-              "target": "Package",
-              "version": "[106.10.1, )"
-            },
             "Stripe.net": {
               "target": "Package",
               "version": "[35.3.0, )"
@@ -111,7 +110,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
