@@ -26,21 +26,5 @@ namespace eCommerceFrontend.Models.REST.Manager
         {
             return base.Get("User").Result.ToList();
         }
-
-        public UserResponse Post(UserRequest user, string id = null)
-        {
-            return base.Post(user, "User", id).Result;
-        }
-
-        public UserResponse Put(UserRequest user)
-        {
-            return base.Put(user, "User").Result;
-        }
-
-        public UserResponse Delete(string id)
-        {
-            return base.Delete("User", id).Result;
-        }
     }
-
 }
