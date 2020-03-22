@@ -15,17 +15,15 @@ namespace eCommerceFrontend.Utility
     public class TokenProvider
     {
         private readonly IHttpClientFactory _clientFactory;
-        private readonly IHttpContextAccessor _contextAccessor;
 
-        public TokenProvider(IHttpClientFactory clientFactory, IHttpContextAccessor contextAccessor)
+        public TokenProvider(IHttpClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
-            _contextAccessor = contextAccessor;
         }
 
         public string LoginUser(string email, string password)
         {
-            AuthenticationManager authenticationManager = new AuthenticationManager(_clientFactory, _contextAccessor);
+            AuthenticationManager authenticationManager = new AuthenticationManager(_clientFactory);
             var response = authenticationManager.Post(email, password);
 
             if (response == null)

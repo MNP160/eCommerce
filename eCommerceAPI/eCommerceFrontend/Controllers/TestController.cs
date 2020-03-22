@@ -14,18 +14,16 @@ namespace eCommerceFrontend.Controllers
     {
         private readonly ILogger<TestController> _logger;
         private readonly IHttpClientFactory _clientFactory;
-        private readonly IHttpContextAccessor _contextAccessor;
 
-        public TestController(ILogger<TestController> logger, IHttpClientFactory clientFactory, IHttpContextAccessor contextAccessor)
+        public TestController(ILogger<TestController> logger, IHttpClientFactory clientFactory)
         {
             _logger = logger;
             _clientFactory = clientFactory;
-            _contextAccessor = contextAccessor;
         }
 
         public IActionResult Index()
         {
-            UserManager um = new UserManager(_clientFactory, _contextAccessor);
+            UserManager um = new UserManager(_clientFactory);
             System.Diagnostics.Debug.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(um.Get("1"), Newtonsoft.Json.Formatting.Indented));
             return View();
         }

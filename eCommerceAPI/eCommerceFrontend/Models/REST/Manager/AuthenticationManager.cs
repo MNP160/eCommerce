@@ -11,12 +11,10 @@ namespace eCommerceFrontend.Models.REST.Manager
     public class AuthenticationManager: RESTManager<AuthenticationResponse, AuthenticationRequest>
     {
         private readonly IHttpClientFactory _clientFactory;
-        private readonly IHttpContextAccessor _contextAccessor;
 
-        public AuthenticationManager(IHttpClientFactory clientFactory, IHttpContextAccessor contextAccessor) : base(clientFactory, contextAccessor)
+        public AuthenticationManager(IHttpClientFactory clientFactory) : base(clientFactory)
         {
             _clientFactory = clientFactory;
-            _contextAccessor = contextAccessor;
         }
 
         public AuthenticationResponse Post(string email, string password)
