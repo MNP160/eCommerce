@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lyubo\\Source\\Repos\\eCommerce\\eCommerceAPI\\eCommerceFrontend\\eCommerceFrontend.csproj": {}
+    "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceFrontend\\eCommerceFrontend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lyubo\\Source\\Repos\\eCommerce\\eCommerceAPI\\eCommerceFrontend\\eCommerceFrontend.csproj": {
+    "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceFrontend\\eCommerceFrontend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lyubo\\Source\\Repos\\eCommerce\\eCommerceAPI\\eCommerceFrontend\\eCommerceFrontend.csproj",
+        "projectUniqueName": "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceFrontend\\eCommerceFrontend.csproj",
         "projectName": "eCommerceFrontend",
-        "projectPath": "C:\\Users\\lyubo\\Source\\Repos\\eCommerce\\eCommerceAPI\\eCommerceFrontend\\eCommerceFrontend.csproj",
-        "packagesPath": "C:\\Users\\lyubo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lyubo\\Source\\Repos\\eCommerce\\eCommerceAPI\\eCommerceFrontend\\obj\\",
+        "projectPath": "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceFrontend\\eCommerceFrontend.csproj",
+        "packagesPath": "C:\\Users\\mpene\\.nuget\\packages\\",
+        "outputPath": "D:\\Programming\\Projects\\eCommerceV2\\eCommerceAPI\\eCommerceFrontend\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\lyubo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mpene\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -73,7 +76,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
