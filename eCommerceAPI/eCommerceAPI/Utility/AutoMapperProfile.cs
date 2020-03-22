@@ -39,6 +39,8 @@ namespace farmersAPi.Utility
             CreateMap<Users, ProductUserDto>();
             CreateMap<ProductUserDto, Users>();
 
+            CreateMap<Product, OrderItemProductDto>();
+            CreateMap<OrderItemProductDto, Product>();
 
         }
 

@@ -1,4 +1,5 @@
 ﻿using eCommerceAPI.Interfaces;
+using eCommerceAPI.Models;
 using farmersAPi.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace farmersAPi.Models
         [ForeignKey("Cathegory")]
         public int? CathegoryId { get; set; }
         public virtual Cathegory Cathegory { get; set; }
+
+        public virtual ICollection<OrderItems> OrderItems { get; set; }
 
         }
 

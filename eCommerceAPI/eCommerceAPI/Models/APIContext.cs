@@ -27,7 +27,7 @@ namespace farmersAPi.Models
             modelBuilder.Entity<Product>().ToTable("Products");
             modelBuilder.Entity<Users>().ToTable("Users");
             modelBuilder.Entity<Orders>().ToTable("Orders");
-            modelBuilder.Entity<OrderItems>().ToTable("OrderItems");
+            modelBuilder.Entity<OrderItems>().HasKey(sc=>new { sc.Id, sc.ProductId});
 
 
         }

@@ -72,8 +72,6 @@ D:\Programming\Projects\eCommerce\eCommerceAPI\eCommerceAPI\obj\Debug\netcoreapp
 D:\Programming\Projects\eCommerceV2\eCommerceAPI\eCommerceAPI\obj\Debug\netcoreapp3.1\eCommerceAPI.csprojAssemblyReference.cache
 D:\Programming\Projects\eCommerceV2\eCommerceAPI\eCommerceAPI\obj\Debug\netcoreapp3.1\staticwebassets\eCommerceAPI.StaticWebAssets.Manifest.cache
 D:\Programming\Projects\eCommerceV2\eCommerceAPI\eCommerceAPI\obj\Debug\netcoreapp3.1\staticwebassets\eCommerceAPI.StaticWebAssets.xml
-D:\Programming\Projects\eCommerceV2\eCommerceAPI\eCommerceAPI\obj\Debug\netcoreapp3.1\eCommerceAPI.MvcApplicationPartsAssemblyInfo.cs
-D:\Programming\Projects\eCommerceV2\eCommerceAPI\eCommerceAPI\obj\Debug\netcoreapp3.1\eCommerceAPI.MvcApplicationPartsAssemblyInfo.cache
 D:\Programming\Projects\eCommerceV2\eCommerceAPI\eCommerceAPI\obj\Debug\netcoreapp3.1\eCommerceAPI.AssemblyInfoInputs.cache
 D:\Programming\Projects\eCommerceV2\eCommerceAPI\eCommerceAPI\obj\Debug\netcoreapp3.1\eCommerceAPI.AssemblyInfo.cs
 D:\Programming\Projects\eCommerceV2\eCommerceAPI\eCommerceAPI\obj\Debug\netcoreapp3.1\eCommerceAPI.dll
@@ -140,3 +138,5 @@ D:\Programming\Projects\eCommerceV2\eCommerceAPI\eCommerceAPI\bin\Debug\netcorea
 D:\Programming\Projects\eCommerceV2\eCommerceAPI\eCommerceAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\Programming\Projects\eCommerceV2\eCommerceAPI\eCommerceAPI\obj\Debug\netcoreapp3.1\eCommerceAPI.RazorTargetAssemblyInfo.cache
 D:\Programming\Projects\eCommerceV2\eCommerceAPI\eCommerceAPI\obj\Debug\netcoreapp3.1\eCommerceAPI.csproj.CopyComplete
+D:\Programming\Projects\eCommerceV2\eCommerceAPI\eCommerceAPI\obj\Debug\netcoreapp3.1\eCommerceAPI.MvcApplicationPartsAssemblyInfo.cs
+D:\Programming\Projects\eCommerceV2\eCommerceAPI\eCommerceAPI\obj\Debug\netcoreapp3.1\eCommerceAPI.MvcApplicationPartsAssemblyInfo.cache

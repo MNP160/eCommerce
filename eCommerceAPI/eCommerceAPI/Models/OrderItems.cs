@@ -11,18 +11,16 @@ namespace eCommerceAPI.Models
 {
     public class OrderItems :IEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        
         
 
         [ForeignKey("Product")]
-        public int? ProductId { get; set; }
+        public int ProductId { get; set; }
 
         public virtual Product Product { get; set; }
 
         [ForeignKey("Order")]
-        public int? OrderId { get; set; }
+        public int Id { get; set; }
 
         public virtual Orders Order { get; set; }
     }
