@@ -25,29 +25,45 @@ namespace eCommerceFrontend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options => {
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(60);
             });
-
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddMvc().AddSessionStateTempDataProvider();
             services.AddSession();
             services.AddHttpContextAccessor();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            var SecretKey = Encoding.ASCII.GetBytes("7XToJ1QCxtr6DxHln9S7qUcLrFjsAobivdJH7plZxF5rsn3anPYdYRdN7yCSxMvd");
 
             services.AddAuthentication(auth =>
             {
                 auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            });
+            })
+           .AddJwtBearer(token =>
+           {
+               token.RequireHttpsMetadata = false;
+               token.SaveToken = true;
+               token.TokenValidationParameters = new TokenValidationParameters
+               {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(SecretKey),
+                    ValidateIssuer = true,
+                    ValidIssuer = "usersAPI",
+                    ValidateAudience = true,
+                    ValidAudience = "everybody",
+                    RequireExpirationTime = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+               };
+           });
 
             services.AddControllersWithViews();
             services.AddHttpClient(); // Http Client Factory
             services.AddHttpClient("ecoproduce", c =>
             {
                 c.BaseAddress = new Uri("http://ecoproduce.eu/");
-                //c.DefaultRequestHeaders.Add("Content-Type", "application/json");
             });
         }
 
@@ -65,13 +81,21 @@ namespace eCommerceFrontend
                 app.UseHsts();
             }
 
-            Utility.AppContext.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseSession();
+            app.Use(async (context, next) =>
+            {
+                var JWToken = context.Session.GetString("JWToken");
+                if (!string.IsNullOrEmpty(JWToken))
+                {
+                    context.Request.Headers.Add("Authorization", "Bearer " + JWToken);
+                }
+                await next();
+            });
             app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {

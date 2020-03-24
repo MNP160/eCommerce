@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using AppContext = eCommerceFrontend.Utility.AppContext;
 
 namespace eCommerceFrontend.Controllers
 {
@@ -26,11 +25,11 @@ namespace eCommerceFrontend.Controllers
 
         public IActionResult Login(string email, string password)
         {
-            var userToken = new TokenProvider(_clientFactory).LoginUser(email.Trim(), password.Trim());
-            if (userToken != null)
-            {
-                AppContext.Current.Session.Set<string>("token", userToken);
-            }
+            //var userToken = new TokenProvider(_clientFactory).LoginUser(email.Trim(), password.Trim());
+            //if (userToken != null)
+            //{
+            //    AppContext.Current.Session.Set<string>("token", userToken);
+            //}
             return Redirect("~/Home/Index");
         }
 

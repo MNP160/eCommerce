@@ -9,6 +9,7 @@ using eCommerceFrontend.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 
 namespace eCommerceFrontend.Models.REST.Manager
@@ -18,10 +19,14 @@ namespace eCommerceFrontend.Models.REST.Manager
         where U : class
     {
         private readonly IHttpClientFactory _clientFactory;
+        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly string _token;
 
-        protected internal RESTManager(IHttpClientFactory clientFactory)
+        protected internal RESTManager(IHttpClientFactory clientFactory, IHttpContextAccessor contextAccessor)
         {
             _clientFactory = clientFactory;
+            _contextAccessor = contextAccessor;
+            _token = contextAccessor.HttpContext.Session.GetString("JWToken");
         }
 
         [HttpGet]
@@ -29,7 +34,7 @@ namespace eCommerceFrontend.Models.REST.Manager
         {
             T result = null;
 
-            var client = _clientFactory.CreateClient("ecoproduce").GetJwt("token");
+            var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
             string path = id != null ? $"api/{controller}/{id}" : $"api/{controller}";
             var response = await client.GetAsync(path);
 
@@ -49,7 +54,7 @@ namespace eCommerceFrontend.Models.REST.Manager
         {
             IEnumerable<T> result = null;
 
-            var client = _clientFactory.CreateClient("ecoproduce").GetJwt("token");
+            var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
             string path = $"api/{controller}";
             var response = await client.GetAsync(path);
 
@@ -69,7 +74,7 @@ namespace eCommerceFrontend.Models.REST.Manager
         {
             T result = null;
 
-            var client = _clientFactory.CreateClient("ecoproduce").GetJwt("token");
+            var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
             var content = new StringContent(JsonConvert.SerializeObject(postObject), System.Text.Encoding.UTF8, "application/json");
             string path = id != null ? $"api/{controller}/{id}" : $"api/{controller}";
             var response = await client.PostAsync(path, content).ConfigureAwait(false);
@@ -91,7 +96,7 @@ namespace eCommerceFrontend.Models.REST.Manager
         {
             T result = null;
 
-            var client = _clientFactory.CreateClient("ecoproduce").GetJwt("token");
+            var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
             var content = new StringContent(putObject.ToString());
             string path = $"api/{controller}";
             var response = await client.PutAsync(path, content).ConfigureAwait(false);
@@ -113,7 +118,7 @@ namespace eCommerceFrontend.Models.REST.Manager
         {
             T result = null;
 
-            var client = _clientFactory.CreateClient("ecoproduce").GetJwt("token");
+            var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
             string path = $"api/{controller}/{id}";
             var response = await client.DeleteAsync(path).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();

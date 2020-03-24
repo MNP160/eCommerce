@@ -1,4 +1,5 @@
 ﻿using eCommerceFrontend.Models.REST.Objects.Cathegory;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,12 @@ namespace eCommerceFrontend.Models.REST.Manager
     public class CathegoryManager : RESTManager<CathegoryResponse, CathegoryRequest>
     {
         private readonly IHttpClientFactory _clientFactory;
-        public CathegoryManager(IHttpClientFactory clientFactory) : base(clientFactory)
+        private readonly IHttpContextAccessor _contextAccessor;
+
+        public CathegoryManager(IHttpClientFactory clientFactory, IHttpContextAccessor contextAccessor) : base(clientFactory, contextAccessor)
         {
             _clientFactory = clientFactory;
+            _contextAccessor = contextAccessor;
         }
 
         public new CathegoryResponse Get(string id)

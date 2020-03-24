@@ -1,5 +1,6 @@
 ﻿using eCommerceFrontend.Models.REST.Objects;
 using eCommerceFrontend.Models.REST.Objects.Product;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,12 @@ namespace eCommerceFrontend.Models.REST.Manager
     public class ProductManager : RESTManager<ProductResponse, ProductRequest>
     {
         private readonly IHttpClientFactory _clientFactory;
-        public ProductManager(IHttpClientFactory clientFactory) : base (clientFactory)
+        private readonly IHttpContextAccessor _contextAccessor;
+
+        public ProductManager(IHttpClientFactory clientFactory, IHttpContextAccessor contextAccessor) : base (clientFactory, contextAccessor)
         {
             _clientFactory = clientFactory;
+            _contextAccessor = contextAccessor;
         }
 
         public new ProductResponse Get(string id)

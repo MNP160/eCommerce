@@ -11,7 +11,7 @@ using System.Net.Http;
 using eCommerceFrontend.Utility;
 using Microsoft.AspNetCore.Http;
 using eCommerceFrontend.Models.REST.Objects;
-using AppContext = eCommerceFrontend.Utility.AppContext;
+using System.Net.Http.Headers;
 
 namespace eCommerceFrontend.Controllers
 {
@@ -19,20 +19,21 @@ namespace eCommerceFrontend.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IHttpClientFactory _clientFactory;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-
-        public HomeController(ILogger<HomeController> logger, IHttpClientFactory clientFactory)
+        public HomeController(ILogger<HomeController> logger, IHttpClientFactory clientFactory, IHttpContextAccessor contextAccessor)
         {
             _logger = logger;
             _clientFactory = clientFactory;
+            _contextAccessor = contextAccessor;
         }
 
         public IActionResult Index()
         {
             LoginUser("admin3@gmail.com", "bestPassword");
-            UserManager um = new UserManager(_clientFactory);
+            UserManager um = new UserManager(_clientFactory, _contextAccessor);
             System.Diagnostics.Debug.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(um.Get(), Newtonsoft.Json.Formatting.Indented));
-            OrderManager om = new OrderManager(_clientFactory);
+            OrderManager om = new OrderManager(_clientFactory, _contextAccessor);
             System.Diagnostics.Debug.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(om.Get(), Newtonsoft.Json.Formatting.Indented));
 
             return View();
@@ -51,10 +52,14 @@ namespace eCommerceFrontend.Controllers
 
         public IActionResult LoginUser(string email, string password)
         {
-            var userToken = new TokenProvider(_clientFactory).LoginUser(email.Trim(), password.Trim());
+            TokenProvider tokenProvider = new TokenProvider(_clientFactory, _contextAccessor);
+            var userToken = tokenProvider.LoginUser(email, password);
+            
             if (userToken != null)
             {
-                AppContext.Current.Session.Set<string>("token", userToken);
+                HttpContext.Session.SetString("JWToken", userToken);
+                var client = _clientFactory.CreateClient("ecoproduce");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userToken);
             }
             return Redirect("~/Home/Index");
         }

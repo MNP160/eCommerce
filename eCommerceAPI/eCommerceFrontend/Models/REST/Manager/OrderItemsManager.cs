@@ -1,4 +1,5 @@
 ﻿using eCommerceFrontend.Models.REST.Objects.Orders;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,11 @@ namespace eCommerceFrontend.Models.REST.Manager
     public class OrderItemsManager : RESTManager<OrderItemsResponse, OrderItemsRequest>
     {
         private readonly IHttpClientFactory _clientFactory;
-
-        public OrderItemsManager(IHttpClientFactory clientFactory) : base(clientFactory)
+        private readonly IHttpContextAccessor _contextAccessor;
+        public OrderItemsManager(IHttpClientFactory clientFactory, IHttpContextAccessor contextAccessor) : base(clientFactory, contextAccessor)
         {
             _clientFactory = clientFactory;
+            _contextAccessor = contextAccessor;
         }
 
         public new OrderItemsResponse Get(string id)
