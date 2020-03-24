@@ -12,5 +12,7 @@ namespace eCommerceFrontend.Models.REST.Objects.Orders
         public string City { get; set; }
         public string Address { get; set; }
         public int? UserId { get; set; }
+        public bool isCashPayment { get; set; }
+        public bool isOrderComplete { get; set; }
     }
 }

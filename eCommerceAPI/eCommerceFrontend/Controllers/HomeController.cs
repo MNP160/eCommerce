@@ -30,7 +30,7 @@ namespace eCommerceFrontend.Controllers
 
         public IActionResult Index()
         {
-            LoginUser("admin3@gmail.com", "bestPassword");
+            LoginUser("admin5@gmail.com", "bestPassword");
             UserManager um = new UserManager(_clientFactory, _contextAccessor);
             System.Diagnostics.Debug.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(um.Get(), Newtonsoft.Json.Formatting.Indented));
             OrderManager om = new OrderManager(_clientFactory, _contextAccessor);

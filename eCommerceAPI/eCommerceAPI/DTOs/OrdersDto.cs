@@ -17,6 +17,9 @@ namespace eCommerceAPI.DTOs
 
         public string Address { get; set; }
 
+        public bool isCashPayment { get; set; }
+        public bool isOrderComplete { get; set; }
+
         public UserDto user { get; set; }
         public ICollection<OrderItemsDto> orderItems { get; set; }
     }

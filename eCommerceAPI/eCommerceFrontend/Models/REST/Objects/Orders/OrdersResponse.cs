@@ -20,6 +20,9 @@ namespace eCommerceFrontend.Models.REST.Objects.Order
         [Required]
         public string Address { get; set; }
 
+        public bool isCashPayment { get; set; }
+        public bool isOrderComplete { get; set; }
+
         [Required]
         public List<OrderItemsResponse> OrderItems { get; set; }
     }
