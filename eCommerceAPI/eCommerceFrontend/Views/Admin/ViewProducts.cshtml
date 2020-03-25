@@ -1,0 +1,45 @@
+﻿@model eCommerceFrontend.Models.View.Admin_Model.ProductView
+
+@{
+    ViewData["Title"] = "ViewProducts";
+}
+
+<h1>ViewProducts</h1>
+
+@foreach(var product in Model.Products)
+{
+<text>
+    <div class="container m-3 p-3 shadow-sm">
+        <div class="row m-3 ">
+            <div class="col-3">
+                <strong>Basic Info</strong>
+            </div>
+            <div class="col-9">
+                <p>Name: @product.Name</p>
+                <p>Description: @product.Description</p>
+                <p>Price: @product.Price</p>
+            </div>
+        </div>
+
+        <div class="row m-3">
+            <div class="col-3">
+                <strong>Image</strong>
+            </div>
+            <div class="col-9">
+                <p>Image: @product.ImagePath</p>
+            </div>
+        </div>
+
+        <div class="row m-3">
+            <div class="col-3">
+                <strong>Size & Discount</strong>
+            </div>
+            <div class="col-9">
+                <p>(S/M/L/XL):@product.SCount @product.MCount @product.LCount @product.XLCount</p>
+                <p>Discount: @product.Discount</p>
+            </div>
+        </div>
+
+    </div>
+</text>
+}
