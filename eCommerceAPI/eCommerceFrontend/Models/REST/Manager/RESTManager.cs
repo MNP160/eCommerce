@@ -97,7 +97,7 @@ namespace eCommerceFrontend.Models.REST.Manager
             T result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
-            var content = new StringContent(putObject.ToString());
+            var content = new StringContent(JsonConvert.SerializeObject(putObject), System.Text.Encoding.UTF8, "application/json");
             string path = $"api/{controller}";
             var response = await client.PutAsync(path, content).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();

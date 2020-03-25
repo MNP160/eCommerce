@@ -1,5 +1,61 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-asd
+﻿@model eCommerceFrontend.Models.View.Admin_Model.AdminView
+@using Newtonsoft.Json
+
+<h1>Index</h1>
+
+<h3>Fulfilled Orders</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Full Name:</th>
+            <th scope="col">Address:</th>
+            <th scope="col">Phone:</th>
+            <th scope="col">Items:</th>
+            <th scope="col">Cash Payment</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.FulfilledOrders)
+        {
+            <text>
+                <tr>
+                    <td>@order.User.FirstName @order.User.LastName</td>
+                    <td>@order.Address, @order.City</td>
+                    <td>+(359)@order.Phone</td>
+                    <td><a>Items</a></td>
+                    <td>@order.isCashPayment</td>
+                    <td><a asp-controller="Admin" asp-action="UnfulfilOrder" asp-route-id="@order.Id" class="btn btn-primary">Unfulfill</a></td>
+                </tr>
+            </text>
+        }
+    </tbody>
+</table>
+
+<h3>Unfulfilled Orders</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Full Name:</th>
+            <th scope="col">Address:</th>
+            <th scope="col">Phone:</th>
+            <th scope="col">Items:</th>
+            <th scope="col">Cash Payment</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.UnforefilledOrders)
+        {
+            <text>
+                <tr>
+                    <td>@order.User.FirstName @order.User.LastName</td>
+                    <td>@order.Address, @order.City</td>
+                    <td>+(359)@order.Phone</td>
+                    <td><a asp-controller="Admin" asp-action="ViewProducts" asp-route-order="@order.Id">Items</a></td>
+                    <td>@order.isCashPayment</td>
+                    <td><a asp-controller="Admin" asp-action="FulfilOrder" asp-route-id="@order.Id" class="btn btn-primary">Fulfill</a></td>
+                </tr>
+            </text>
+        }
+    </tbody>
+</table>
