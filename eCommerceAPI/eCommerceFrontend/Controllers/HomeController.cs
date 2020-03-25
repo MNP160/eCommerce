@@ -12,6 +12,7 @@ using eCommerceFrontend.Utility;
 using Microsoft.AspNetCore.Http;
 using eCommerceFrontend.Models.REST.Objects;
 using System.Net.Http.Headers;
+using eCommerceFrontend.Models.REST.Objects.Cathegory;
 
 namespace eCommerceFrontend.Controllers
 {
@@ -30,13 +31,11 @@ namespace eCommerceFrontend.Controllers
 
         public IActionResult Index()
         {
-            LoginUser("admin5@gmail.com", "bestPassword");
-            UserManager um = new UserManager(_clientFactory, _contextAccessor);
-            System.Diagnostics.Debug.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(um.Get(), Newtonsoft.Json.Formatting.Indented));
-            OrderManager om = new OrderManager(_clientFactory, _contextAccessor);
-            System.Diagnostics.Debug.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(om.Get(), Newtonsoft.Json.Formatting.Indented));
+            CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
+            var categories= cm.Get();
+            
 
-            return View();
+            return View(categories);
         }
 
         public IActionResult Privacy()
@@ -50,24 +49,7 @@ namespace eCommerceFrontend.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult LoginUser(string email, string password)
-        {
-            TokenProvider tokenProvider = new TokenProvider(_clientFactory, _contextAccessor);
-            var userToken = tokenProvider.LoginUser(email, password);
-            
-            if (userToken != null)
-            {
-                HttpContext.Session.SetString("JWToken", userToken);
-                var client = _clientFactory.CreateClient("ecoproduce");
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userToken);
-            }
-            return Redirect("~/Home/Index");
-        }
-
-        public IActionResult Logoff()
-        {
-            HttpContext.Session.Clear();
-            return Redirect("~/Home/Index");
-        }
+        
+       
     }
 }

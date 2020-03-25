@@ -12,7 +12,7 @@ namespace farmersAPi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "Bearer")]
+
     public class CathegoryController : BasicController<Cathegory, CathegoryRepository, CathegoryDto>
     {
 

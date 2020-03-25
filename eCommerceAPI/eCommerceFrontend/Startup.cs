@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Stripe;
 
 namespace eCommerceFrontend
 {
@@ -80,7 +81,7 @@ namespace eCommerceFrontend
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            StripeConfiguration.ApiKey = "sk_test_B3W47PWqPhvz42JEgHBpwL7c00VpUVbgBa";
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();

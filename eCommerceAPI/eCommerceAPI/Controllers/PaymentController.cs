@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using eCommerceAPI.Utility;
+using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using System;
 using System.Collections.Generic;
@@ -13,43 +14,29 @@ namespace farmersAPi.Controllers
     {
 
         [HttpPost("charge")]
-        public IActionResult Charge(string stripeEmail, string stripeToken)
+        public IActionResult Charge(StripeModel model)
         {
-
-            var customers = new CustomerService();
-            var charges = new ChargeService();
-
-            var customer = customers.Create(new CustomerCreateOptions { 
-                Email=stripeEmail,
-                Source=stripeToken
-
-            });
-
-            var charge = charges.Create(new ChargeCreateOptions { 
-                Amount=500,   //change this to product price later
-                Description="changeThisToSomethingMeaningfulLater",
-                Currency="bgn",
-                Customer=customer.Id,
-                //here I can add whatever data i need for database
-                Metadata=new Dictionary<string, string>()
-                {
-                    { "OrderId","123454"},
-                    { "UserId", "1" }
-                }
-
-            });
-
-            if (charge.Status == "succeeded")
+                       
+            System.Diagnostics.Debug.WriteLine("aaaaaaaaaaaaaaaaaaaasfdgfdhdfhgfjgfjhhkjhg");
+            System.Diagnostics.Debug.WriteLine(" " + model.stripeEmail + " " + model.stripeToken);
+            System.Diagnostics.Debug.WriteLine("aaaaaaaaaaaaaaaaaaaasfdgfdhdfhgfjgfjhhkjhg");
+            Dictionary<string, string> Metadata = new Dictionary<string, string>();
+            Metadata.Add("superduperProduct", "with id 1");
+            Metadata.Add("Quantity", "2");
+            var options = new ChargeCreateOptions
             {
-                string BalanceTransactionId = charge.BalanceTransactionId;
-                //this should be the transactionId
-                //we can use this to maybe integrate with our users
-                //for now like this for test
-
-                return Ok(BalanceTransactionId);
-            }
-
-            return Ok();
+                Amount = 5000,
+                Currency = "USD",
+                Description = "testing",
+                Source = model.stripeToken,
+                ReceiptEmail = model.stripeEmail,
+                Metadata = Metadata
+            };
+            var service = new ChargeService();
+            Charge charge = service.Create(options);
+            
+            return Ok(charge.BalanceTransactionId);
+           
         }
 
     }

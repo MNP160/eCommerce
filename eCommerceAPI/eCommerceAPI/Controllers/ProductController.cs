@@ -15,7 +15,7 @@ namespace farmersAPi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "Bearer")]
+
     public class ProductController : BasicController<Product, ProductRepository, ProductDto>
     {
         private IMapper mapper;
