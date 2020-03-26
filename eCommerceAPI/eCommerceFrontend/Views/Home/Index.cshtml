@@ -1,4 +1,4 @@
-﻿@model IEnumerable<eCommerceFrontend.Models.REST.Objects.Cathegory.CathegoryResponse>
+﻿@model eCommerceFrontend.Models.View.Home_Model.IndexView
 
 @{
     ViewData["Title"] = "Home Page";
@@ -10,7 +10,7 @@
     </sidenav>
 
     <main>
-        @foreach(var category in Model)
+        @foreach(var category in Model.SelectedCategories)
         {
         <text>
                 <div class="container-fluid">
