@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace farmersAPi.Models
 {
-    public class Users : IEntity
+    public class Users 
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -24,7 +24,7 @@ namespace farmersAPi.Models
         public string Role { get; set; }
         
 
-        public virtual ICollection<Orders> Orders { get; set; }
+        public  virtual ICollection<Orders> Orders { get; set; }
        
 
     }

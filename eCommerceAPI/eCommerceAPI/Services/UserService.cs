@@ -12,7 +12,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace farmersAPi.Servces
+namespace farmersAPi.Services
 {
     public class UserService :IUserService
     {

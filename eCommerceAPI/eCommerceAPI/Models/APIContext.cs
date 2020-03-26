@@ -14,20 +14,36 @@ namespace farmersAPi.Models
 
         }
 
-        public DbSet<Cathegory> Cathegory { get; set; }
-        public DbSet<Product> Product { get; set; }
+        public DbSet<Categories> Category { get; set; }
+        public DbSet<Products> Product { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Orders> Orders { get; set; }
-        public DbSet<OrderItems> OrderItems { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Cathegory>().ToTable("Cathegories");
-            modelBuilder.Entity<Product>().ToTable("Products");
-            modelBuilder.Entity<Users>().ToTable("Users");
-            modelBuilder.Entity<Orders>().ToTable("Orders");
-            modelBuilder.Entity<OrderItems>().HasKey(sc=>new { sc.Id, sc.ProductId});
+
+            modelBuilder.Entity<Users>()
+                 .HasMany(o => o.Orders)
+                 .WithOne(u => u.User);
+
+            modelBuilder.Entity<Categories>()
+                .HasMany(p => p.Products)
+                .WithOne(c => c.Category)
+                .HasForeignKey(p=>p.CategoryId);
+
+            modelBuilder.Entity<Orders>()
+                .HasMany(od => od.OrderDetails)
+                .WithOne(o => o.Order)
+                .HasForeignKey(od=>od.OrderId);
+
+            modelBuilder.Entity<Products>().Property(p => p.ProductSKU).ValueGeneratedOnAdd();
+
+
+           
+
+
 
 
         }

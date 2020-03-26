@@ -3,50 +3,49 @@ using eCommerceAPI.DTOs;
 using eCommerceAPI.Extensions;
 using eCommerceAPI.Models;
 using eCommerceAPI.QueryParameters;
-using farmersAPi.DTOs;
 using farmersAPi.Interfaces;
 using farmersAPi.Models;
 using farmersAPi.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace eCommerceAPI.Repositories
 {
-    public class OrdersRepository :IRepository<Orders, OrdersDto>
+    public class OrderDetailsRepository : IRepository<OrderDetails, OrderDetailsDto>
     {
+
         private readonly APIContext _context;
         private IMapper _mapper;
 
-        public OrdersRepository(APIContext context, IMapper map)
+        public OrderDetailsRepository(APIContext context, IMapper map)
         {
             _context = context;
             _mapper = map;
         }
 
-        public async Task<Orders> Create(Orders value)
+        public async Task<OrderDetails> Create(OrderDetails value)
         {
 
-            _context.Set<Orders>().Add(value);
+            _context.Set<OrderDetails>().Add(value);
             await _context.SaveChangesAsync();
             return value;
         }
 
-        public async Task<Orders> Delete(Orders value)
+        public async Task<OrderDetails> Delete(OrderDetails value)
         {
-            _context.Set<Orders>().Remove(value);
+            _context.Set<OrderDetails>().Remove(value);
             await _context.SaveChangesAsync();
             return value;
 
 
         }
-        public async Task<Orders> Delete(int Id)
+        public async Task<OrderDetails> Delete (int Id)
         {
-            var entityToDelete = _context.Orders.FirstOrDefault(x => x.Id == Id);
+            var entityToDelete = _context.OrderDetails.FirstOrDefault(x => x.DetailId == Id);
             if (entityToDelete != null)
             {
-                _context.Orders.Remove(entityToDelete);
+                _context.OrderDetails.Remove(entityToDelete);
                 await _context.SaveChangesAsync();
                 return entityToDelete;
             }
@@ -57,18 +56,18 @@ namespace eCommerceAPI.Repositories
         }
 
 
-        public async Task<PagedList<OrdersDto>> Read(GenericParameters parameters)
+        public async Task<PagedList<OrderDetailsDto>> Read(GenericParameters parameters)
         {
-            //test this cause it probably breaks
-            return  await Task.Run(()=>PagedList<OrdersDto>.ToPagedList(FindAll(), parameters.PageNumber, parameters.PageSize));
+
+            return await Task.Run(()=>PagedList<OrderDetailsDto>.ToPagedList(FindAll(), parameters.PageNumber, parameters.PageSize));
         }
 
-        public async Task<OrdersDto> ReadById(int Id)
+        public async Task<OrderDetailsDto> ReadById(int Id)
         {
-            var entityToReturn = await _context.Orders.FindAsync(Id);
+            var entityToReturn = await _context.OrderDetails.FindAsync(Id);
             if (entityToReturn != null)
             {
-                var dto = _mapper.Map<OrdersDto>(entityToReturn);
+                var dto = _mapper.Map<OrderDetailsDto>(entityToReturn);
                 return dto;
             }
             else
@@ -77,9 +76,9 @@ namespace eCommerceAPI.Repositories
             }
         }
 
-        public async Task<Orders> Update(Orders value)
+        public async Task<OrderDetails> Update(OrderDetails value)
         {
-            var editedEntity = _context.Set<Orders>().FirstOrDefault(e => e.Id == value.Id);
+            var editedEntity = _context.Set<OrderDetails>().FirstOrDefault(e => e.DetailId == value.DetailId);
             editedEntity = value;
             _context.Update(editedEntity);
             await _context.SaveChangesAsync();
@@ -87,15 +86,12 @@ namespace eCommerceAPI.Repositories
 
         }
 
-        public IQueryable<OrdersDto> FindAll()
+        public IQueryable<OrderDetailsDto> FindAll()
         {
-            var entities = _context.Set<Orders>();
-            var dtos = _mapper.Map<IList<OrdersDto>>(entities);
+            var entities = _context.Set<OrderDetails>();
+            var dtos = _mapper.Map<IList<OrderDetailsDto>>(entities);
             return dtos.AsQueryable();
         }
-
-
-
 
     }
 }

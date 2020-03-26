@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace farmersAPi.Models
 {
-    public class Cathegory :IEntity
+    public class Categories 
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -17,10 +17,9 @@ namespace farmersAPi.Models
         public int Id { get; set; }
        
         public string Name { get; set; }
-        public string Description { get; set; }
        
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Products> Products { get; set; }
        
     }
 }

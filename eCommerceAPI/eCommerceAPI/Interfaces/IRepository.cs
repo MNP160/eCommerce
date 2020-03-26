@@ -9,17 +9,18 @@ using System.Threading.Tasks;
 
 namespace farmersAPi.Interfaces
 {
-    public interface IRepository<TEntity, TDto> where TEntity : class, IEntity
-        where TDto:IDto
+    public interface IRepository<TEntity, TDto> 
+        where TEntity:class
+        where TDto:class
     {
        
 
-       Task<PagedList<TDto>> Select(GenericParameters parameters);
-        Task<TDto> SelectbyId(int Id);
-       Task<TEntity> Update(TEntity value);
-        Task<TEntity> Delete(TEntity value);
-       Task<TEntity> Delete(int Id);
-       Task<TEntity> Create(TEntity value);
+       abstract  Task<PagedList<TDto>> Read(GenericParameters parameters);
+        abstract Task<TDto> ReadById(int Id);
+       abstract Task<TEntity> Update(TEntity value);
+        abstract Task<TEntity> Delete(TEntity value);
+      abstract Task<TEntity> Delete(int Id);
+      abstract Task<TEntity> Create(TEntity value);
 
 
     }

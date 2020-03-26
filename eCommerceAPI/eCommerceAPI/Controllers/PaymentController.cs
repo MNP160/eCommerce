@@ -17,9 +17,7 @@ namespace farmersAPi.Controllers
         public IActionResult Charge(StripeModel model)
         {
                        
-            System.Diagnostics.Debug.WriteLine("aaaaaaaaaaaaaaaaaaaasfdgfdhdfhgfjgfjhhkjhg");
-            System.Diagnostics.Debug.WriteLine(" " + model.stripeEmail + " " + model.stripeToken);
-            System.Diagnostics.Debug.WriteLine("aaaaaaaaaaaaaaaaaaaasfdgfdhdfhgfjgfjhhkjhg");
+          
             Dictionary<string, string> Metadata = new Dictionary<string, string>();
             Metadata.Add("superduperProduct", "with id 1");
             Metadata.Add("Quantity", "2");

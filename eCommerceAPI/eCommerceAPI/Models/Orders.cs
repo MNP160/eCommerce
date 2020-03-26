@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace eCommerceAPI.Models
 {
-    public class Orders : IEntity
+    public class Orders 
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -18,19 +18,22 @@ namespace eCommerceAPI.Models
         public int Id { get; set; }
 
         public double TotalAmount { get; set; }
-        public int Phone { get; set; }
+        public string Phone { get; set; }
         public string City { get; set; }
         public string Address { get; set; }
-        public bool isCashPayment { get; set; }
-        public bool isOrderComplete { get; set; }
+        public string Address2 { get; set; }
+        public DateTime OrderDate { get; set; } = DateTime.UtcNow;
+        public string OrderEmail { get; set; }
+        public string OrderZipCode { get; set; }
+        public string Size { get; set; }
+        public bool IsCashPayment { get; set; }
+        public bool IsOrderComplete { get; set; }
+
+           
 
 
-        [ForeignKey("User")]
-        public int? UserId { get; set; }
+        public  virtual Users User { get; set; }
 
-
-        public virtual Users User { get; set; }
-
-        public virtual ICollection<OrderItems> OrderItems { get; set; }
+        public  virtual ICollection<OrderDetails> OrderDetails { get; set; }
     }
 }

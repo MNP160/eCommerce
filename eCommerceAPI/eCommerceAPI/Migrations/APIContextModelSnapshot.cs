@@ -19,20 +19,33 @@ namespace eCommerceAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("eCommerceAPI.Models.OrderItems", b =>
+            modelBuilder.Entity("eCommerceAPI.Models.OrderDetails", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnName("OrderId")
+                    b.Property<int>("DetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DetailName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("DetailPrice")
+                        .HasColumnType("float");
+
+                    b.Property<int>("DetailQuantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<string>("DetailSKU")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id", "ProductId");
+                    b.HasKey("DetailId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("eCommerceAPI.Models.Orders", b =>
@@ -46,23 +59,38 @@ namespace eCommerceAPI.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Address2")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Phone")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsCashPayment")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsOrderComplete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderZipCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Size")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("TotalAmount")
                         .HasColumnType("float");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("isCashPayment")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("isOrderComplete")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -71,7 +99,7 @@ namespace eCommerceAPI.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("farmersAPi.Models.Cathegory", b =>
+            modelBuilder.Entity("farmersAPi.Models.Categories", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -79,18 +107,15 @@ namespace eCommerceAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cathegories");
+                    b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("farmersAPi.Models.Product", b =>
+            modelBuilder.Entity("farmersAPi.Models.Products", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -98,20 +123,23 @@ namespace eCommerceAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CathegoryId")
-                        .HasColumnType("int");
+                    b.Property<double>("ActualPrice")
+                        .HasColumnType("float");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Discount")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsLive")
+                        .HasColumnType("bit");
+
                     b.Property<int>("LCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("LongDescription")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MCount")
                         .HasColumnType("int");
@@ -119,20 +147,30 @@ namespace eCommerceAPI.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Price")
+                    b.Property<double>("OriginalPrice")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("ProductSKU")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<int>("SCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("ShortDescription")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("XLCount")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CathegoryId");
+                    b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("farmersAPi.Models.Users", b =>
@@ -166,17 +204,11 @@ namespace eCommerceAPI.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("eCommerceAPI.Models.OrderItems", b =>
+            modelBuilder.Entity("eCommerceAPI.Models.OrderDetails", b =>
                 {
                     b.HasOne("eCommerceAPI.Models.Orders", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("farmersAPi.Models.Product", "Product")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("ProductId")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -188,11 +220,13 @@ namespace eCommerceAPI.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("farmersAPi.Models.Product", b =>
+            modelBuilder.Entity("farmersAPi.Models.Products", b =>
                 {
-                    b.HasOne("farmersAPi.Models.Cathegory", "Cathegory")
+                    b.HasOne("farmersAPi.Models.Categories", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CathegoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

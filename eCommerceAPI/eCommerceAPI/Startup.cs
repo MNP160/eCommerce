@@ -1,15 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using eCommerceAPI.Repositories;
+using eCommerceAPI.Services;
 using farmersAPi.Interfaces;
 using farmersAPi.Models;
 using farmersAPi.Repositories;
-using farmersAPi.Servces;
+using farmersAPi.Services;
 using farmersAPi.Utility;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -26,6 +28,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Stripe;
+using ProductService = eCommerceAPI.Services.ProductService;
 
 namespace farmersAPi
 {
@@ -87,17 +90,23 @@ namespace farmersAPi
                                           
             services.AddSwaggerGen(c=>c.SwaggerDoc("v1", new OpenApiInfo { Title="eCommerceAPI", Version="v1"}));
             services.AddDbContext<APIContext>(options => options.UseSqlServer(Configuration.GetConnectionString("APIContext")));
-            services.AddScoped<CathegoryRepository>();
+            services.AddScoped<CategoryRepository>();
             services.AddScoped<ProductRepository>();
             services.AddScoped<OrdersRepository>();
-            services.AddScoped<OrderItemsRepository>();
+            services.AddScoped<OrderDetailsRepository>();
+
+
+            services.AddScoped<CategoryService>();
+            services.AddScoped<ProductService>();
+            services.AddScoped<OrdersService>();
+            services.AddScoped<OrderDetailsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-           
-            StripeConfiguration.ApiKey=Configuration.GetSection("Stripe")["ClientSecret"];
+
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["ClientSecret"];
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -112,20 +121,32 @@ namespace farmersAPi
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images")),
                 RequestPath = new PathString("/images")
             }
-                ) ;
+                );
             app.UseCors(x =>
                   x.AllowAnyOrigin()
                  .AllowAnyMethod()
                .AllowAnyHeader()
              );
             app.UseAuthorization();
-          
-            app.UseSwaggerUI(c=>c.SwaggerEndpoint("/swagger/v1/swagger.json", "eCommerceAPI"));
+
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "eCommerceAPI"));
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
         }
+
     }
-}
+
+    
+    
+
+       
+    }
+
+
+
+
+
+

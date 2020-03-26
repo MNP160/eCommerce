@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using eCommerceAPI.QueryParameters;
+﻿using eCommerceAPI.QueryParameters;
 using eCommerceAPI.Services;
 using farmersAPi.DTOs;
 using farmersAPi.Models;
 using farmersAPi.Repositories;
-using farmersAPi.Utility;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -19,11 +16,12 @@ namespace farmersAPi.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    public class ProductController :ControllerBase
-    {
-        private ProductService _service;
+    public class CategoryController : ControllerBase
+    { 
 
-        public ProductController(ProductService service)
+        private CategoryService _service;
+
+        public CategoryController(CategoryService service)
         {
             _service = service;
 
@@ -32,7 +30,7 @@ namespace farmersAPi.Controllers
 
         [HttpGet("")]
 
-        public async Task<ActionResult<List<Products>>> Get([FromQuery] GenericParameters parameters)
+        public async Task<ActionResult<List<CategoryDto>>> Get([FromQuery] GenericParameters parameters)
         {
             var values = await _service.Read(parameters);
             if (values != null)
@@ -59,7 +57,7 @@ namespace farmersAPi.Controllers
 
         [HttpGet("{id}")]
 
-        public async Task<ActionResult<Products>> Get(int id)
+        public async Task<ActionResult<CategoryDto>> Get(int id)
         {
             var dto = await _service.ReadById(id);
             if (dto != null)
@@ -74,7 +72,7 @@ namespace farmersAPi.Controllers
         }
 
         [HttpPut("")]
-        public async Task<IActionResult> Put(Products value)
+        public async Task<IActionResult> Put(Categories value)
         {
 
             var entity = await _service.Update(value);
@@ -89,11 +87,25 @@ namespace farmersAPi.Controllers
 
         }
 
-       
+        [HttpPost("")]
+
+        public async Task<ActionResult<Categories>> Post(Categories value)
+        {
+            var entity = await _service.Create(value);
+            if (entity != null)
+            {
+                return Ok(entity);
+            }
+            else
+            {
+                return BadRequest("something broke ");
+            }
+
+        }
 
         [HttpDelete("{id}")]
 
-        public async Task<ActionResult<Products>> Delete(int id)
+        public async Task<ActionResult<Categories>> Delete(int id)
         {
             var entity = await _service.Delete(id);
 
@@ -103,23 +115,6 @@ namespace farmersAPi.Controllers
             }
             return Ok(entity);
 
-        }
-
-
-        [HttpPost("")]
-        
-        public  async Task<ActionResult<Products>> Post([FromForm]ProductModel value, IFormFile file)
-        {
-           var createdProduct= await _service.Create(value, file);
-            if (createdProduct != null)
-            {
-                return Ok(createdProduct);
-            }
-            else
-            {
-                return BadRequest("something broke");
-            }
-           
         }
 
     }

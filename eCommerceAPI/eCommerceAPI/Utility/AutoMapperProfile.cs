@@ -20,27 +20,23 @@ namespace farmersAPi.Utility
             CreateMap<RegisterModel, Users>();
             CreateMap<Users, UserDto>();
             CreateMap<Users, RegisterModel>();
-            CreateMap<Product, ProductDto>();
-            CreateMap<ProductDto, Product>();
+            CreateMap<Products, ProductDto>();
+            CreateMap<ProductDto, Products>();
 
             CreateMap<Orders, OrdersDto>();
             CreateMap<OrdersDto, Orders>();
 
-            CreateMap<Cathegory, CathegoryDto>();
-            CreateMap<CathegoryDto, Cathegory>();
+            CreateMap<Categories, CategoryDto>();
+            CreateMap<CategoryDto, Categories>();
 
-            CreateMap<ProductModel, Product>();
-            CreateMap<Product, ProductModel>();
+            CreateMap<ProductModel, Products>();
+            CreateMap<Products, ProductModel>();
 
 
-            CreateMap<OrderItems, OrderItemsDto>();
-            CreateMap<OrderItemsDto,OrderItems>();
+            CreateMap<OrderDetails, OrderDetailsDto>();
+            CreateMap<OrderDetailsDto,OrderDetails>();
 
-            CreateMap<Users, ProductUserDto>();
-            CreateMap<ProductUserDto, Users>();
-
-            CreateMap<Product, OrderItemProductDto>();
-            CreateMap<OrderItemProductDto, Product>();
+         
 
         }
 

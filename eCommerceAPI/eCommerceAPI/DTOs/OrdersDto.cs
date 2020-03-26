@@ -1,4 +1,5 @@
-﻿using farmersAPi.DTOs;
+﻿using eCommerceAPI.Interfaces;
+using farmersAPi.DTOs;
 using farmersAPi.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -7,20 +8,23 @@ using System.Threading.Tasks;
 
 namespace eCommerceAPI.DTOs
 {
-    public class OrdersDto : IDto, IBasicDto
+    public class OrdersDto : IDto
     {
 
         public int Id { get; set; }
-             
-        public int Phone { get; set; }
+
+        public double TotalAmount { get; set; }
+        public string Phone { get; set; }
         public string City { get; set; }
-
         public string Address { get; set; }
+        public string Address2 { get; set; }
+        public DateTime OrderDate { get; set; } 
+        public string OrderEmail { get; set; }
+        public string OrderZipCode { get; set; }
+        public string Size { get; set; }
+        public bool IsCashPayment { get; set; }
+        public bool IsOrderComplete { get; set; }
 
-        public bool isCashPayment { get; set; }
-        public bool isOrderComplete { get; set; }
-
-        public UserDto user { get; set; }
-        public ICollection<OrderItemsDto> orderItems { get; set; }
+        public ICollection<OrderDetailsDto> OrderDetails { get; set; }
     }
 }

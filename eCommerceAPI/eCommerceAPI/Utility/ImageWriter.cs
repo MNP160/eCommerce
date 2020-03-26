@@ -47,28 +47,21 @@ namespace farmersAPi.Utility
                 var extension="."+ file.FileName.Split(".")[file.FileName.Split(".").Length - 1];
                 filename = Guid.NewGuid().ToString() + extension;
 
-                 path = Path.Combine(_hostingEnvironment.WebRootPath, "images", filename);
+                 path = Path.Combine(_hostingEnvironment.WebRootPath, "/images/", filename);
                 using (var bits = new FileStream(path, FileMode.Create))
                 {
                     await file.CopyToAsync(bits);
                 }
 
+               
 
             }catch(Exception ex)
             {
                 return ex.Message;
             }
 
-           // var serverPath = _hostingEnvironment.WebRootPath+"\\images\\"+filename;
-           // System.Diagnostics.Debug.WriteLine("--------------------------------------------------------");
-            //System.Diagnostics.Debug.WriteLine(serverPath);
-           // System.Diagnostics.Debug.WriteLine(_hostingEnvironment.WebRootPath+"\\images\\"+filename);
-            //System.Diagnostics.Debug.WriteLine(filename);
-
-            //System.Diagnostics.Debug.WriteLine("--------------------------------------------------------");
-           // System.Diagnostics.Debug.WriteLine("--------------------------------------------------------");
-           // System.Diagnostics.Debug.WriteLine("--------------------------------------------------------");
-            return filename;
+          
+            return path;
         }
 
     }
