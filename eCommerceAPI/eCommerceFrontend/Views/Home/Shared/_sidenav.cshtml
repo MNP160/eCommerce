@@ -1,15 +1,41 @@
-﻿@model IEnumerable<eCommerceFrontend.Models.REST.Objects.Cathegory.CathegoryResponse>
+﻿@model eCommerceFrontend.Models.View.Home_Model.IndexView
+
 <div id="wrapper">
     <!-- Sidebar -->
     <div id="sidebar-wrapper" class="bg-primary">
         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-            @foreach(var category in Model)
+            @foreach (var category in Model.AllCategories)
             {
-            <text>
-                <li>
-                    <a href="#"><span class="fa-stack fa-lg pull-left"></span>@category.Name</a>
-                </li>
-            </text>
+                if (Model.SelectedIds.Contains(category.Id))
+                {
+                    <text>
+                        <li>
+                            <a asp-action="RemoveCategoryId"
+                               asp-controller="Home"
+                               asp-route-selectedIds="@Newtonsoft.Json.JsonConvert.SerializeObject(Model.SelectedIds)"
+                               asp-route-id="@Newtonsoft.Json.JsonConvert.SerializeObject(category.Id)">
+                                <span class="fa-stack fa-lg pull-left"></span>@category.Name<div class="badge badge-primary text-wrap">SELECTED</div>
+                            </a>
+                        </li>
+                    </text>
+                }
+                else
+                {
+                    <text>
+                        <li>
+                            <a asp-action="AddCategoryId"
+                               asp-controller="Home"
+                               asp-route-selectedIds="@Newtonsoft.Json.JsonConvert.SerializeObject(Model.SelectedIds)"
+                               asp-route-id="@Newtonsoft.Json.JsonConvert.SerializeObject(category.Id)"
+                               class="font-weight-lighter">
+                                <span class="fa-stack fa-lg pull-left"></span>@category.Name
+                            </a>
+                        </li>
+                    </text>
+                }
+
+
+
             }
         </ul>
     </div>
@@ -76,20 +102,17 @@
 
             .sidebar-nav li a {
                 display: block;
-                text-decoration: none;
                 color: #999999;
             }
 
                 .sidebar-nav li a:hover {
-                    text-decoration: none;
                     color: #fff;
                     background: rgba(255, 255, 255, 0.2);
-                    border-left: red 2px solid;
+                    border-left: blue 2px solid;
                 }
 
                 .sidebar-nav li a:active,
                 .sidebar-nav li a:focus {
-                    text-decoration: none;
                 }
 
         .sidebar-nav > .sidebar-brand {
