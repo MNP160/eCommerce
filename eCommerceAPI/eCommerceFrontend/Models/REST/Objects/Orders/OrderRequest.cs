@@ -7,6 +7,8 @@ namespace eCommerceFrontend.Models.REST.Objects.Orders
 {
     public class OrderRequest
     {
+        public string OrderSKU = Guid.NewGuid().ToString();
+        public string OrderDate = DateTime.UtcNow.ToString();
         public double TotalAmount { get; set; }
         public string Phone { get; set; }
         public string City { get; set; }
@@ -15,7 +17,6 @@ namespace eCommerceFrontend.Models.REST.Objects.Orders
         public string OrderEmail { get; set; }
         public string OrderZipCode { get; set; }
         public string Size { get; set; }
-
         public bool IsCashPayment { get; set; }
         public bool IsOrderComplete { get; set; }
     }

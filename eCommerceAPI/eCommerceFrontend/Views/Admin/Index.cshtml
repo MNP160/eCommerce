@@ -23,7 +23,7 @@
                     <td>@order.OrderEmail</td>
                     <td>@order.Address, @order.Address2, @order.OrderZipCode, @order.City</td>
                     <td>+(359)@order.Phone</td>
-                    <td><a>Items</a></td>
+                    <td><a asp-controller="Admin" asp-action="ViewProducts" asp-route-order="@order.Id">Items</a></td>
                     <td>@order.IsCashPayment</td>
                     <td><a asp-controller="Admin" asp-action="UnfulfilOrder" asp-route-id="@order.Id" class="btn btn-primary">Unfulfill</a></td>
                 </tr>
@@ -51,7 +51,7 @@
                     <td>@order.OrderEmail</td>
                     <td>@order.Address, @order.Address2, @order.OrderZipCode, @order.City</td>
                     <td>+(359)@order.Phone</td>
-                    <td><a>Items</a></td>
+                    <td><a asp-controller="Admin" asp-action="ViewProducts" asp-route-order="@order.Id">Items</a></td>
                     <td>@order.IsCashPayment</td>
                     <td><a asp-controller="Admin" asp-action="FulfilOrder" asp-route-id="@order.Id" class="btn btn-primary">Unfulfill</a></td>
                 </tr>
