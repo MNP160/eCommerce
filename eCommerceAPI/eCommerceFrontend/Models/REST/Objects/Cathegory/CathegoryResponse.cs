@@ -15,10 +15,6 @@ namespace eCommerceFrontend.Models.REST.Objects.Cathegory
         [DataType(DataType.Text)]
         public string Name { get; set; }
 
-        [Required]
-        [DataType(DataType.Text)]
-        public string Description { get; set; }
-
         #nullable enable
         public List<ProductResponse>? Products {get; set;}
         #nullable disable

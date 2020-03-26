@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace eCommerceFrontend.Models.REST.Objects.Orders
 {
-    public class OrderItemsResponse
+    public class OrderDetailsResponse
     {
-        #nullable enable
-        public ProductResponse? Product { get; set; }
-        #nullable disable
+        public string DetailsName { get; set; }
+        public string DatailsPrice { get; set; }
+        public string DetailSKU { get; set; }
+        public int DetailsQuantity { get; set; }
     }
 }

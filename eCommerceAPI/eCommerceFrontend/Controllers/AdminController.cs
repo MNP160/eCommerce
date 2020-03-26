@@ -16,6 +16,9 @@ using eCommerceFrontend.Models.View.Admin_Model;
 using Newtonsoft.Json;
 using eCommerceFrontend.Models.REST.Objects;
 using eCommerceFrontend.Models.REST.Objects.Orders;
+using eCommerceFrontend.Models.REST.Objects.Product;
+using System.Threading;
+using System.IO;
 
 namespace eCommerceFrontend.Controllers
 {
@@ -35,35 +38,53 @@ namespace eCommerceFrontend.Controllers
         {
             OrderManager orderManager = new OrderManager(_clientFactory, _contextAccessor);
             List<OrdersResponse> orders = orderManager.Get();
-            List<OrdersResponse> fulfilledOrders = orders.Where(x => x.isOrderComplete).ToList();
-            List<OrdersResponse> unfulfilledOrders = orders.Where(x => !x.isOrderComplete).ToList();
+            List<OrdersResponse> fulfilledOrders = orders.Where(x => x.IsOrderComplete).ToList();
+            List<OrdersResponse> unfulfilledOrders = orders.Where(x => !x.IsOrderComplete).ToList();
 
             return View(new AdminView(fulfilledOrders, unfulfilledOrders));
         }
 
+
         public IActionResult ViewProducts(int order)
         {
-            //var productIds = JsonConvert.DeserializeObject<List<int>>(product);
             OrderManager orderManager = new OrderManager(_clientFactory, _contextAccessor);
             OrdersResponse currentOrder = orderManager.Get($"{order}");
 
-            List<ProductResponse> products = currentOrder.OrderItems.Select(x => x.Product).ToList();
+            List<OrderDetailsResponse> products = currentOrder.OrderItems.ToList();
             
             return View(new ProductView(products));
+        }
+
+
+        public IActionResult AddProduct()
+        {
+            ProductManager productManager = new ProductManager(_clientFactory, _contextAccessor);
+            return View();
+        }
+
+
+        public IActionResult UploadFile(IFormFile file)
+        {
+            System.Diagnostics.Debug.WriteLine($"SUCCESS: {file.FileName}");
+            return RedirectToAction("Index");
         }
 
         public IActionResult FulfilOrder(int id)
         {
             OrderManager orderManager = new OrderManager(_clientFactory, _contextAccessor);
             OrdersResponse orderResponse = orderManager.Get($"{id}");
-            OrderRequest orderRequest = new OrderRequest {
-                TotalAmount = orderResponse.OrderItems.Sum(x => x.Product.Price),
+            OrderRequest orderRequest = new OrderRequest
+            {
+                TotalAmount = orderResponse.TotalAmount,
                 Phone = orderResponse.Phone,
                 City = orderResponse.City,
                 Address = orderResponse.Address,
-                UserId = orderResponse.User.Id,
-                isCashPayment = orderResponse.isCashPayment,
-                isOrderComplete = true
+                Address2 = orderResponse.Address2,
+                OrderEmail = orderResponse.OrderEmail,
+                OrderZipCode = orderResponse.OrderZipCode,
+                Size = orderResponse.Size,
+                IsCashPayment = orderResponse.IsCashPayment,
+                IsOrderComplete = true
             };
 
             orderManager.Put(orderRequest);
@@ -77,13 +98,16 @@ namespace eCommerceFrontend.Controllers
             OrdersResponse orderResponse = orderManager.Get($"{id}");
             OrderRequest orderRequest = new OrderRequest
             {
-                TotalAmount = orderResponse.OrderItems.Sum(x => x.Product.Price),
+                TotalAmount = orderResponse.TotalAmount,
                 Phone = orderResponse.Phone,
                 City = orderResponse.City,
                 Address = orderResponse.Address,
-                UserId = orderResponse.User.Id,
-                isCashPayment = orderResponse.isCashPayment,
-                isOrderComplete = false
+                Address2 = orderResponse.Address2,
+                OrderEmail = orderResponse.OrderEmail,
+                OrderZipCode = orderResponse.OrderZipCode,
+                Size = orderResponse.Size,
+                IsCashPayment = orderResponse.IsCashPayment,
+                IsOrderComplete = false
             };
 
             orderManager.Put(orderRequest);

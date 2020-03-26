@@ -7,7 +7,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">Full Name:</th>
+            <th scope="col">Email:</th>
             <th scope="col">Address:</th>
             <th scope="col">Phone:</th>
             <th scope="col">Items:</th>
@@ -20,11 +20,11 @@
         {
             <text>
                 <tr>
-                    <td>@order.User.FirstName @order.User.LastName</td>
-                    <td>@order.Address, @order.City</td>
+                    <td>@order.OrderEmail</td>
+                    <td>@order.Address, @order.Address2, @order.OrderZipCode, @order.City</td>
                     <td>+(359)@order.Phone</td>
                     <td><a>Items</a></td>
-                    <td>@order.isCashPayment</td>
+                    <td>@order.IsCashPayment</td>
                     <td><a asp-controller="Admin" asp-action="UnfulfilOrder" asp-route-id="@order.Id" class="btn btn-primary">Unfulfill</a></td>
                 </tr>
             </text>
@@ -48,12 +48,12 @@
         {
             <text>
                 <tr>
-                    <td>@order.User.FirstName @order.User.LastName</td>
-                    <td>@order.Address, @order.City</td>
+                    <td>@order.OrderEmail</td>
+                    <td>@order.Address, @order.Address2, @order.OrderZipCode, @order.City</td>
                     <td>+(359)@order.Phone</td>
-                    <td><a asp-controller="Admin" asp-action="ViewProducts" asp-route-order="@order.Id">Items</a></td>
-                    <td>@order.isCashPayment</td>
-                    <td><a asp-controller="Admin" asp-action="FulfilOrder" asp-route-id="@order.Id" class="btn btn-primary">Fulfill</a></td>
+                    <td><a>Items</a></td>
+                    <td>@order.IsCashPayment</td>
+                    <td><a asp-controller="Admin" asp-action="FulfilOrder" asp-route-id="@order.Id" class="btn btn-primary">Unfulfill</a></td>
                 </tr>
             </text>
         }

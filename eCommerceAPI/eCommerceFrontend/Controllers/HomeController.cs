@@ -34,8 +34,14 @@ namespace eCommerceFrontend.Controllers
             CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
             var categories= cm.Get();
             
-
             return View(categories);
+        }
+
+        public IActionResult BuyItem(int id)
+        {
+            ProductManager pm = new ProductManager(_clientFactory, _contextAccessor);
+            ProductResponse product = pm.Get($"{id}");
+            return View(product);
         }
 
         public IActionResult Privacy()

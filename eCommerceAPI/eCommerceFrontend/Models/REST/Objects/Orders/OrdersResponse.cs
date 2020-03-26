@@ -11,19 +11,17 @@ namespace eCommerceFrontend.Models.REST.Objects.Order
     {
         [Required]
         public int Id { get; set; }
-        [Required]
-        public UserResponse User { get; set; }
-        [Required]
-        public int Phone { get; set; }
-        [Required]
+        public double TotalAmount { get; set; }
+        public string Phone { get; set; }
         public string City { get; set; }
-        [Required]
         public string Address { get; set; }
-
-        public bool isCashPayment { get; set; }
-        public bool isOrderComplete { get; set; }
-
-        [Required]
-        public List<OrderItemsResponse> OrderItems { get; set; }
+        public string Address2 { get; set; }
+        public DateTime OrderDate { get; set; }
+        public string OrderEmail { get; set; }
+        public string OrderZipCode { get; set; }
+        public string Size { get; set; }
+        public bool IsCashPayment { get; set; }
+        public bool IsOrderComplete { get; set; }
+        public List<OrderDetailsResponse> OrderItems { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using eCommerceFrontend.Models.REST.Objects;
 using eCommerceFrontend.Models.REST.Objects.Product;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,11 @@ namespace eCommerceFrontend.Models.REST.Manager
         }
 
         public ProductResponse Post(ProductRequest product)
+        {
+            return base.Post(product, "Product", "create").Result;
+        }
+
+        public ProductResponse Post(ProductRequest product, IFormFile file)
         {
             return base.Post(product, "Product", "create").Result;
         }
