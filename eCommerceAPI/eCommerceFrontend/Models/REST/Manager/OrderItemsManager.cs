@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace eCommerceFrontend.Models.REST.Manager
 {
-    public class OrderItemsManager : RESTManager<OrderItemsResponse, OrderItemsRequest>
+    public class OrderItemsManager : RESTManager<OrderDetailsResponse, OrderDetailsRequest>
     {
         private readonly IHttpClientFactory _clientFactory;
         private readonly IHttpContextAccessor _contextAccessor;
@@ -18,27 +18,27 @@ namespace eCommerceFrontend.Models.REST.Manager
             _contextAccessor = contextAccessor;
         }
 
-        public new OrderItemsResponse Get(string id)
+        public new OrderDetailsResponse Get(string id)
         {
             return base.Get("OrderItems", id).Result;
         }
 
-        public List<OrderItemsResponse> Get()
+        public List<OrderDetailsResponse> Get()
         {
             return base.Get("OrderItems").Result.ToList();
         }
 
-        public OrderItemsResponse Post(OrderItemsRequest orderItem)
+        public OrderDetailsResponse Post(OrderDetailsRequest orderItem)
         {
             return base.Post(orderItem, "OrderItems", null).Result;
         }
 
-        public OrderItemsResponse Put(OrderItemsRequest orderItem)
+        public OrderDetailsResponse Put(OrderDetailsRequest orderItem)
         {
             return base.Put(orderItem, "OrderItems").Result;
         }
 
-        public OrderItemsResponse Delete(string id)
+        public OrderDetailsResponse Delete(string id)
         {
             return base.Delete("OrderItems", id).Result;
         }

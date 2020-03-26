@@ -3,40 +3,99 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<div class="main-container">
 
+    <sidenav>
+        @{ await Html.RenderPartialAsync("Shared/_sidenav", Model); }
+    </sidenav>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-               
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                           
-            </tr>
-}        </tbody>
-    </table>
+    <main>
+        @foreach(var category in Model)
+        {
+        <text>
+                <div class="container-fluid">
+                    <h2 class="border-bottom border-top p-4" style="margin-top:20px;">@category.Name</h2> <br />
+                    <div class="row">
+                        @foreach (var product in category.Products)
+                        {
+                            <text>
+                            <div class="card col-sm-6 col-md-3 col-lg-3 " style="height:auto">
+                                @{ await Html.RenderPartialAsync("Shared/_productCard", product); }
+                            </div>
+                            <div class="card col-sm-6 col-md-3 " style="height:auto">
+                                @{ await Html.RenderPartialAsync("Shared/_productCard", product); }
+                            </div>
+                            <div class="card col-sm-6 col-md-3 " style="height:auto">
+                                @{ await Html.RenderPartialAsync("Shared/_productCard", product); }
+                            </div>
+                            </text>
+                        }
+                    </div>
+                </div>
+        </text>
+        }
 
-<div>
-    <form action="/Payment/Processing" method="POST">
-        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                data-key="pk_test_2Ggmdu6GjggTolPptU5DTnHA00hwgZb3Di"
-                data-amount=5000
-                data-name="very important purchase"
-                data-description="the good stuff"
-                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                data-locale="en"
-                data-zip-code="true"
-                data-label="Give me money">
-        </script>
-    </form>
+        <div>
+            <form action="/Payment/Processing" method="POST">
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="pk_test_2Ggmdu6GjggTolPptU5DTnHA00hwgZb3Di"
+                        data-amount=5000
+                        data-name="very important purchase"
+                        data-description="the good stuff"
+                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                        data-locale="en"
+                        data-zip-code="true"
+                        data-label="Give me money">
+                </script>
+            </form>
+        </div>
+
+    </main>
 </div>
+
+
+<style>
+    .main-container {
+        display: grid;
+        grid-template-areas: "nav content";
+        grid-template-columns: 250px 1fr ;
+        grid-template-rows: auto 1fr;
+        grid-gap: 10px;
+        height: 100vh;
+    }
+
+    sidenav {
+        grid-area: nav;
+        margin-left: 0.0rem;
+    }
+
+    main {
+        grid-area: content;
+        width: 100%;
+        height: 100%;
+        padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+        box-sizing: content-box; /* So the width will be 100% + 17px */
+        overflow-y: scroll;
+
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    @@media (max-width: 768px) {
+      .main-container {
+        grid-template-areas:
+          "content";
+
+        grid-template-columns: 1fr;
+        grid-template-rows:
+
+          1fr /* Content */
+      }
+
+      sidenav{
+        margin: 0;
+      }
+}
+</style>

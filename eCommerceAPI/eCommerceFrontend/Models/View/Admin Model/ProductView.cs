@@ -1,4 +1,5 @@
 ﻿using eCommerceFrontend.Models.REST.Objects;
+using eCommerceFrontend.Models.REST.Objects.Orders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace eCommerceFrontend.Models.View.Admin_Model
 {
     public class ProductView
     {
-        public List<ProductResponse> Products = new List<ProductResponse>();
+        public List<OrderDetailsResponse> Products = new List<OrderDetailsResponse>();
 
-        public ProductView(List<ProductResponse> products)
+        public ProductView(List<OrderDetailsResponse> products)
         {
             Products = products;
         }

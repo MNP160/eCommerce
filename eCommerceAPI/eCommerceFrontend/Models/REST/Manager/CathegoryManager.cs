@@ -21,27 +21,27 @@ namespace eCommerceFrontend.Models.REST.Manager
 
         public new CathegoryResponse Get(string id)
         {
-            return base.Get("Cathegory", id).Result;
+            return base.Get("Category", id).Result;
         }
 
         public List<CathegoryResponse> Get()
         {
-            return base.Get("Cathegory").Result.ToList();
+            return base.Get("Category").Result.ToList();
         }
 
         public CathegoryResponse Post(CathegoryRequest cathegory)
         {
-            return base.Post(cathegory, "Cathegory", null).Result;
+            return base.Post(cathegory, "Category", null).Result;
         }
 
         public CathegoryResponse Put(CathegoryRequest cathegory)
         {
-            return base.Put(cathegory, "Cathegory").Result;
+            return base.Put(cathegory, "Category").Result;
         }
 
         public CathegoryResponse Delete(string id)
         {
-            return base.Delete("Cathegory", id).Result;
+            return base.Delete("Category", id).Result;
         }
     }
 }
