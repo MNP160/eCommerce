@@ -51,4 +51,22 @@ namespace eCommerceFrontend.Models.REST.Manager
             return base.Delete("Product", id).Result;
         }
     }
+
+    public class ProductPostManager : RESTManager<ProductResponse, ProductPostRequest>
+    {
+        private readonly IHttpClientFactory _clientFactory;
+        private readonly IHttpContextAccessor _contextAccessor;
+
+        public ProductPostManager(IHttpClientFactory clientFactory, IHttpContextAccessor contextAccessor) : base(clientFactory, contextAccessor)
+        {
+            _clientFactory = clientFactory;
+            _contextAccessor = contextAccessor;
+        }
+
+        public ProductResponse Post(ProductPostRequest product)
+        {
+            return base.Post(product, "Product", null).Result;
+        }
+    }
+
 }

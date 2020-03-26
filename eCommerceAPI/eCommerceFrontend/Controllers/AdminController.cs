@@ -19,6 +19,7 @@ using eCommerceFrontend.Models.REST.Objects.Orders;
 using eCommerceFrontend.Models.REST.Objects.Product;
 using System.Threading;
 using System.IO;
+using eCommerceFrontend.Models.REST.Objects.Cathegory;
 
 namespace eCommerceFrontend.Controllers
 {
@@ -45,18 +46,49 @@ namespace eCommerceFrontend.Controllers
         }
 
 
-        public IActionResult ViewProducts(int order)
+        public IActionResult ViewOrderItems(int order)
         {
             OrderManager orderManager = new OrderManager(_clientFactory, _contextAccessor);
             OrdersResponse currentOrder = orderManager.Get($"{order}");
 
             List<OrderDetailsResponse> products = currentOrder.OrderDetails.ToList();
             
-            return View(new ProductView(products));
+            return View(new OrderDetailsView(products));
+        }
+
+        public IActionResult ViewCategory()
+        {
+            CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
+            List<CathegoryResponse> categories = cm.Get();
+            return View(categories);
+        }
+
+        public IActionResult AddCategory(string name)
+        {
+            CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
+            CathegoryRequest request = new CathegoryRequest() { Name = name };
+            cm.Post(request);
+            return RedirectToAction("ViewCategory", "Admin");
+        }
+
+        public IActionResult ViewProduct()
+        {
+            ProductManager pm = new ProductManager(_clientFactory, _contextAccessor);
+            List<ProductResponse> products = pm.Get();
+            return View(products);
+        }
+
+        public IActionResult AddProduct(string name, string longDescription, string shortDescription,
+            double originalPrice, double actualPrice, int quantity, bool isLive, int sCount, int mCount,
+            int lCount, int xlCount, int categoryId, IFormFile file)
+        {
+            System.Diagnostics.Debug.WriteLine($"{file.FileName}");
+            return RedirectToAction("ViewProduct", "Admin");
         }
 
 
-        public IActionResult AddProduct()
+
+        public IActionResult AddProductx()
         {
             ProductManager productManager = new ProductManager(_clientFactory, _contextAccessor);
             return View();

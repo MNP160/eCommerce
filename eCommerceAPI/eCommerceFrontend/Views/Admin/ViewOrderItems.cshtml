@@ -1,4 +1,4 @@
-﻿@model eCommerceFrontend.Models.View.Admin_Model.ProductView
+﻿@model eCommerceFrontend.Models.View.Admin_Model.OrderDetailsView
 
 @{
     ViewData["Title"] = "ViewProducts";
@@ -6,7 +6,7 @@
 
 <h1>ViewProducts</h1>
 
-@foreach(var product in Model.Products)
+@foreach(var product in Model.OrderDetails)
 {
 <text>
     <div class="container m-3 p-3 shadow-sm">
