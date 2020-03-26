@@ -50,7 +50,7 @@ namespace eCommerceFrontend.Controllers
             OrderManager orderManager = new OrderManager(_clientFactory, _contextAccessor);
             OrdersResponse currentOrder = orderManager.Get($"{order}");
 
-            List<OrderDetailsResponse> products = currentOrder.OrderItems.ToList();
+            List<OrderDetailsResponse> products = currentOrder.OrderDetails.ToList();
             
             return View(new ProductView(products));
         }
