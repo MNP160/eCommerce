@@ -10,6 +10,8 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace eCommerceAPI.Controllers
@@ -94,6 +96,27 @@ namespace eCommerceAPI.Controllers
             var entity = await _service.Create(value);
             if (entity != null)
             {
+                using (var message = new MailMessage())
+                {
+                    message.To.Add(new MailAddress("mpenev13@gmail.com", "Dearest Customer"));
+                    message.From = new MailAddress("mpenev13@gmail.com", "Best Shopping Platform Ever");
+
+                    message.Subject = "Your order from god knows where";
+                    message.Body = "Dear Customer if you have any questions about your order contact us at" +
+                        "this email with the following order tracking number: " + value.OrderSKU;
+                    message.IsBodyHtml = true;
+
+                    using (var client = new SmtpClient("smtp.gmail.com"))
+                    {
+                        client.Port = 587;
+                        client.Credentials = new NetworkCredential("mpenev13@gmail.com", "redacted");
+                        client.EnableSsl = true;
+                        client.Send(message);
+                    }
+                }
+
+
+
                 return Ok(entity);
             }
             else

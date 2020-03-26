@@ -91,11 +91,24 @@ namespace farmersAPi.Repositories
         public async Task<Products> Update(Products value)
         {
             var editedEntity = _context.Set<Products>().FirstOrDefault(e => e.ProductSKU == value.ProductSKU);
-            editedEntity = value;
-            _context.Update(editedEntity);
-            await _context.SaveChangesAsync();
-            return value;
+           if(editedEntity != null)
+            {
+                editedEntity.Name = value.Name;
+                editedEntity.OriginalPrice = value.OriginalPrice;
+                editedEntity.SCount = value.SCount;
+                editedEntity.ShortDescription = value.ShortDescription;
+                editedEntity.XLCount = value.XLCount;
+                editedEntity.MCount = value.MCount;
+                editedEntity.LongDescription = value.LongDescription;
+                editedEntity.LCount = value.LCount;
+                editedEntity.IsLive = value.IsLive;
+                
+                _context.Update(editedEntity);
+                await _context.SaveChangesAsync();
+                return value;
+            }
 
+            return null;
         }
 
         public IQueryable<ProductDto> FindAll()

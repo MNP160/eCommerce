@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Threading.Tasks;
 
 namespace eCommerceAPI.Controllers
@@ -92,6 +93,10 @@ namespace eCommerceAPI.Controllers
             var entity = await _service.Create(value);
             if (entity != null)
             {
+
+               
+
+
                 return Ok(entity);
             }
             else

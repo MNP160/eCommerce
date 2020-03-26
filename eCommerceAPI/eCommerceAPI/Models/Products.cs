@@ -26,7 +26,7 @@ namespace farmersAPi.Models
         public double ActualPrice { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid ProductSKU { get; set; }
+        public string ProductSKU { get; set; }
         public int Quantity { get; set; }
         public bool IsLive { get; set; }
         public int SCount { get; set; } = 0;

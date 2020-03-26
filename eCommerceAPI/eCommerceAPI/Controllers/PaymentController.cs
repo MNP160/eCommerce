@@ -33,7 +33,7 @@ namespace farmersAPi.Controllers
             var service = new ChargeService();
             Charge charge = service.Create(options);
             
-            return Ok(charge.BalanceTransactionId);
+            return Ok(charge.Id);
            
         }
 

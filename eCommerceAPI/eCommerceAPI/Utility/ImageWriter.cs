@@ -12,10 +12,12 @@ namespace farmersAPi.Utility
     public class ImageWriter :IImageWriter
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IHttpContextAccessor _accessor;
 
-        public ImageWriter(IWebHostEnvironment hostingEnvironment)
+        public ImageWriter(IWebHostEnvironment hostingEnvironment, IHttpContextAccessor accessor)
         {
             _hostingEnvironment = hostingEnvironment;
+            _accessor = accessor;
         }
         public async Task<string> UploadImage(IFormFile file)
         {
@@ -47,7 +49,7 @@ namespace farmersAPi.Utility
                 var extension="."+ file.FileName.Split(".")[file.FileName.Split(".").Length - 1];
                 filename = Guid.NewGuid().ToString() + extension;
 
-                 path = Path.Combine(_hostingEnvironment.WebRootPath, "/images/", filename);
+                 path = Path.Combine(_accessor.HttpContext.Request.Scheme+ "://"+_accessor.HttpContext.Request.Host+  "/images/", filename);
                 using (var bits = new FileStream(path, FileMode.Create))
                 {
                     await file.CopyToAsync(bits);

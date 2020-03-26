@@ -25,9 +25,47 @@ namespace eCommerceAPI.Repositories
             _mapper = map;
         }
 
+
+        private  async Task ReduceProductQuantityForOrder(Orders order)
+        {
+            var orderItems = _context.OrderDetails.Where(x=>x.OrderId==order.Id);
+            var products = _context.Product.ToList();
+            
+            Products specificProduct = null;
+            foreach(var item in orderItems)
+            {
+                specificProduct = products.FirstOrDefault(x => x.ProductSKU == item.DetailSKU);
+                switch (order.Size)
+                {
+                    case "S":
+                        specificProduct.SCount -= item.DetailQuantity;
+                        break;
+                    case "M":
+                        specificProduct.MCount -= item.DetailQuantity;
+                        break;
+                    case "L":
+                        specificProduct.LCount -= item.DetailQuantity;
+                        break;
+                    case "XL":
+                        specificProduct.XLCount -= item.DetailQuantity;
+                        break;
+                }
+                _context.Product.Update(specificProduct);
+
+              
+                specificProduct = null;
+            }
+            await _context.SaveChangesAsync();
+
+                     
+        }
+
+      
+
+
         public async Task<Orders> Create(Orders value)
         {
-
+            await ReduceProductQuantityForOrder(value);
             _context.Set<Orders>().Add(value);
             await _context.SaveChangesAsync();
             return value;
@@ -79,11 +117,29 @@ namespace eCommerceAPI.Repositories
 
         public async Task<Orders> Update(Orders value)
         {
-            var editedEntity = _context.Set<Orders>().FirstOrDefault(e => e.Id == value.Id);
-            editedEntity = value;
-            _context.Update(editedEntity);
-            await _context.SaveChangesAsync();
-            return value;
+            var editedEntity = _context.Set<Orders>().FirstOrDefault(e => e.OrderSKU == value.OrderSKU);
+            if (editedEntity != null)
+            {
+                editedEntity.Address = value.Address;
+                editedEntity.City = value.City;
+                editedEntity.IsCashPayment = value.IsCashPayment;
+                editedEntity.IsOrderComplete = value.IsOrderComplete;
+                editedEntity.OrderDate = value.OrderDate;
+                editedEntity.OrderEmail = value.OrderEmail;
+                editedEntity.OrderZipCode = value.OrderZipCode;
+                editedEntity.Phone = value.Phone;
+                editedEntity.Size = value.Size;
+                editedEntity.TotalAmount = value.TotalAmount;
+               
+
+                _context.Update(editedEntity);
+                await _context.SaveChangesAsync();
+                return value;
+            }
+            else
+            {
+                return null;
+            }
 
         }
 

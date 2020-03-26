@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using eCommerceAPI.QueryParameters;
 using eCommerceAPI.Services;
+using eCommerceAPI.Utility;
 using farmersAPi.DTOs;
 using farmersAPi.Models;
 using farmersAPi.Repositories;
@@ -108,9 +109,9 @@ namespace farmersAPi.Controllers
 
         [HttpPost("")]
         
-        public  async Task<ActionResult<Products>> Post([FromForm]ProductModel value, IFormFile file)
+        public  async Task<ActionResult<Products>> Post(ProductPostRequest request)
         {
-           var createdProduct= await _service.Create(value, file);
+           var createdProduct= await _service.Create(request.model, request.file);
             if (createdProduct != null)
             {
                 return Ok(createdProduct);

@@ -94,7 +94,7 @@ namespace farmersAPi
             services.AddScoped<ProductRepository>();
             services.AddScoped<OrdersRepository>();
             services.AddScoped<OrderDetailsRepository>();
-
+            services.AddHttpContextAccessor();
 
             services.AddScoped<CategoryService>();
             services.AddScoped<ProductService>();

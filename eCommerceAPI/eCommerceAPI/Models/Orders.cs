@@ -28,7 +28,7 @@ namespace eCommerceAPI.Models
         public string Size { get; set; }
         public bool IsCashPayment { get; set; }
         public bool IsOrderComplete { get; set; }
-
+        public string OrderSKU { get; set; }
            
 
 
