@@ -81,7 +81,27 @@ namespace eCommerceFrontend.Controllers
         public IActionResult AddProduct(string name, string longDescription, string shortDescription,
             double originalPrice, double actualPrice, int quantity, bool isLive, int sCount, int mCount,
             int lCount, int xlCount, int categoryId, IFormFile file)
-        {
+        {                 //check none can be null
+            ProductRequest request = new ProductRequest {
+                Name=name,
+                LongDescription=longDescription,
+                ShortDescription=shortDescription,
+                OriginalPrice=originalPrice,
+                ActualPrice=actualPrice,
+                Quantity=quantity,
+                IsLive=isLive,
+                SCount=sCount,
+                MCount=mCount,
+                LCount=lCount,
+                XLCount=xlCount,
+                CathegoryId=categoryId
+                            };
+
+            ProductPostRequest productPost = new ProductPostRequest(request, file);
+            ProductPostManager ppm = new ProductPostManager(_clientFactory, _contextAccessor);
+            ppm.Post(productPost);
+
+
             System.Diagnostics.Debug.WriteLine($"{file.FileName}");
             return RedirectToAction("ViewProduct", "Admin");
         }
