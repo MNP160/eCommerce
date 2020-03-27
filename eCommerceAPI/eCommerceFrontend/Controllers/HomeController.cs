@@ -30,40 +30,77 @@ namespace eCommerceFrontend.Controllers
             _contextAccessor = contextAccessor;
         }
 
-        public IActionResult Index(string id = null)
+        public IActionResult Index(int pageNum = 1, int pageSize = 4, int? category = null, string search = null)
         {
-            List<int> ids = new List<int>();
+            List<int> ids = new List<int>(); // delete later
+
             CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
             var allCategories = cm.Get();
             var selectedCategories = allCategories; // If no categories are selected, display all.
 
-            if (id != null && id.Length > 0)
+            // If a category is selected
+            // And that category id exists
+            // And that category contains more than 1 product
+            // Then display items for that category
+            // Otherwise display all
+            if (category != null && selectedCategories.Any(x => x.Id == category && x.Products.Count > 0))
             {
-                ids = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(id);
-                selectedCategories = allCategories.Where(x => ids.Contains(x.Id)).ToList(); // Categories w/ id from List<int> ids
+                selectedCategories = allCategories.Where(x => x.Id == category).ToList();
             }
 
-            return View(new IndexView(allCategories, selectedCategories, ids));
+            List<ProductResponse> allProducts = new List<ProductResponse>();
+            // Adds all products to a list
+            foreach(var currentCategory in selectedCategories)
+            {
+                // product list needs to be separate from the category response for pagination
+                if(currentCategory.Products != null && currentCategory.Products.Count > 0)
+                {
+                    allProducts.AddRange(currentCategory.Products);
+                }
+            }
+
+            // Example: 54 products, 10 per page
+            // 54/10 = 5
+            // 54%10 = 4 -> 4 != 0 -> TotalPages++
+            int totalPages = allProducts.Count / pageSize;
+            if (allProducts.Count % pageSize != 0)
+                totalPages++;
+
+            // Get the required products
+            allProducts = allProducts.Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+            if(allProducts.Count < 1)
+            {
+                return NotFound();
+            }
+
+            return View(new IndexView(allCategories, allProducts, pageNum, pageSize, category, totalPages, search));
         }
 
-        public IActionResult AddCategoryId(string id, string selectedIds = null)
+        public IActionResult AddCategory(string pageNum, string pageSize, string categoryId)
         {
-            List<int> allIds = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(selectedIds);
-            int currentId = Newtonsoft.Json.JsonConvert.DeserializeObject<int>(id);
-            allIds.Add(currentId);
-            allIds.Distinct();
-            string serializedIds = Newtonsoft.Json.JsonConvert.SerializeObject(allIds);
-            return RedirectToAction("Index", "Home", new { id = serializedIds });
+            int pageNumInt = Newtonsoft.Json.JsonConvert.DeserializeObject<int>(pageNum);
+            int pageSizeInt = Newtonsoft.Json.JsonConvert.DeserializeObject<int>(pageSize);
+            int categoryIdInt = Newtonsoft.Json.JsonConvert.DeserializeObject<int>(categoryId);
+
+            return RedirectToAction("Index", "Home", new { pageNum = pageNumInt, pageSize = pageSizeInt, category = categoryIdInt });
         }
 
-        public IActionResult RemoveCategoryId(string id, string selectedIds)
+        public IActionResult RemoveCategory(string pageNum, string pageSize, string categoryId)
         {
-            List<int> allIds = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(selectedIds);
-            int currentId = Newtonsoft.Json.JsonConvert.DeserializeObject<int>(id);
-            allIds.RemoveAll(x => x == currentId);
-            allIds.Distinct();
-            string serializedIds = Newtonsoft.Json.JsonConvert.SerializeObject(allIds);
-            return RedirectToAction("Index", "Home", new { id = serializedIds });
+            int pageNumInt = Newtonsoft.Json.JsonConvert.DeserializeObject<int>(pageNum);
+            int pageSizeInt = Newtonsoft.Json.JsonConvert.DeserializeObject<int>(pageSize);
+
+            return RedirectToAction("Index", "Home", new { pageNum = pageNumInt, pageSize = pageSizeInt});
+        }
+
+        public IActionResult UpdateModel(string pageNum, string pageSize, string? categoryId, string search)
+        {
+            int pageNumInt = Newtonsoft.Json.JsonConvert.DeserializeObject<int>(pageNum);
+            int pageSizeInt = Newtonsoft.Json.JsonConvert.DeserializeObject<int>(pageSize);
+            int? categoryIdInt = null;
+            if(categoryId != null)
+                categoryIdInt = Newtonsoft.Json.JsonConvert.DeserializeObject<int>(categoryId);
+            return RedirectToAction("Index", "Home", new { pageNum = pageNumInt, pageSize = pageSizeInt, category = categoryIdInt, search = search });
         }
 
         public IActionResult BuyItem(int id)

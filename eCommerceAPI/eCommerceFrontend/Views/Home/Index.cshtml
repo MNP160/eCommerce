@@ -10,33 +10,22 @@
     </sidenav>
 
     <main>
-        @foreach(var category in Model.SelectedCategories)
-        {
-        <text>
-                <div class="container-fluid">
-                    <h2 class="border-bottom border-top p-4" style="margin-top:20px;">@category.Name</h2> <br />
-                    <div class="row">
-                        @foreach (var product in category.Products)
-                        {
-                            <text>
-                            <div class="card col-sm-6 col-md-3 col-lg-3 " style="height:auto">
+        <div class="container-fluid p-5">
+            <div class="row">
+                @foreach (var product in Model.Products)
+                {
+                    <text>
+                        <div class="col-sm-6 col-md-3 col-lg-3 p-3">
+                            <div class="card" style="height:auto">
                                 @{ await Html.RenderPartialAsync("Shared/_productCard", product); }
                             </div>
-                            <div class="card col-sm-6 col-md-3 " style="height:auto">
-                                @{ await Html.RenderPartialAsync("Shared/_productCard", product); }
-                            </div>
-                            <div class="card col-sm-6 col-md-3 " style="height:auto">
-                                @{ await Html.RenderPartialAsync("Shared/_productCard", product); }
-                            </div>
-                            </text>
-                        }
-                    </div>
-                </div>
-        </text>
-        }
+                        </div>
+                    </text>
+                }
+            </div>
+            @{ await Html.RenderPartialAsync("Shared/_pagination", Model); }
 
-        
-
+        </div>
     </main>
 </div>
 
