@@ -59,6 +59,15 @@ namespace eCommerceFrontend.Controllers
                 }
             }
 
+            if(search != null && search.Length > 2)
+            {
+                var foundProducts = allProducts.Where(x => x.Name.ToUpper().Contains(search.ToUpper())).ToList();
+                if (foundProducts.Count > 0)
+                    allProducts = foundProducts;
+                else
+                    allProducts.Clear();
+            }
+
             // Example: 54 products, 10 per page
             // 54/10 = 5
             // 54%10 = 4 -> 4 != 0 -> TotalPages++
@@ -68,10 +77,6 @@ namespace eCommerceFrontend.Controllers
 
             // Get the required products
             allProducts = allProducts.Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
-            if(allProducts.Count < 1)
-            {
-                return NotFound();
-            }
 
             return View(new IndexView(allCategories, allProducts, pageNum, pageSize, category, totalPages, search));
         }

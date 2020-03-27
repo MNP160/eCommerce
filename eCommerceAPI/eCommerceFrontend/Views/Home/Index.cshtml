@@ -10,7 +10,36 @@
     </sidenav>
 
     <main>
-        <div class="container-fluid p-5">
+        <div class="container-fluid pl-5 pr-5 pt-3">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <form asp-action="UpdateModel">
+                        <div class="form-group">
+                            <label>Search:</label>
+                            <input type="hidden" name="pageNum" value="@Model.PageNum" />
+                            <input type="hidden" name="pageSize" value="@Model.PageSize" />
+                            <input type="hidden" name="categoryId" value="@Model.SelectedCategory" />
+                            <input type="text" value="@Model.SearchTerm" name="search" class="form-control" onchange="this.form.submit()" />
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <form asp-action="UpdateModel">
+                        <div class="form-group">
+                            <label>PageCount:</label>
+                            <input type="hidden" name="pageNum" value="@Model.PageNum" />
+                            <input type="hidden" name="search" value="@Model.SearchTerm" />
+                            <input type="hidden" name="categoryId" value="@Model.SelectedCategory" />
+                            <input type="number" value="@Model.PageSize" name="pageSize" class="form-control" onchange="this.form.submit()" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container-fluid pl-5 pr-5 pt-2 pb-2">
             <div class="row">
                 @foreach (var product in Model.Products)
                 {
@@ -22,8 +51,16 @@
                         </div>
                     </text>
                 }
+                @if (Model.Products.Count == 0)
+                {
+                    <h3>No products found.</h3>
+                }
             </div>
-            @{ await Html.RenderPartialAsync("Shared/_pagination", Model); }
+
+            @if (Model.TotalPages > 1)
+            {
+                await Html.RenderPartialAsync("Shared/_pagination", Model); 
+            }
 
         </div>
     </main>
