@@ -10,33 +10,59 @@
     </sidenav>
 
     <main>
-        @foreach(var category in Model.SelectedCategories)
-        {
-        <text>
-                <div class="container-fluid">
-                    <h2 class="border-bottom border-top p-4" style="margin-top:20px;">@category.Name</h2> <br />
-                    <div class="row">
-                        @foreach (var product in category.Products)
-                        {
-                            <text>
-                            <div class="card col-sm-6 col-md-3 col-lg-3 " style="height:auto">
-                                @{ await Html.RenderPartialAsync("Shared/_productCard", product); }
-                            </div>
-                            <div class="card col-sm-6 col-md-3 " style="height:auto">
-                                @{ await Html.RenderPartialAsync("Shared/_productCard", product); }
-                            </div>
-                            <div class="card col-sm-6 col-md-3 " style="height:auto">
-                                @{ await Html.RenderPartialAsync("Shared/_productCard", product); }
-                            </div>
-                            </text>
-                        }
-                    </div>
+        <div class="container-fluid pl-5 pr-5 pt-3">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <form asp-action="UpdateModel">
+                        <div class="form-group">
+                            <label>Search:</label>
+                            <input type="hidden" name="pageNum" value="@Model.PageNum" />
+                            <input type="hidden" name="pageSize" value="@Model.PageSize" />
+                            <input type="hidden" name="categoryId" value="@Model.SelectedCategory" />
+                            <input type="text" value="@Model.SearchTerm" name="search" class="form-control" onchange="this.form.submit()" />
+                        </div>
+                    </form>
                 </div>
-        </text>
-        }
+                
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <form asp-action="UpdateModel">
+                        <div class="form-group">
+                            <label>PageCount:</label>
+                            <input type="hidden" name="pageNum" value="@Model.PageNum" />
+                            <input type="hidden" name="search" value="@Model.SearchTerm" />
+                            <input type="hidden" name="categoryId" value="@Model.SelectedCategory" />
+                            <input type="number" value="@Model.PageSize" name="pageSize" class="form-control" onchange="this.form.submit()" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-        
 
+        <div class="container-fluid pl-5 pr-5 pt-2 pb-2">
+            <div class="row">
+                @foreach (var product in Model.Products)
+                {
+                    <text>
+                        <div class="col-sm-6 col-md-3 col-lg-3 p-3">
+                            <div class="card" style="height:auto">
+                                @{ await Html.RenderPartialAsync("Shared/_productCard", product); }
+                            </div>
+                        </div>
+                    </text>
+                }
+                @if (Model.Products.Count == 0)
+                {
+                    <h3>No products found.</h3>
+                }
+            </div>
+
+            @if (Model.TotalPages > 1)
+            {
+                await Html.RenderPartialAsync("Shared/_pagination", Model); 
+            }
+
+        </div>
     </main>
 </div>
 

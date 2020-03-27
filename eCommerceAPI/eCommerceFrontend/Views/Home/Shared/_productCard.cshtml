@@ -1,10 +1,22 @@
 ﻿@model eCommerceFrontend.Models.REST.Objects.ProductResponse
-
-    <img class="card-img-top" src="~/img/notfound.png" alt="Card image cap" style="width: 100%;">
-    <div class="card-body">
+    <div class="img-container">
+        <img class="card-img-top" src="~/img/notfound.png" alt="Card image cap" style="width: 100%; ">
+    </div>
+    <div class="card-body" style="z-index: 5;">
         <h5 class="card-title">@Model.Name</h5>
         <p class="card-text">@Model.ShortDescription</p>
         <p class="price">$@Model.ActualPrice</p>
         <p><a asp-controller="Home" asp-action="BuyItem" asp-route-id="@Model.Id" class="btn btn-dark text-light btn-block">Buy</a></p>
     </div>
 
+<style>
+    .img-container {
+        overflow:hidden;
+    }
+    .card img {
+          transition: transform .5s ease;
+    }
+    .card img:hover{
+          transform: scale(1.5);
+    }
+</style>

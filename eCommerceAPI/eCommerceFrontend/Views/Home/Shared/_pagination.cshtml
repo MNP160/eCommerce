@@ -1,0 +1,73 @@
+﻿@model eCommerceFrontend.Models.View.Home_Model.IndexView
+@{ 
+    System.Diagnostics.Debug.WriteLine($"TOTAL PAGES{Model.TotalPages}");
+
+    int previousPage = Model.PageNum - 1;
+    int nextPage = Model.PageNum + 1;
+
+    string isFirst()
+    {
+        if(Model.PageNum <= 1)
+            return "disabled";
+        return "";
+    }
+
+    string isLast()
+    {
+        if(Model.PageNum == Model.TotalPages)
+            return "disabled";
+        return "";
+    }
+
+    string isActive(int i)
+    {
+        if (Model.PageNum == i)
+            return "active";
+        return "";
+    }
+
+
+}
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @isFirst()">
+                <a class="page-link"
+                   asp-controller="Home"
+                   asp-action="UpdateModel"
+                   asp-route-pageNum="@previousPage"
+                   asp-route-pageSize="@Model.PageSize"
+                   asp-route-categoryId="@Model.SelectedCategory"
+                   asp-route-search="@Model.SearchTerm">
+                    Previous
+                </a>            
+            </li>
+            @for (int i = 1; i <= Model.TotalPages; ++i)
+            {
+                <text>
+                    <li class="page-item @isActive(i)">
+                        <a class="page-link"
+                           asp-controller="Home"
+                           asp-action="UpdateModel"
+                           asp-route-pageNum ="@i"
+                           asp-route-pageSize = "@Model.PageSize"
+                           asp-route-categoryId ="@Model.SelectedCategory"
+                           asp-route-search="@Model.SearchTerm">
+                        @i
+                        </a>
+                    </li>
+                </text>
+            }
+            <li class="page-item @isLast()">
+                <a class="page-link" 
+                    asp-controller="Home"
+                    asp-action="UpdateModel"
+                    asp-route-pageNum ="@nextPage"
+                    asp-route-pageSize = "@Model.PageSize"
+                    asp-route-categoryId ="@Model.SelectedCategory"
+                    asp-route-search="@Model.SearchTerm">
+                Next
+                </a>
+            </li>
+        </ul>
+    </nav>

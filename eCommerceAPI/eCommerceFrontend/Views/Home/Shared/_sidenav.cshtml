@@ -6,36 +6,32 @@
         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
             @foreach (var category in Model.AllCategories)
             {
-                if (Model.SelectedIds.Contains(category.Id))
-                {
-                    <text>
-                        <li>
-                            <a asp-action="RemoveCategoryId"
-                               asp-controller="Home"
-                               asp-route-selectedIds="@Newtonsoft.Json.JsonConvert.SerializeObject(Model.SelectedIds)"
-                               asp-route-id="@Newtonsoft.Json.JsonConvert.SerializeObject(category.Id)">
-                                <span class="fa-stack fa-lg pull-left"></span>@category.Name<div class="badge badge-primary text-wrap">SELECTED</div>
-                            </a>
-                        </li>
-                    </text>
+                if (category.Id == Model.SelectedCategory)
+                {// bold
+                    <li>
+                        <a asp-action="UpdateModel"
+                           asp-controller="Home"
+                           asp-route-pageNum="1"
+                           asp-route-pageSize="@Model.PageSize"
+                           asp-route-categoryId="@null"
+                           asp-route-search="@Model.SearchTerm">
+                            <span class="fa-stack fa-lg pull-left"></span>@category.Name<div class="badge badge-primary text-wrap">SELECTED</div>
+                        </a>
+                    </li>
                 }
                 else
                 {
-                    <text>
-                        <li>
-                            <a asp-action="AddCategoryId"
-                               asp-controller="Home"
-                               asp-route-selectedIds="@Newtonsoft.Json.JsonConvert.SerializeObject(Model.SelectedIds)"
-                               asp-route-id="@Newtonsoft.Json.JsonConvert.SerializeObject(category.Id)"
-                               class="font-weight-lighter">
-                                <span class="fa-stack fa-lg pull-left"></span>@category.Name
-                            </a>
-                        </li>
-                    </text>
+                    <li>
+                        <a asp-action="UpdateModel"
+                           asp-controller="Home"
+                           asp-route-pageNum="1"
+                           asp-route-pageSize="@Model.PageSize"
+                           asp-route-categoryId="@category.Id"
+                           asp-route-search="@Model.SearchTerm">
+                            <span class="fa-stack fa-lg pull-left"></span>@category.Name
+                        </a>
+                    </li>
                 }
-
-
-
             }
         </ul>
     </div>
