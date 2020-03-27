@@ -1,8 +1,14 @@
 ﻿@model eCommerceFrontend.Models.View.Admin_Model.AdminView
 @using Newtonsoft.Json
 
-<h1>Index</h1>
+<div class="row col-auto text-center">
+    <div class="col">
+        <a class="btn btn-primary text-white">Add Category</a>
+        <a class="btn btn-primary text-white">Add Product</a>
+    </div>
+</div>
 
+<br />
 <h3>Fulfilled Orders</h3>
 <table class="table">
     <thead>
@@ -23,7 +29,7 @@
                     <td>@order.OrderEmail</td>
                     <td>@order.Address, @order.Address2, @order.OrderZipCode, @order.City</td>
                     <td>+(359)@order.Phone</td>
-                    <td><a asp-controller="Admin" asp-action="ViewProducts" asp-route-order="@order.Id">Items</a></td>
+                    <td><a asp-controller="Admin" asp-action="ViewOrderItems" asp-route-order="@order.Id">Items</a></td>
                     <td>@order.IsCashPayment</td>
                     <td><a asp-controller="Admin" asp-action="UnfulfilOrder" asp-route-id="@order.Id" class="btn btn-primary">Unfulfill</a></td>
                 </tr>
@@ -51,9 +57,9 @@
                     <td>@order.OrderEmail</td>
                     <td>@order.Address, @order.Address2, @order.OrderZipCode, @order.City</td>
                     <td>+(359)@order.Phone</td>
-                    <td><a asp-controller="Admin" asp-action="ViewProducts" asp-route-order="@order.Id">Items</a></td>
+                    <td><a asp-controller="Admin" asp-action="ViewOrderItems" asp-route-order="@order.Id">Items</a></td>
                     <td>@order.IsCashPayment</td>
-                    <td><a asp-controller="Admin" asp-action="FulfilOrder" asp-route-id="@order.Id" class="btn btn-primary">Unfulfill</a></td>
+                    <td><a asp-controller="Admin" asp-action="FulfilOrder" asp-route-id="@order.Id" class="btn btn-primary">Fulfill</a></td>
                 </tr>
             </text>
         }

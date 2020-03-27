@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using eCommerceFrontend.Models.REST.Objects;
+using eCommerceFrontend.Models.REST.Objects.Product;
 using eCommerceFrontend.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
@@ -75,9 +76,25 @@ namespace eCommerceFrontend.Models.REST.Manager
             T result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
-            var content = new StringContent(JsonConvert.SerializeObject(postObject), System.Text.Encoding.UTF8, "application/json");
-            string path = id != null ? $"api/{controller}/{id}" : $"api/{controller}";
-            var response = await client.PostAsync(path, content).ConfigureAwait(false);
+            var content = new StringContent(" ");
+            var multiContent = new MultipartFormDataContent();
+            HttpResponseMessage response;
+            System.Diagnostics.Debug.WriteLine(postObject.GetType().Name);
+            if (postObject.GetType().Name == "ProductPostRequest")
+            {
+
+
+                multiContent.Add(new StringContent(JsonConvert.SerializeObject(postObject), System.Text.Encoding.UTF8)); 
+                string path = id != null ? $"api/{controller}/{id}" : $"api/{controller}";
+                response = await client.PostAsync(path, multiContent).ConfigureAwait(false);
+            }
+            else
+            {
+                content = new StringContent(JsonConvert.SerializeObject(postObject), System.Text.Encoding.UTF8, "application/json");
+                string path = id != null ? $"api/{controller}/{id}" : $"api/{controller}";
+                response = await client.PostAsync(path, content).ConfigureAwait(false);
+            }
+            
             response.EnsureSuccessStatusCode();
 
             await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>

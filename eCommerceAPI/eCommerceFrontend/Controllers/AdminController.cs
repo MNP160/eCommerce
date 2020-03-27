@@ -19,6 +19,7 @@ using eCommerceFrontend.Models.REST.Objects.Orders;
 using eCommerceFrontend.Models.REST.Objects.Product;
 using System.Threading;
 using System.IO;
+using eCommerceFrontend.Models.REST.Objects.Cathegory;
 
 namespace eCommerceFrontend.Controllers
 {
@@ -43,7 +44,36 @@ namespace eCommerceFrontend.Controllers
 
             return View(new AdminView(fulfilledOrders, unfulfilledOrders));
         }
+        public IActionResult ViewOrderItems(int order)
+        {
+            OrderManager orderManager = new OrderManager(_clientFactory, _contextAccessor);
+            OrdersResponse currentOrder = orderManager.Get($"{order}");
 
+            List<OrderDetailsResponse> products = currentOrder.OrderDetails.ToList();
+
+            return View(new OrderDetailsView(products));
+        }
+
+        public IActionResult ViewCategory()
+        {
+            CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
+            List<CathegoryResponse> categories = cm.Get();
+            return View(categories);
+        }
+
+        public IActionResult AddCategory(string name)
+        {
+            CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
+            CathegoryRequest request = new CathegoryRequest() { Name = name };
+            cm.Post(request);
+            return RedirectToAction("ViewCategory", "Admin");
+        }
+        public IActionResult ViewProduct()
+        {
+            ProductManager pm = new ProductManager(_clientFactory, _contextAccessor);
+            List<ProductResponse> products = pm.Get();
+            return View(products);
+        }
 
         public IActionResult ViewProducts(int order)
         {
@@ -56,9 +86,32 @@ namespace eCommerceFrontend.Controllers
         }
 
 
-        public IActionResult AddProduct()
+        public IActionResult AddProduct(string name, string longDescription, string shortDescription,
+            double originalPrice, double actualPrice, int quantity, bool isLive, int sCount, int mCount,
+            int lCount, int xlCount, int categoryId, IFormFile file)
         {
-            ProductManager productManager = new ProductManager(_clientFactory, _contextAccessor);
+            ProductRequest request = new ProductRequest
+            {
+                Name = name,
+                LongDescription = longDescription,
+                ShortDescription = shortDescription,
+                OriginalPrice = originalPrice,
+                ActualPrice = actualPrice,
+                Quantity = quantity,
+                IsLive = isLive,
+                SCount = sCount,
+                MCount = mCount,
+                LCount = lCount,
+                XLCount = xlCount,
+                CathegoryId = categoryId
+            };
+
+            ProductPostRequest productPost = new ProductPostRequest(request, file);
+            ProductPostManager ppm = new ProductPostManager(_clientFactory, _contextAccessor);
+            ppm.Post(productPost);
+
+
+            System.Diagnostics.Debug.WriteLine($"{file.FileName}");
             return View();
         }
 

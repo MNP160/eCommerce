@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace farmersAPi.Utility
 {
-    public class ProductModel
+    public class ProductRequest
     {
         public string Name { get; set; }
         public string LongDescription { get; set; }
@@ -21,6 +22,7 @@ namespace farmersAPi.Utility
         public int LCount { get; set; } = 0;
         public int XLCount { get; set; } = 0;
         public int CategoryId { get; set; }
+       
 
     }
 }

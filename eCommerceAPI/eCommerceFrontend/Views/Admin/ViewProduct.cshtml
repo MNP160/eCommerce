@@ -1,0 +1,126 @@
+﻿@model IEnumerable<eCommerceFrontend.Models.REST.Objects.ProductResponse>
+
+@{
+    ViewData["Title"] = "ViewProduct";
+}
+
+<h1>ViewProduct</h1>
+
+<div class="row">
+    <form asp-controller="Admin" asp-action="AddProduct" method="post" enctype="multipart/form-data">
+        <div class="form-row">
+            <input name="name" type="text" placeholder="Product Name" class="form-control" />
+            <input name="longDescription" type="text" placeholder="Long Description" class="form-control" />
+            <input name="shortDescription" type="text" placeholder="Short Description" class="form-control" />
+            <input name="originalPrice" type="number" step="0.1" placeholder="Original Price" class="form-control" />
+            <input name="actualPrice" type="number" step="0.1" placeholder="Actual Price" class="form-control" />
+            <input name="quantity" type="number" step="1" placeholder="Quantity" class="form-control" />
+            <input name="isLive" type="checkbox" placeholder="Is Live" class="form-check-input" />
+            <input name="sCount" type="number" step="1" placeholder="S Count" class="form-control" />
+            <input name="mCount" type="number" step="1" placeholder="M Count" class="form-control" />
+            <input name="lCount" type="number" step="1" placeholder="L Count" class="form-control" />
+            <input name="xlCount" type="number" step="1" placeholder="XL Count" class="form-control" />
+            <input name="categoryId" type="number" step="1" placeholder="CategoryId" class="form-control" />
+            <input name="file" type="file" class="form-control" />
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LongDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShortDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OriginalPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActualPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductSKU)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsLive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.XLCount)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LongDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShortDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImagePath)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OriginalPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActualPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductSKU)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsLive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.XLCount)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

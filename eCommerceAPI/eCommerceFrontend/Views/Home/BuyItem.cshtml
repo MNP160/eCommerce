@@ -16,7 +16,21 @@
         </div>
         <div class="product-price-btn">
             <p>$<span>@Model.ActualPrice </span></p>
-            <button type="button" class="btn-primary text-white">buy now</button>
+            <div>
+                <form action="/Payment/Processing" method="POST">
+                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            data-key="pk_test_2Ggmdu6GjggTolPptU5DTnHA00hwgZb3Di"
+                            data-amount=@Model.ActualPrice
+                            data-name=@Model.Name
+                            data-description="the good stuff"
+                            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                            data-locale="en"
+                            
+                            data-label="Give me money">
+
+                    </script>
+                </form>
+            </div>
         </div>
     </div>
 </div>

@@ -29,8 +29,8 @@ namespace farmersAPi.Utility
             CreateMap<Categories, CategoryDto>();
             CreateMap<CategoryDto, Categories>();
 
-            CreateMap<ProductModel, Products>();
-            CreateMap<Products, ProductModel>();
+            CreateMap<ProductRequest, Products>();
+            CreateMap<Products, ProductRequest>();
 
 
             CreateMap<OrderDetails, OrderDetailsDto>();

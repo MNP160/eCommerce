@@ -32,7 +32,7 @@ namespace farmersAPi.Repositories
             return value;
         }
 
-        public async Task<Products> Create(ProductModel value, IFormFile file)
+        public async Task<Products> Create(ProductRequest value, IFormFile file)
         {
 
             var product = _mapper.Map<Products>(value);

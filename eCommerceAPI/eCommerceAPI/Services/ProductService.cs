@@ -37,7 +37,7 @@ namespace eCommerceAPI.Services
         {
             return await _repository.Create(value);
         }
-        public async Task<Products> Create(ProductModel value, IFormFile file)
+        public async Task<Products> Create(ProductRequest value, IFormFile file)
         {
             return await _repository.Create(value, file);
         }

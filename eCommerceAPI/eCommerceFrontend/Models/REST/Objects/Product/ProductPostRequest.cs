@@ -1,11 +1,10 @@
-﻿using farmersAPi.Utility;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace eCommerceAPI.Utility
+namespace eCommerceFrontend.Models.REST.Objects.Product
 {
     public class ProductPostRequest
     {
@@ -16,11 +15,6 @@ namespace eCommerceAPI.Utility
         {
             ProductRequest = productRequest;
             IFormFile = iFormFile;
-        }
-
-        public ProductPostRequest()
-        {
-
         }
 
     }

@@ -44,26 +44,30 @@ namespace farmersAPi.Utility
         {
             string filename;
             var path = " ";
+            var pathToSend = " ";
             try
             {
                 var extension="."+ file.FileName.Split(".")[file.FileName.Split(".").Length - 1];
                 filename = Guid.NewGuid().ToString() + extension;
 
-                 path = Path.Combine(_accessor.HttpContext.Request.Scheme+ "://"+_accessor.HttpContext.Request.Host+  "/images/", filename);
+                 path = Path.Combine(_hostingEnvironment.WebRootPath, "images", filename);
+                System.Diagnostics.Debug.WriteLine(path);
                 using (var bits = new FileStream(path, FileMode.Create))
                 {
                     await file.CopyToAsync(bits);
                 }
 
-               
 
-            }catch(Exception ex)
+                 pathToSend = _accessor.HttpContext.Request.Scheme + "://" + _accessor.HttpContext.Request.Host + "/images/" + filename;
+                System.Diagnostics.Debug.WriteLine(pathToSend);
+            }
+            catch(Exception ex)
             {
                 return ex.Message;
             }
 
           
-            return path;
+            return pathToSend;
         }
 
     }
