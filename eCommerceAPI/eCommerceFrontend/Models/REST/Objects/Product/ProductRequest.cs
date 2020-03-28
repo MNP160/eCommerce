@@ -8,7 +8,7 @@ namespace eCommerceFrontend.Models.REST.Objects.Product
     public class ProductRequest
     {
         public string Name { get; set; }
-        public string ProductSKU = Guid.NewGuid().ToString();
+        public string ProductSKU { get; set; }
         public string LongDescription { get; set; }
         public string ShortDescription { get; set; }
         public double OriginalPrice { get; set; }

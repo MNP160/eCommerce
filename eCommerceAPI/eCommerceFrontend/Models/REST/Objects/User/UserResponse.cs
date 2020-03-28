@@ -32,6 +32,7 @@ namespace eCommerceFrontend.Models.REST.Objects
 
         #nullable enable
         public string? Role { get; set; }
+        public List<OrdersResponse>? Orders { get; set; }
        
         #nullable disable
     }

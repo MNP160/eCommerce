@@ -8,7 +8,7 @@
         @if (HttpContextAccessor.HttpContext.Session.GetString("JWToken")!=null)
         {
             <li class="nav-item">
-                <a id="manage" class="nav-link text-light"  title="Manage">Hello User!</a>
+                <a id="manage" class="nav-link text-light"  title="Manage" asp-controller="Users" asp-action="Orders">Hello User!</a>
             </li>
             <li class="nav-item">
                 <form id="logoutForm" class="form-inline" asp-controller="Users" asp-action="Logoff" >

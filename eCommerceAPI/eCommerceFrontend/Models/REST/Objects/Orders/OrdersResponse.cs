@@ -21,8 +21,7 @@ namespace eCommerceFrontend.Models.REST.Objects.Order
         public string OrderEmail { get; set; }
         public string OrderZipCode { get; set; }
         public string Size { get; set; }
-        public bool IsCashPayment { get; set; }
-        public bool IsOrderComplete { get; set; }
+        public int Stage { get; set; }
         public List<OrderDetailsResponse> OrderDetails { get; set; }
     }
 }

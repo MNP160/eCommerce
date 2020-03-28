@@ -3,8 +3,8 @@
 
 <div class="row col-auto text-center">
     <div class="col">
-        <a class="btn btn-primary text-white">Add Category</a>
-        <a class="btn btn-primary text-white">Add Product</a>
+        <a asp-controller="Admin" asp-action="ViewCategory" class="btn btn-primary text-white">Categories</a>
+        <a asp-controller="Admin" asp-action="ViewProduct" class="btn btn-primary text-white">Products</a>
     </div>
 </div>
 
@@ -30,7 +30,7 @@
                     <td>@order.Address, @order.Address2, @order.OrderZipCode, @order.City</td>
                     <td>+(359)@order.Phone</td>
                     <td><a asp-controller="Admin" asp-action="ViewOrderItems" asp-route-order="@order.Id">Items</a></td>
-                    <td>@order.IsCashPayment</td>
+                    <td>@order.Stage</td>
                     <td><a asp-controller="Admin" asp-action="UnfulfilOrder" asp-route-id="@order.Id" class="btn btn-primary">Unfulfill</a></td>
                 </tr>
             </text>
@@ -58,7 +58,7 @@
                     <td>@order.Address, @order.Address2, @order.OrderZipCode, @order.City</td>
                     <td>+(359)@order.Phone</td>
                     <td><a asp-controller="Admin" asp-action="ViewOrderItems" asp-route-order="@order.Id">Items</a></td>
-                    <td>@order.IsCashPayment</td>
+                    <td>@order.Stage</td>
                     <td><a asp-controller="Admin" asp-action="FulfilOrder" asp-route-id="@order.Id" class="btn btn-primary">Fulfill</a></td>
                 </tr>
             </text>
