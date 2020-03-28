@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -15,8 +16,8 @@ using Newtonsoft.Json;
 
 namespace eCommerceFrontend.Models.REST.Manager
 {
-    public abstract class RESTManager<T, U>: IRestManager<T, U>
-        where T: class
+    public abstract class RESTManager<ProductResponce, U>: IRestManager<ProductResponce, U>
+        where ProductResponce: class
         where U : class
     {
         private readonly IHttpClientFactory _clientFactory;
@@ -31,9 +32,9 @@ namespace eCommerceFrontend.Models.REST.Manager
         }
 
         [HttpGet]
-        public async Task<T> Get(string controller, string id)
+        public async Task<ProductResponce> Get(string controller, string id)
         {
-            T result = null;
+            ProductResponce result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
             string path = id != null ? $"api/{controller}/{id}" : $"api/{controller}";
@@ -44,16 +45,16 @@ namespace eCommerceFrontend.Models.REST.Manager
                 if (x.IsFaulted)
                     throw x.Exception;
 
-                result = JsonConvert.DeserializeObject<T>(x.Result);
+                result = JsonConvert.DeserializeObject<ProductResponce>(x.Result);
             });
 
             return result;
         }
         
         [HttpGet]
-        public async Task<IEnumerable<T>> Get(string controller)
+        public async Task<IEnumerable<ProductResponce>> Get(string controller)
         {
-            IEnumerable<T> result = null;
+            IEnumerable<ProductResponce> result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
             string path = $"api/{controller}";
@@ -64,16 +65,16 @@ namespace eCommerceFrontend.Models.REST.Manager
                 if (x.IsFaulted)
                     throw x.Exception;
 
-                result = JsonConvert.DeserializeObject<IEnumerable<T>>(x.Result);
+                result = JsonConvert.DeserializeObject<IEnumerable<ProductResponce>>(x.Result);
             });
 
             return result;
         }
 
         [HttpPost]
-        public async Task<T> Post(U postObject, string controller, string id)
+        public async Task<ProductResponce> Post(U postObject, string controller, string id)
         {
-            T result = null;
+            ProductResponce result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
 
@@ -100,16 +101,49 @@ namespace eCommerceFrontend.Models.REST.Manager
                 if (x.IsFaulted)
                     throw x.Exception;
 
-                result = JsonConvert.DeserializeObject<T>(x.Result);
+                result = JsonConvert.DeserializeObject<ProductResponce>(x.Result);
+            });
+
+            return result;
+        }
+
+        [HttpPost]
+        public async Task<ProductResponce> Post(ProductPostRequest postObject, string controller, string id)
+        {
+            ProductResponce result = null;
+
+            var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
+            byte[] data;
+            using (var br = new BinaryReader(postObject.IFormFile.OpenReadStream()))
+                data = br.ReadBytes((int)postObject.IFormFile.OpenReadStream().Length);
+            ByteArrayContent bytes = new ByteArrayContent(data); 
+
+            var multiContent = new MultipartFormDataContent();
+
+            multiContent.Add(bytes);
+            multiContent.Add(new StringContent(JsonConvert.SerializeObject(postObject.ProductRequest), System.Text.Encoding.UTF8));
+            string path = id != null ? $"api/{controller}/{id}" : $"api/{controller}";
+            var response = await client.PostAsync(path, multiContent).ConfigureAwait(false);
+
+            response.EnsureSuccessStatusCode();
+
+
+
+            await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
+            {
+                if (x.IsFaulted)
+                    throw x.Exception;
+
+                result = JsonConvert.DeserializeObject<ProductResponce>(x.Result);
             });
 
             return result;
         }
 
         [HttpPut]
-        public async Task<T> Put(U putObject, string controller)
+        public async Task<ProductResponce> Put(U putObject, string controller)
         {
-            T result = null;
+            ProductResponce result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
             var content = new StringContent(JsonConvert.SerializeObject(putObject), System.Text.Encoding.UTF8, "application/json");
@@ -122,16 +156,16 @@ namespace eCommerceFrontend.Models.REST.Manager
                 if (x.IsFaulted)
                     throw x.Exception;
 
-                result = JsonConvert.DeserializeObject<T>(x.Result);
+                result = JsonConvert.DeserializeObject<ProductResponce>(x.Result);
             });
 
             return result;
         }
 
         [HttpDelete]
-        public async Task<T> Delete(string controller, string id)
+        public async Task<ProductResponce> Delete(string controller, string id)
         {
-            T result = null;
+            ProductResponce result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
             string path = $"api/{controller}/{id}";
@@ -143,7 +177,7 @@ namespace eCommerceFrontend.Models.REST.Manager
                 if (x.IsFaulted)
                     throw x.Exception;
 
-                result = JsonConvert.DeserializeObject<T>(x.Result);
+                result = JsonConvert.DeserializeObject<ProductResponce>(x.Result);
             });
 
             return result;

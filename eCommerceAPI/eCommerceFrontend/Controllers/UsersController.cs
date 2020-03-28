@@ -43,6 +43,7 @@ namespace eCommerceFrontend.Controllers
             HttpContext.Session.TryGetValue("email", out emailByteArray);
 
             var email = System.Text.Encoding.Default.GetString(emailByteArray);
+            
             UserManager um = new UserManager(_clientFactory, _contextAccessor);
             List<UserResponse> allUsers = um.Get();
             int currentId = allUsers.Where(x => x.Email == email).Select(x => x.Id).FirstOrDefault();

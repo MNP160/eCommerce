@@ -114,9 +114,16 @@ namespace farmersAPi.Services
                    throw new ArgumentException("the salt length cannot be different than 128", "storedSalt");
                }*/
 
-            using (var sha256 = SHA256.Create(password))
+            using (var sha256 = SHA256.Create())
             {
-                var computedHash = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                var Hash = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                var sBuilder = new StringBuilder();
+                for (int i = 0; i < Hash.Length; i++)
+                {
+                    sBuilder.Append(Hash[i].ToString("x2"));
+                }
+                string computedHash = sBuilder.ToString();
+                System.Diagnostics.Debug.WriteLine(computedHash.ToString());
                 for (int i = 0; i < computedHash.Length; i++)
                 {
                     if (computedHash[i] != storedHash[i])
