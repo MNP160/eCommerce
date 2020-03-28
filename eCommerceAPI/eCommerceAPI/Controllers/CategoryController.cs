@@ -91,6 +91,8 @@ namespace farmersAPi.Controllers
 
         public async Task<ActionResult<Categories>> Post(Categories value)
         {
+
+            System.Diagnostics.Debug.WriteLine("Testing");
             var entity = await _service.Create(value);
             if (entity != null)
             {

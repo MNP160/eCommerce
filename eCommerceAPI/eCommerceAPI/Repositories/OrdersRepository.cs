@@ -122,8 +122,7 @@ namespace eCommerceAPI.Repositories
             {
                 editedEntity.Address = value.Address;
                 editedEntity.City = value.City;
-                editedEntity.IsCashPayment = value.IsCashPayment;
-                editedEntity.IsOrderComplete = value.IsOrderComplete;
+                editedEntity.Stage = value.Stage;
                 editedEntity.OrderDate = value.OrderDate;
                 editedEntity.OrderEmail = value.OrderEmail;
                 editedEntity.OrderZipCode = value.OrderZipCode;

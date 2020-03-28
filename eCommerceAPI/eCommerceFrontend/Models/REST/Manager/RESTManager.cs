@@ -76,13 +76,13 @@ namespace eCommerceFrontend.Models.REST.Manager
             T result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
-            var content = new StringContent(" ");
-            var multiContent = new MultipartFormDataContent();
+          
+           
             HttpResponseMessage response;
             System.Diagnostics.Debug.WriteLine(postObject.GetType().Name);
             if (postObject.GetType().Name == "ProductPostRequest")
             {
-
+                var multiContent = new MultipartFormDataContent();
 
                 multiContent.Add(new StringContent(JsonConvert.SerializeObject(postObject), System.Text.Encoding.UTF8)); 
                 string path = id != null ? $"api/{controller}/{id}" : $"api/{controller}";
@@ -90,7 +90,7 @@ namespace eCommerceFrontend.Models.REST.Manager
             }
             else
             {
-                content = new StringContent(JsonConvert.SerializeObject(postObject), System.Text.Encoding.UTF8, "application/json");
+                var content = new StringContent(JsonConvert.SerializeObject(postObject), System.Text.Encoding.UTF8, "application/json");
                 string path = id != null ? $"api/{controller}/{id}" : $"api/{controller}";
                 response = await client.PostAsync(path, content).ConfigureAwait(false);
             }

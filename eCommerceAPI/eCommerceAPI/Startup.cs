@@ -6,8 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using eCommerceAPI.Interfaces;
 using eCommerceAPI.Repositories;
 using eCommerceAPI.Services;
+using eCommerceAPI.Utility;
 using farmersAPi.Interfaces;
 using farmersAPi.Models;
 using farmersAPi.Repositories;
@@ -27,7 +29,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Stripe;
+
 using ProductService = eCommerceAPI.Services.ProductService;
 
 namespace farmersAPi
@@ -48,13 +50,11 @@ namespace farmersAPi
             .ReferenceLoopHandling= Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddCors();
-            var stripeSection = Configuration.GetSection("Stripe");
-            services.Configure<StripeSandbox>(stripeSection);
-            var stripeSecrets = stripeSection.Get<StripeSandbox>();
-            System.Diagnostics.Debug.WriteLine("-----------------------------------------------");
-            System.Diagnostics.Debug.WriteLine(stripeSecrets.ClientId);
-            System.Diagnostics.Debug.WriteLine(stripeSecrets.ClientSecret);
-            System.Diagnostics.Debug.WriteLine("-----------------------------------------------");
+            var emailSection = Configuration.GetSection("EmailSender");
+            services.Configure<EmailSender>(emailSection);
+            var emailSettingSection = emailSection.Get<EmailSender>();
+
+           
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<Secret>(appSettingsSection);
             var appSettings = appSettingsSection.Get<Secret>();
@@ -85,7 +85,7 @@ namespace farmersAPi
             services.AddScoped<IUserService, UserService>();
             services.AddTransient<IImageHandler, ImageHandler>();
             services.AddTransient<IImageWriter, ImageWriter>();
-                
+            services.AddSingleton<IMailService, MailService>();   
                                               
                                           
             services.AddSwaggerGen(c=>c.SwaggerDoc("v1", new OpenApiInfo { Title="eCommerceAPI", Version="v1"}));
@@ -106,7 +106,7 @@ namespace farmersAPi
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["ClientSecret"];
+           
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

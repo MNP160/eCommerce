@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using eCommerceAPI.Interfaces;
 using eCommerceAPI.QueryParameters;
 using farmersAPi.DTOs;
 using farmersAPi.Interfaces;
@@ -13,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,12 +30,14 @@ namespace farmersAPi.Controllers
         private readonly Secret _secret;
         private IMapper mapper;
         private readonly APIContext context;
-        public UserController(IUserService service, IOptions<Secret> secret, IMapper map, APIContext _con)
+        private readonly IMailService _mailService;
+        public UserController(IUserService service, IOptions<Secret> secret, IMapper map, APIContext _con, IMailService mailService)
         {
             userService = service;
             _secret = secret.Value;
             mapper = map;
             context = _con;
+            _mailService = mailService;
         }
 
         [HttpPost("authenticate")]
@@ -54,7 +58,7 @@ namespace farmersAPi.Controllers
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]{
-                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                     new Claim(ClaimTypes.Name, user.Id.ToString()),
                      new Claim(ClaimTypes.Role, user.Role)
                 }
                     ),
@@ -95,6 +99,7 @@ namespace farmersAPi.Controllers
                 var registeredUser = context.Users.FirstOrDefault(x => x.Email == model.Email);
                 
                 var mappedUser = mapper.Map<UserDto>(registeredUser);
+                _mailService.SendEmail(registeredUser.Email, registeredUser.FirstName, "successfulRegistration", "you have registered successfully");
                 return Ok(mappedUser);
             }
             catch (Exception ex)
@@ -104,6 +109,8 @@ namespace farmersAPi.Controllers
 
 
         }
+
+       
 
         [HttpGet("")]
 

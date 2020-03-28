@@ -26,8 +26,9 @@ namespace eCommerceAPI.Models
         public string OrderEmail { get; set; }
         public string OrderZipCode { get; set; }
         public string Size { get; set; }
-        public bool IsCashPayment { get; set; }
-        public bool IsOrderComplete { get; set; }
+
+        [Range(1,4)]
+        public int Stage { get; set; }
         public string OrderSKU { get; set; }
            
 

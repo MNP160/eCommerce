@@ -1,4 +1,5 @@
 ﻿using eCommerceAPI.DTOs;
+using eCommerceAPI.Interfaces;
 using eCommerceAPI.Models;
 using eCommerceAPI.QueryParameters;
 using eCommerceAPI.Repositories;
@@ -22,10 +23,12 @@ namespace eCommerceAPI.Controllers
     public class OrdersController :ControllerBase
     {
         private OrdersService _service;
+        private readonly IMailService _mailService;
 
-        public OrdersController(OrdersService service)
+        public OrdersController(OrdersService service, IMailService mailService)
         {
             _service = service;
+            _mailService = mailService;
 
         }
 
@@ -96,25 +99,8 @@ namespace eCommerceAPI.Controllers
             var entity = await _service.Create(value);
             if (entity != null)
             {
-                using (var message = new MailMessage())
-                {
-                    message.To.Add(new MailAddress("mpenev13@gmail.com", "Dearest Customer"));
-                    message.From = new MailAddress("mpenev13@gmail.com", "Best Shopping Platform Ever");
-
-                    message.Subject = "Your order from god knows where";
-                    message.Body = "Dear Customer if you have any questions about your order contact us at" +
-                        "this email with the following order tracking number: " + value.OrderSKU;
-                    message.IsBodyHtml = true;
-
-                    using (var client = new SmtpClient("smtp.gmail.com"))
-                    {
-                        client.Port = 587;
-                        client.Credentials = new NetworkCredential("mpenev13@gmail.com", "redacted");
-                        client.EnableSsl = true;
-                        client.Send(message);
-                    }
-                }
-
+                string body = "your order is being prepared";
+                _mailService.SendEmail(value.OrderEmail, "dearest customer", "your new order", body);
 
 
                 return Ok(entity);

@@ -26,7 +26,7 @@ namespace farmersAPi.Repositories
         {
 
             _context.Category.Add(value);
-            await _context.SaveChangesAsync();
+             await _context.SaveChangesAsync();
             return value;
         }
 
