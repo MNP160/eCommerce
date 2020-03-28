@@ -22,6 +22,7 @@ namespace farmersAPi.DTOs
       
         public string Role { get; set; }
 
+        public ICollection<OrdersDto> Orders { get; set; }
        
       
      

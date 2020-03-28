@@ -22,8 +22,7 @@ namespace eCommerceAPI.DTOs
         public string OrderEmail { get; set; }
         public string OrderZipCode { get; set; }
         public string Size { get; set; }
-        public bool IsCashPayment { get; set; }
-        public bool IsOrderComplete { get; set; }
+        public int Stage { get; set; }
         public string OrderSKU { get; set; }
         public ICollection<OrderDetailsDto> OrderDetails { get; set; }
     }
