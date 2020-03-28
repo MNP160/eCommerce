@@ -76,10 +76,8 @@ namespace eCommerceFrontend.Models.REST.Manager
             T result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
-          
-           
+
             HttpResponseMessage response;
-            System.Diagnostics.Debug.WriteLine(postObject.GetType().Name);
             if (postObject.GetType().Name == "ProductPostRequest")
             {
                 var multiContent = new MultipartFormDataContent();

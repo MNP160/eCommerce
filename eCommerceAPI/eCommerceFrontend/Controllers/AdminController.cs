@@ -39,11 +39,14 @@ namespace eCommerceFrontend.Controllers
         {
             OrderManager orderManager = new OrderManager(_clientFactory, _contextAccessor);
             List<OrdersResponse> orders = orderManager.Get();
-            List<OrdersResponse> fulfilledOrders = orders.Where(x => x.IsOrderComplete).ToList();
-            List<OrdersResponse> unfulfilledOrders = orders.Where(x => !x.IsOrderComplete).ToList();
+            // CHANGE
+            List<OrdersResponse> fulfilledOrders = orders;
+            List<OrdersResponse> unfulfilledOrders = orders;
 
             return View(new AdminView(fulfilledOrders, unfulfilledOrders));
         }
+
+
         public IActionResult ViewOrderItems(int order)
         {
             OrderManager orderManager = new OrderManager(_clientFactory, _contextAccessor);
@@ -61,30 +64,16 @@ namespace eCommerceFrontend.Controllers
             return View(categories);
         }
 
-        public IActionResult AddCategory(string name)
-        {
-            CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
-            CathegoryRequest request = new CathegoryRequest() { Name = name };
-            cm.Post(request);
-            return RedirectToAction("ViewCategory", "Admin");
-        }
         public IActionResult ViewProduct()
         {
             ProductManager pm = new ProductManager(_clientFactory, _contextAccessor);
             List<ProductResponse> products = pm.Get();
-            return View(products);
+            CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
+            List<CathegoryResponse> categories = cm.Get();
+            return View(new ProductView(products, categories));
         }
 
-        public IActionResult ViewProducts(int order)
-        {
-            OrderManager orderManager = new OrderManager(_clientFactory, _contextAccessor);
-            OrdersResponse currentOrder = orderManager.Get($"{order}");
-
-            List<OrderDetailsResponse> products = currentOrder.OrderDetails.ToList();
-            
-            return View(new ProductView(products));
-        }
-
+        #region Redirect 
 
         public IActionResult AddProduct(string name, string longDescription, string shortDescription,
             double originalPrice, double actualPrice, int quantity, bool isLive, int sCount, int mCount,
@@ -93,6 +82,7 @@ namespace eCommerceFrontend.Controllers
             ProductRequest request = new ProductRequest
             {
                 Name = name,
+                ProductSKU = Guid.NewGuid().ToString(),
                 LongDescription = longDescription,
                 ShortDescription = shortDescription,
                 OriginalPrice = originalPrice,
@@ -110,16 +100,15 @@ namespace eCommerceFrontend.Controllers
             ProductPostManager ppm = new ProductPostManager(_clientFactory, _contextAccessor);
             ppm.Post(productPost);
 
-
-            System.Diagnostics.Debug.WriteLine($"{file.FileName}");
-            return View();
+            return RedirectToAction("ViewProduct");
         }
 
-
-        public IActionResult UploadFile(IFormFile file)
+        public IActionResult AddCategory(string name)
         {
-            System.Diagnostics.Debug.WriteLine($"SUCCESS: {file.FileName}");
-            return RedirectToAction("Index");
+            CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
+            CathegoryRequest request = new CathegoryRequest() { Name = name };
+            cm.Post(request);
+            return RedirectToAction("ViewCategory", "Admin");
         }
 
         public IActionResult FulfilOrder(int id)
@@ -128,6 +117,8 @@ namespace eCommerceFrontend.Controllers
             OrdersResponse orderResponse = orderManager.Get($"{id}");
             OrderRequest orderRequest = new OrderRequest
             {
+                OrderSKU = orderResponse.OrderSKU,
+                OrderDate = orderResponse.OrderDate,
                 TotalAmount = orderResponse.TotalAmount,
                 Phone = orderResponse.Phone,
                 City = orderResponse.City,
@@ -136,8 +127,7 @@ namespace eCommerceFrontend.Controllers
                 OrderEmail = orderResponse.OrderEmail,
                 OrderZipCode = orderResponse.OrderZipCode,
                 Size = orderResponse.Size,
-                IsCashPayment = orderResponse.IsCashPayment,
-                IsOrderComplete = true
+                Stage = 1// Change
             };
 
             orderManager.Put(orderRequest);
@@ -151,6 +141,8 @@ namespace eCommerceFrontend.Controllers
             OrdersResponse orderResponse = orderManager.Get($"{id}");
             OrderRequest orderRequest = new OrderRequest
             {
+                OrderSKU = orderResponse.OrderSKU,
+                OrderDate = orderResponse.OrderDate,
                 TotalAmount = orderResponse.TotalAmount,
                 Phone = orderResponse.Phone,
                 City = orderResponse.City,
@@ -159,13 +151,13 @@ namespace eCommerceFrontend.Controllers
                 OrderEmail = orderResponse.OrderEmail,
                 OrderZipCode = orderResponse.OrderZipCode,
                 Size = orderResponse.Size,
-                IsCashPayment = orderResponse.IsCashPayment,
-                IsOrderComplete = false
+                Stage = 1
             };
 
             orderManager.Put(orderRequest);
 
             return RedirectToAction("Index");
         }
+        #endregion
     }
 }
