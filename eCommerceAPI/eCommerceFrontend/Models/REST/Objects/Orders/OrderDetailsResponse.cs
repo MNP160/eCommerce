@@ -9,6 +9,8 @@ namespace eCommerceFrontend.Models.REST.Objects.Orders
 {
     public class OrderDetailsResponse
     {
+        public string Size { get; set; }
+        public string ImagePath { get; set; }
         public string DetailName { get; set; }
         public string DetailPrice { get; set; }
         public string DetailSKU { get; set; }

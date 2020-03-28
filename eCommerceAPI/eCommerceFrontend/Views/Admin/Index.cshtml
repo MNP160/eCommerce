@@ -9,59 +9,142 @@
 </div>
 
 <br />
-<h3>Fulfilled Orders</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Email:</th>
-            <th scope="col">Address:</th>
-            <th scope="col">Phone:</th>
-            <th scope="col">Items:</th>
-            <th scope="col">Cash Payment</th>
-            <th scope="col">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var order in Model.FulfilledOrders)
-        {
-            <text>
-                <tr>
-                    <td>@order.OrderEmail</td>
-                    <td>@order.Address, @order.Address2, @order.OrderZipCode, @order.City</td>
-                    <td>+(359)@order.Phone</td>
-                    <td><a asp-controller="Admin" asp-action="ViewOrderItems" asp-route-order="@order.Id">Items</a></td>
-                    <td>@order.Stage</td>
-                    <td><a asp-controller="Admin" asp-action="UnfulfilOrder" asp-route-id="@order.Id" class="btn btn-primary">Unfulfill</a></td>
-                </tr>
-            </text>
-        }
-    </tbody>
-</table>
 
-<h3>Unfulfilled Orders</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Full Name:</th>
-            <th scope="col">Address:</th>
-            <th scope="col">Phone:</th>
-            <th scope="col">Items:</th>
-            <th scope="col">Cash Payment</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var order in Model.UnforefilledOrders)
-        {
-            <text>
-                <tr>
-                    <td>@order.OrderEmail</td>
-                    <td>@order.Address, @order.Address2, @order.OrderZipCode, @order.City</td>
-                    <td>+(359)@order.Phone</td>
-                    <td><a asp-controller="Admin" asp-action="ViewOrderItems" asp-route-order="@order.Id">Items</a></td>
-                    <td>@order.Stage</td>
-                    <td><a asp-controller="Admin" asp-action="FulfilOrder" asp-route-id="@order.Id" class="btn btn-primary">Fulfill</a></td>
-                </tr>
-            </text>
-        }
-    </tbody>
-</table>
+@if (Model.AcceptedOrders.Count > 0)
+{
+    <h3>Accepted:</h3>
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Email:</th>
+                <th scope="col">Address:</th>
+                <th scope="col">Phone:</th>
+                <th scope="col">Items:</th>
+                <th scope="col">Cash Payment</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.AcceptedOrders)
+            {
+                <text>
+                    <tr>
+                        <td>@order.OrderEmail</td>
+                        <td>@order.Address, @order.Address2, @order.OrderZipCode, @order.City</td>
+                        <td>+(359)@order.Phone</td>
+                        <td><a asp-controller="Admin" asp-action="ViewOrderItems" asp-route-order="@order.Id">Items</a></td>
+                        <td>@order.Stage</td>
+                        <td>
+                            <a asp-controller="Admin" asp-action="MoveForward" asp-route-id="@order.Id" class="btn btn-sm btn-primary">Forward</a>
+                        </td>
+                    </tr>
+                </text>
+            }
+        </tbody>
+    </table>
+}
+
+@if (Model.ProcessingOrders.Count > 0)
+{
+    <h3>Processing:</h3>
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Email:</th>
+                <th scope="col">Address:</th>
+                <th scope="col">Phone:</th>
+                <th scope="col">Items:</th>
+                <th scope="col">Cash Payment</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.ProcessingOrders)
+            {
+                <text>
+                    <tr>
+                        <td>@order.OrderEmail</td>
+                        <td>@order.Address, @order.Address2, @order.OrderZipCode, @order.City</td>
+                        <td>+(359)@order.Phone</td>
+                        <td><a asp-controller="Admin" asp-action="ViewOrderItems" asp-route-order="@order.Id">Items</a></td>
+                        <td>@order.Stage</td>
+                        <td>
+                            <a asp-controller="Admin" asp-action="MoveBack" asp-route-id="@order.Id" class="btn btn-sm btn-primary">Back</a>
+                            <a asp-controller="Admin" asp-action="MoveForward" asp-route-id="@order.Id" class="btn btn-sm btn-primary">Forward</a>
+                        </td>
+                    </tr>
+                </text>
+            }
+        </tbody>
+    </table>
+}
+
+@if (Model.TravellingOrders.Count > 0)
+{
+    <h3>Travelling:</h3>
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Email:</th>
+                <th scope="col">Address:</th>
+                <th scope="col">Phone:</th>
+                <th scope="col">Items:</th>
+                <th scope="col">Cash Payment</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.TravellingOrders)
+            {
+                <text>
+                    <tr>
+                        <td>@order.OrderEmail</td>
+                        <td>@order.Address, @order.Address2, @order.OrderZipCode, @order.City</td>
+                        <td>+(359)@order.Phone</td>
+                        <td><a asp-controller="Admin" asp-action="ViewOrderItems" asp-route-order="@order.Id">Items</a></td>
+                        <td>@order.Stage</td>
+                        <td>
+                            <a asp-controller="Admin" asp-action="MoveBack" asp-route-id="@order.Id" class="btn btn-sm btn-primary">Back</a>
+                            <a asp-controller="Admin" asp-action="MoveForward" asp-route-id="@order.Id" class="btn btn-sm btn-primary">Forward</a>
+                        </td>
+                    </tr>
+                </text>
+            }
+        </tbody>
+    </table>
+}
+
+@if (Model.DeliveredOrders.Count > 0)
+{
+    <h3>Delivered:</h3>
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Email:</th>
+                <th scope="col">Address:</th>
+                <th scope="col">Phone:</th>
+                <th scope="col">Items:</th>
+                <th scope="col">Cash Payment</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.DeliveredOrders)
+            {
+                <text>
+                    <tr>
+                        <td>@order.OrderEmail</td>
+                        <td>@order.Address, @order.Address2, @order.OrderZipCode, @order.City</td>
+                        <td>+(359)@order.Phone</td>
+                        <td><a asp-controller="Admin" asp-action="ViewOrderItems" asp-route-order="@order.Id">Items</a></td>
+                        <td>@order.Stage</td>
+                        <td>
+                            <a asp-controller="Admin" asp-action="MoveBack" asp-route-id="@order.Id" class="btn btn-sm btn-primary">Back</a>
+                        </td>
+                    </tr>
+                </text>
+            }
+        </tbody>
+    </table>
+
+}

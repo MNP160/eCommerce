@@ -7,7 +7,7 @@
     var currentOrders = Model.Orders.Where(x => x.Stage == 1 || x.Stage == 2 || x.Stage == 3).ToList();
     var finishedOrders = Model.Orders.Where(x => x.Stage == 4).ToList();
 
-    string foo(int orderStatus)
+    string getStage(int orderStatus)
     {
         switch (orderStatus)
         {
@@ -42,7 +42,7 @@
                 <div class="container mb-1">
                     <div class="border border-dark bg-dark text-white">
                         <div class="row pl-2 pr-2">
-                            <div class="text-left col-6 font-weight-bold">Status: @foo(order.Stage).ToUpper()</div>
+                            <div class="text-left col-6 font-weight-bold">Status: @getStage(order.Stage).ToUpper()</div>
                             <div class="text-right col-6">Order # @order.OrderSKU</div>
                         </div>
                         <div class="row pl-2 pr-2">
@@ -97,7 +97,7 @@
                 <div class="container mb-1">
                     <div class="border border-dark">
                         <div class="row pl-2 pr-2">
-                            <div class="text-left col-6 font-weight-bold">Status: @foo(order.Stage).ToUpper()</div>
+                            <div class="text-left col-6 font-weight-bold">Status: @getStage(order.Stage).ToUpper()</div>
                             <div class="text-right col-6">Order # @order.OrderSKU</div>
                         </div>
                         <div class="row pl-2 pr-2">

@@ -8,13 +8,18 @@ namespace eCommerceFrontend.Models.View.Admin_Model
 {
     public class AdminView
     {
-        public List<OrdersResponse> FulfilledOrders = new List<OrdersResponse>();
-        public List<OrdersResponse> UnforefilledOrders = new List<OrdersResponse>();
+        public List<OrdersResponse> AcceptedOrders = new List<OrdersResponse>();
+        public List<OrdersResponse> ProcessingOrders = new List<OrdersResponse>();
+        public List<OrdersResponse> TravellingOrders = new List<OrdersResponse>();
+        public List<OrdersResponse> DeliveredOrders = new List<OrdersResponse>();
 
-        public AdminView(List<OrdersResponse> fulfilledOrders, List<OrdersResponse> unfulfilledOrders)
+
+        public AdminView(List<OrdersResponse> acceptedOrders, List<OrdersResponse> processingOrders, List<OrdersResponse> travellingOrders, List<OrdersResponse> deliveredOrders)
         {
-            FulfilledOrders = fulfilledOrders;
-            UnforefilledOrders = unfulfilledOrders;
+            AcceptedOrders = acceptedOrders;
+            ProcessingOrders = processingOrders;
+            TravellingOrders = travellingOrders;
+            DeliveredOrders = deliveredOrders;
         }
 
     }

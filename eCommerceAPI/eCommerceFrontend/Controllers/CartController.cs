@@ -2,6 +2,7 @@
 using eCommerceFrontend.Models.REST.Manager;
 using eCommerceFrontend.Models.REST.Objects;
 using eCommerceFrontend.Models.REST.Objects.Orders;
+using eCommerceFrontend.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -22,12 +23,14 @@ namespace eCommerceFrontend.Controllers
             _clientFactory = clientFactory;
             _contextAccessor = contextAccessor;
         }
+
+        //[Authorize(Roles.USER)]
         public IActionResult Index()
         {
             var cart = SessionHelper.GetObjectFronJson<List<OrderDetailsRequest>>(HttpContext.Session, "cart");
             ViewBag.cart = cart;
             ViewBag.Total = cart.Sum(item=>item.DetailPrice*item.DetailQuantity);
-            return View();
+            return View(cart);
         }
 
 
@@ -45,6 +48,9 @@ namespace eCommerceFrontend.Controllers
             or.TotalAmount = TotalAmount;
             or.OrderZipCode = OrderZipCode;
             or.Phone = Phone;
+            or.OrderSKU = new Guid().ToString();
+            or.OrderDate = DateTime.UtcNow.ToString();
+            or.Stage = 1;
 
             var responce =  om.Post(or);
 
@@ -64,30 +70,27 @@ namespace eCommerceFrontend.Controllers
 
 
 
-        public IActionResult AddToCart(ProductResponse product)
+        public IActionResult AddToCart(string name, double price, int quantity, string sku, string size, string imagePath)
         {
-
-          
             if(SessionHelper.GetObjectFronJson<List<OrderDetailsRequest>>(HttpContext.Session, "cart") == null)
             {
                 
                 List<OrderDetailsRequest> cart = new List<OrderDetailsRequest>();
-                cart.Add(new OrderDetailsRequest { DetailName = product.Name, DetailPrice = product.ActualPrice, DetailQuantity=1, DetailsSKU = product.ProductSKU });
+                cart.Add(new OrderDetailsRequest { DetailName = name, DetailPrice = (price*quantity), DetailQuantity=quantity, DetailsSKU = sku, Size = size, ImagePath = imagePath});
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
 
             }
             else
             {
                 List<OrderDetailsRequest> cart = SessionHelper.GetObjectFronJson<List<OrderDetailsRequest>>(HttpContext.Session, "cart");
-                int index = IsExists(product.Name);
+                int index = IsExists(name);
                 if (index != -1)
                 {
                     cart[index].DetailQuantity++;
                 }
                 else
                 {
-                    cart.Add(new OrderDetailsRequest { DetailName = product.Name, DetailPrice = product.ActualPrice, DetailQuantity = 1, DetailsSKU = product.ProductSKU });
-
+                    cart.Add(new OrderDetailsRequest { DetailName = name, DetailPrice = (price * quantity), DetailQuantity = quantity, DetailsSKU = sku, Size = size, ImagePath = imagePath });
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
@@ -105,9 +108,6 @@ namespace eCommerceFrontend.Controllers
             cart.RemoveAt(index);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return RedirectToAction("Index");
-
-
-
         }
 
 
