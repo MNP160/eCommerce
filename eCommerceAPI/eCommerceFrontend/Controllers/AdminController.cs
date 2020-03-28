@@ -34,18 +34,35 @@ namespace eCommerceFrontend.Controllers
             _contextAccessor = contextAccessor;
         }
 
-        [Authorize(Roles.USER)]
+        [Authorize(Roles.ADMIN)]
         public IActionResult Index()
         {
             OrderManager orderManager = new OrderManager(_clientFactory, _contextAccessor);
             List<OrdersResponse> orders = orderManager.Get();
-            // CHANGE
-            List<OrdersResponse> fulfilledOrders = orders;
-            List<OrdersResponse> unfulfilledOrders = orders;
-
-            return View(new AdminView(fulfilledOrders, unfulfilledOrders));
+            List<OrdersResponse> acceptedOrders = orders.Where(x => x.Stage == 1).ToList();
+            List<OrdersResponse> processingOrders = orders.Where(x => x.Stage == 2).ToList();
+            List<OrdersResponse> travellingOrders = orders.Where(x => x.Stage == 3).ToList();
+            List<OrdersResponse> deliveredOrders = orders.Where(x => x.Stage == 4).ToList();
+            
+            return View(new AdminView(acceptedOrders, processingOrders, travellingOrders, deliveredOrders));
         }
 
+        private string getStage(int orderStatus)
+        {
+            switch (orderStatus)
+            {
+                case 1:
+                    return "Accepted";
+                case 2:
+                    return "Processing";
+                case 3:
+                    return "Travelling";
+                case 4:
+                    return "Delivered";
+                default:
+                    return "N/A";
+            }
+        }
 
         public IActionResult ViewOrderItems(int order)
         {
@@ -111,10 +128,14 @@ namespace eCommerceFrontend.Controllers
             return RedirectToAction("ViewCategory", "Admin");
         }
 
-        public IActionResult FulfilOrder(int id)
+        public IActionResult MoveForward(int id)
         {
             OrderManager orderManager = new OrderManager(_clientFactory, _contextAccessor);
             OrdersResponse orderResponse = orderManager.Get($"{id}");
+
+            if ((orderResponse.Stage + 1) > 4)
+                return NotFound();
+
             OrderRequest orderRequest = new OrderRequest
             {
                 OrderSKU = orderResponse.OrderSKU,
@@ -126,19 +147,21 @@ namespace eCommerceFrontend.Controllers
                 Address2 = orderResponse.Address2,
                 OrderEmail = orderResponse.OrderEmail,
                 OrderZipCode = orderResponse.OrderZipCode,
-                Size = orderResponse.Size,
-                Stage = 1// Change
+                Stage = orderResponse.Stage + 1
             };
 
             orderManager.Put(orderRequest);
 
             return RedirectToAction("Index");
         }
-
-        public IActionResult UnfulfilOrder(int id)
+        public IActionResult MoveBack(int id)
         {
             OrderManager orderManager = new OrderManager(_clientFactory, _contextAccessor);
             OrdersResponse orderResponse = orderManager.Get($"{id}");
+
+            if ((orderResponse.Stage + 1) < 1)
+                return NotFound();
+
             OrderRequest orderRequest = new OrderRequest
             {
                 OrderSKU = orderResponse.OrderSKU,
@@ -150,8 +173,7 @@ namespace eCommerceFrontend.Controllers
                 Address2 = orderResponse.Address2,
                 OrderEmail = orderResponse.OrderEmail,
                 OrderZipCode = orderResponse.OrderZipCode,
-                Size = orderResponse.Size,
-                Stage = 1
+                Stage = orderResponse.Stage - 1
             };
 
             orderManager.Put(orderRequest);

@@ -1,0 +1,83 @@
+﻿@model IEnumerable<eCommerceFrontend.Models.REST.Objects.Orders.OrderDetailsRequest>
+
+@{
+    ViewData["Title"] = "Index";
+    var totalAmount = Model.Sum(x => x.DetailPrice);
+}
+
+<div class="container">
+
+    <form asp-controller="Cart" asp-action="BuyCart" method="post" class="pt-2">
+        <input type="hidden" name="TotalAmount" value="@totalAmount" />
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Email</label>
+                <input type="email" name="OrderEmail" class="form-control" placeholder="Email">
+            </div>
+            <div class="form-group col-md-6">
+                <label>Phone Number</label>
+                <input type="text" name="Phone" class="form-control" placeholder="Phone Number">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Address</label>
+            <input type="text" name="Address" class="form-control" placeholder="1234 Main St">
+        </div>
+        <div class="form-group">
+            <label>Address 2</label>
+            <input type="text" name="Address2" class="form-control" placeholder="Apartment, studio, or floor">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputCity">City</label>
+                <input type="text" name="City" class="form-control" >
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputZip">Zip</label>
+                <input type="text" name="OrderZipCode" class="form-control">
+            </div>
+            <div class="form-group col-md-4 ">
+                <label>Total Amount: </label>
+                <p class="align-self-center" style="font-size:16px;">@totalAmount</p>
+            </div>
+        </div>
+
+        <input type="submit" class="btn btn-block btn-success text-white">Buy</input>
+
+    </form>
+
+    <div class="container-fluid pt-3">
+        <div class="row">
+
+            <div class="col-12">
+                @foreach (var order in Model)
+                {
+                    <div class="row border mb-2">
+                        <div class="col-2">
+                            <img src="~/img/notfound.png" class="img-fluid" />
+                        </div>
+                        <div class="col-9 pt-3 pb-3 pl-3 align-self-center">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4><span class="text-dark font-weight-bold">@order.DetailName </span>x @order.DetailQuantity <span class="text-muted">(Size: @order.Size)</span></h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 ">
+                                    <h5>Total Price: $@order.DetailPrice</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1 justify-content-center align-self-center">
+                            <h1><a asp-controller="Cart" asp-action="Remove" asp-route-name="@order.DetailName"><i class="fa fa-trash text-danger"></i></a></h1>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>

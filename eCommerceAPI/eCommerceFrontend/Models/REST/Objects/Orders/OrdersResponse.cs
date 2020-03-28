@@ -20,7 +20,6 @@ namespace eCommerceFrontend.Models.REST.Objects.Order
         public string OrderDate { get; set; }
         public string OrderEmail { get; set; }
         public string OrderZipCode { get; set; }
-        public string Size { get; set; }
         public int Stage { get; set; }
         public List<OrderDetailsResponse> OrderDetails { get; set; }
     }

@@ -36,16 +36,19 @@ namespace eCommerceFrontend.Controllers
 
             CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
             var allCategories = cm.Get();
-            var selectedCategories = allCategories; // If no categories are selected, display all.
+            var selectedCategories = new List<CathegoryResponse>(); 
 
-            // If a category is selected
-            // And that category id exists
-            // And that category contains more than 1 product
-            // Then display items for that category
-            // Otherwise display all
-            if (category != null && selectedCategories.Any(x => x.Id == category && x.Products.Count > 0))
+            if (category != null && allCategories.Any(x => x.Id == category && x.Products.Count > 0))
             {
                 selectedCategories = allCategories.Where(x => x.Id == category).ToList();
+            }
+            else if (category != null && (!selectedCategories.Any(x => x.Id == category) || (selectedCategories.Any(x => x.Products.Count == 0))))
+            {
+                selectedCategories.Clear();
+            }
+            else if(category == null)
+            {
+                selectedCategories = allCategories;
             }
 
             List<ProductResponse> allProducts = new List<ProductResponse>();
