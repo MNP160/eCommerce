@@ -25,7 +25,7 @@ namespace farmersAPi.Repositories
         public async Task<Categories> Create(Categories value)
         {
 
-            _context.Set<Categories>().Add(value);
+            _context.Category.Add(value);
             await _context.SaveChangesAsync();
             return value;
         }
