@@ -25,7 +25,7 @@ namespace eCommerceAPI.Models
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
         public string OrderEmail { get; set; }
         public string OrderZipCode { get; set; }
-        public string Size { get; set; }
+       
 
         [Range(1,4)]
         public int Stage { get; set; }

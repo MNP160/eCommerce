@@ -44,8 +44,8 @@ namespace farmersAPi.Controllers
         [AllowAnonymous]
         public IActionResult Authenticate([FromBody] AuthenticateModel model)
         {
-            // var user = userService.Authenticate(model.Email, model.Password);
-            var user = context.Users.FirstOrDefault(x => x.Email == model.Email);
+             var user = userService.Authenticate(model.Email, model.Password);
+           // var user = context.Users.FirstOrDefault(x => x.Email == model.Email);
 
             if (user == null)
             {

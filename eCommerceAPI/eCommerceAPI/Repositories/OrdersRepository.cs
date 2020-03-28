@@ -35,7 +35,7 @@ namespace eCommerceAPI.Repositories
             foreach(var item in orderItems)
             {
                 specificProduct = products.FirstOrDefault(x => x.ProductSKU == item.DetailSKU);
-                switch (order.Size)
+                switch (item.Size)
                 {
                     case "S":
                         specificProduct.SCount -= item.DetailQuantity;
@@ -127,7 +127,7 @@ namespace eCommerceAPI.Repositories
                 editedEntity.OrderEmail = value.OrderEmail;
                 editedEntity.OrderZipCode = value.OrderZipCode;
                 editedEntity.Phone = value.Phone;
-                editedEntity.Size = value.Size;
+               
                 editedEntity.TotalAmount = value.TotalAmount;
                
 

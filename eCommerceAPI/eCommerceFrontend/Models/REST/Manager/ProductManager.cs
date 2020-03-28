@@ -1,5 +1,6 @@
 ﻿using eCommerceFrontend.Models.REST.Objects;
 using eCommerceFrontend.Models.REST.Objects.Product;
+
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
@@ -66,6 +67,8 @@ namespace eCommerceFrontend.Models.REST.Manager
 
         public ProductResponse Post(ProductPostRequest product)
         {
+          
+
 
 
             return base.Post(product, "Product", null).Result;

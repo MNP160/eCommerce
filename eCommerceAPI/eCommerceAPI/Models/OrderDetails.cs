@@ -19,7 +19,8 @@ namespace eCommerceAPI.Models
 
         
         public string DetailSKU { get; set; }
-        
+        public string Size { get; set; }
+        public string ImagePath { get; set; }
         public int DetailQuantity { get; set; }
                       
 

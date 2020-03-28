@@ -116,17 +116,19 @@ namespace farmersAPi
 
             app.UseRouting();
             app.UseSwagger();
-            app.UseDirectoryBrowser(new DirectoryBrowserOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images")),
-                RequestPath = new PathString("/images")
-            }
-                );
+            /*  app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+              {
+                  FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images")),
+                  RequestPath = new PathString("/images")
+              }
+                  );*/
             app.UseCors(x =>
                   x.AllowAnyOrigin()
                  .AllowAnyMethod()
                .AllowAnyHeader()
              );
+
+            app.UseStaticFiles();
             app.UseAuthorization();
 
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "eCommerceAPI"));

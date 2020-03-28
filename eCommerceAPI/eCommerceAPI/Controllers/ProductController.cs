@@ -110,9 +110,9 @@ namespace farmersAPi.Controllers
         [HttpPost("")]
         [Consumes("multipart/form-data", "application/json")]
 
-        public async Task<ActionResult<Products>> Post([FromForm]ProductPostRequest productPost)
+        public async Task<ActionResult<Products>> Post([FromForm] ProductRequest ProductRequest, IFormFile IFormFile)
         {
-           var createdProduct= await _service.Create(productPost.ProductRequest, productPost.IFormFile);
+           var createdProduct= await _service.Create(ProductRequest, IFormFile);
             if (createdProduct != null)
             {
                 return Ok(createdProduct);
