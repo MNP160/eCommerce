@@ -34,7 +34,7 @@ namespace eCommerceFrontend.Controllers
             _contextAccessor = contextAccessor;
         }
 
-        [Authorize(Roles.ADMIN)]
+        [Authorize(Roles.USER)]
         public IActionResult Index()
         {
             OrderManager orderManager = new OrderManager(_clientFactory, _contextAccessor);

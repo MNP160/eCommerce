@@ -26,7 +26,9 @@ namespace farmersAPi.Models
 
             modelBuilder.Entity<Users>()
                  .HasMany(o => o.Orders)
-                 .WithOne(u => u.User);
+                 .WithOne(u => u.User)
+                 .HasForeignKey(o=>o.UserId)
+                 ;
 
             modelBuilder.Entity<Categories>()
                 .HasMany(p => p.Products)

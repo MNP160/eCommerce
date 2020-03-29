@@ -26,46 +26,13 @@ namespace eCommerceAPI.Repositories
         }
 
 
-        private  async Task ReduceProductQuantityForOrder(Orders order)
-        {
-            var orderItems = _context.OrderDetails.Where(x=>x.OrderId==order.Id);
-            var products = _context.Product.ToList();
-            
-            Products specificProduct = null;
-            foreach(var item in orderItems)
-            {
-                specificProduct = products.FirstOrDefault(x => x.ProductSKU == item.DetailSKU);
-                switch (item.Size)
-                {
-                    case "S":
-                        specificProduct.SCount -= item.DetailQuantity;
-                        break;
-                    case "M":
-                        specificProduct.MCount -= item.DetailQuantity;
-                        break;
-                    case "L":
-                        specificProduct.LCount -= item.DetailQuantity;
-                        break;
-                    case "XL":
-                        specificProduct.XLCount -= item.DetailQuantity;
-                        break;
-                }
-                _context.Product.Update(specificProduct);
-
-              
-                specificProduct = null;
-            }
-            await _context.SaveChangesAsync();
-
-                     
-        }
-
+       
       
 
 
         public async Task<Orders> Create(Orders value)
         {
-            await ReduceProductQuantityForOrder(value);
+         
             _context.Set<Orders>().Add(value);
             await _context.SaveChangesAsync();
             return value;

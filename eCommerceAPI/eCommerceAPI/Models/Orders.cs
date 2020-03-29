@@ -32,7 +32,7 @@ namespace eCommerceAPI.Models
         public string OrderSKU { get; set; }
            
 
-
+        public int? UserId { get; set; }
         public  virtual Users User { get; set; }
 
         public  virtual ICollection<OrderDetails> OrderDetails { get; set; }

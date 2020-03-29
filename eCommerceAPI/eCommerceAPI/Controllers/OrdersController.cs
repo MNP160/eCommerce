@@ -100,7 +100,7 @@ namespace eCommerceAPI.Controllers
             if (entity != null)
             {
                 string body = "your order is being prepared";
-                _mailService.SendEmail(value.OrderEmail, "dearest customer", "your new order", body);
+             //   _mailService.SendEmail(value.OrderEmail, "dearest customer", "your new order", body);
 
 
                 return Ok(entity);

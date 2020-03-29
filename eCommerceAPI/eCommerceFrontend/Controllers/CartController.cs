@@ -37,7 +37,14 @@ namespace eCommerceFrontend.Controllers
 
         public IActionResult BuyCart(double TotalAmount, string Phone, string City, string Address, string Address2, string OrderEmail, string OrderZipCode)
         {
-         
+            byte[] emailByteArray;
+            HttpContext.Session.TryGetValue("email", out emailByteArray);
+
+            var email = System.Text.Encoding.Default.GetString(emailByteArray);
+
+            UserManager um = new UserManager(_clientFactory, _contextAccessor);
+            List<UserResponse> allUsers = um.Get();
+            var currentUser = allUsers.FirstOrDefault(x=>x.Email==email);
 
             OrderManager om = new OrderManager(_clientFactory, _contextAccessor);
             OrderRequest or = new OrderRequest();
@@ -51,7 +58,7 @@ namespace eCommerceFrontend.Controllers
             or.OrderSKU = new Guid().ToString();
             or.OrderDate = DateTime.UtcNow.ToString();
             or.Stage = 1;
-
+            or.UserId = currentUser.Id;
             var responce =  om.Post(or);
 
             OrderItemsManager odm = new OrderItemsManager(_clientFactory, _contextAccessor);

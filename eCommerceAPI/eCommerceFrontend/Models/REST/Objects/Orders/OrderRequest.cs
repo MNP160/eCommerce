@@ -17,5 +17,6 @@ namespace eCommerceFrontend.Models.REST.Objects.Orders
         public string OrderEmail { get; set; }
         public string OrderZipCode { get; set; }
         public int Stage { get; set; }
+        public int UserId { get; set; }
     }
 }
