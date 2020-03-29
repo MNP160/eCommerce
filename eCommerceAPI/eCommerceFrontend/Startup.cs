@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using eCommerceFrontend.Utility;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -59,12 +61,13 @@ namespace eCommerceFrontend
                     ClockSkew = TimeSpan.Zero
                };
            });
+           
 
             services.AddControllersWithViews();
             services.AddHttpClient(); // Http Client Factory
             services.AddHttpClient("ecoproduce", c =>
             {
-                c.BaseAddress = new Uri("http://ecoproduce.eu/");
+                c.BaseAddress = new Uri("http://localhost/ecommerceAPI/");
             });
         }
 
@@ -77,7 +80,8 @@ namespace eCommerceFrontend
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                //app.UseExceptionHandler("/Home/Error");
+                app.UseDeveloperExceptionPage();
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
