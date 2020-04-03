@@ -1,6 +1,9 @@
 ﻿using eCommerceAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,10 +47,19 @@ namespace farmersAPi.Models
             modelBuilder.Entity<Products>().Property(p => p.ProductSKU).ValueGeneratedOnAdd();
 
 
-           
+            /* var valueComparer = new ValueComparer<ICollection<Dictionary<string, int>>>(
+                  (c1, c2) => c1.SequenceEqual(c2),
+                   c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                   c => (ICollection<Dictionary<string, int>>)c.ToHashSet());*/
+
+            modelBuilder.Entity<Products>()
+                .Property(p => p.Size)
+                .HasConversion(s => JsonConvert.SerializeObject(s),
+                s => JsonConvert.DeserializeObject<Dictionary<string, int>>(s));
+               
 
 
-
+            
 
         }
 

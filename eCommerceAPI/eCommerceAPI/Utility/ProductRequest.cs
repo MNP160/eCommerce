@@ -14,13 +14,10 @@ namespace farmersAPi.Utility
         
         public double OriginalPrice { get; set; }
         public double ActualPrice { get; set; }
-        
-        public int Quantity { get; set; }
+
+        public Dictionary<string, int> Size { get; set; } = new Dictionary<string, int>();
         public bool IsLive { get; set; }
-        public int SCount { get; set; } = 0;
-        public int MCount { get; set; } = 0;
-        public int LCount { get; set; } = 0;
-        public int XLCount { get; set; } = 0;
+        
         public int CategoryId { get; set; }
        
 

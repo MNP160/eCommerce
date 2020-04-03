@@ -24,7 +24,7 @@ namespace eCommerceAPI.Repositories
             _mapper = map;
         }
 
-        private async Task ReduceProductQuantityForOrder(OrderDetails order)
+       /* private async Task ReduceProductQuantityForOrder(OrderDetails order)
         {
           
            
@@ -55,12 +55,12 @@ namespace eCommerceAPI.Repositories
             await _context.SaveChangesAsync();
 
 
-        }
+        }*/
 
 
         public async Task<OrderDetails> Create(OrderDetails value)
         {
-            await ReduceProductQuantityForOrder(value);
+          //  await ReduceProductQuantityForOrder(value);
             _context.Set<OrderDetails>().Add(value);
             await _context.SaveChangesAsync();
             return value;

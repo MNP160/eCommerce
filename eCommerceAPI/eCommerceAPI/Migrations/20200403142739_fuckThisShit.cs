@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eCommerceAPI.Migrations
 {
-    public partial class cleverName : Migration
+    public partial class fuckThisShit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,13 +50,9 @@ namespace eCommerceAPI.Migrations
                     ImagePath = table.Column<string>(nullable: true),
                     OriginalPrice = table.Column<double>(nullable: false),
                     ActualPrice = table.Column<double>(nullable: false),
-                    ProductSKU = table.Column<Guid>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false),
+                    ProductSKU = table.Column<string>(nullable: true),
                     IsLive = table.Column<bool>(nullable: false),
-                    SCount = table.Column<int>(nullable: false),
-                    MCount = table.Column<int>(nullable: false),
-                    LCount = table.Column<int>(nullable: false),
-                    XLCount = table.Column<int>(nullable: false),
+                    Size = table.Column<string>(nullable: true),
                     CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -84,9 +80,8 @@ namespace eCommerceAPI.Migrations
                     OrderDate = table.Column<DateTime>(nullable: false),
                     OrderEmail = table.Column<string>(nullable: true),
                     OrderZipCode = table.Column<string>(nullable: true),
-                    Size = table.Column<string>(nullable: true),
-                    IsCashPayment = table.Column<bool>(nullable: false),
-                    IsOrderComplete = table.Column<bool>(nullable: false),
+                    Stage = table.Column<int>(nullable: false),
+                    OrderSKU = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -109,7 +104,9 @@ namespace eCommerceAPI.Migrations
                     DetailName = table.Column<string>(nullable: true),
                     DetailPrice = table.Column<double>(nullable: false),
                     DetailSKU = table.Column<string>(nullable: true),
-                    DetailQuantity = table.Column<int>(nullable: false),
+                    Size = table.Column<string>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false),
+                    ImagePath = table.Column<string>(nullable: true),
                     OrderId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

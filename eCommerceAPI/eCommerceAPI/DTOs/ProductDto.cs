@@ -18,12 +18,9 @@ namespace farmersAPi.DTOs
         public double OriginalPrice { get; set; }
         public double ActualPrice { get; set; }
         public string ProductSKU { get; set; }
-        public int Quantity { get; set; }
+        public Dictionary<string, int> Size { get; set; } = new Dictionary<string, int>();
         public bool IsLive { get; set; }
-        public int SCount { get; set; } 
-        public int MCount { get; set; } 
-        public int LCount { get; set; } 
-        public int XLCount { get; set; } 
+      
 
         //public CathegoryDto cathegory { get; set; }
 
