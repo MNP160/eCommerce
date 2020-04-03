@@ -144,7 +144,7 @@ namespace eCommerceFrontend.Controllers
                 ActualPrice = actualPrice,
                 IsLive = isLive,
                 Size = size,
-                CathegoryId = categoryId
+                CategoryId = categoryId
             };
 
             ProductPostRequest productPost = new ProductPostRequest(request, file);
@@ -177,7 +177,7 @@ namespace eCommerceFrontend.Controllers
                 ActualPrice = product.ActualPrice,
                 IsLive = product.IsLive,
                 Size = dictionary,
-                CathegoryId = categoryId
+                CategoryId = categoryId
             };
 
             pm.Put(request);
@@ -207,7 +207,7 @@ namespace eCommerceFrontend.Controllers
                 ActualPrice = product.ActualPrice,
                 IsLive = product.IsLive,
                 Size = dictionary,
-                CathegoryId = categoryId
+                CategoryId = categoryId
             };
 
             pm.Put(request);

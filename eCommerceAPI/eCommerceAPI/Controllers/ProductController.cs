@@ -111,7 +111,7 @@ namespace farmersAPi.Controllers
        
 
 
-        public async Task<ActionResult<Products>> Post([FromBody]ProductRequest ProductRequest)
+        public async Task<ActionResult<ProductDto>> Post(ProductRequest ProductRequest)
         {
            var createdProduct= await _service.Create(ProductRequest);
             if (createdProduct != null)

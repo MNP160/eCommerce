@@ -37,7 +37,7 @@ namespace eCommerceAPI.Services
             return await _repository.Create(value);
         }
 
-        public async Task<Products> Create(ProductRequest value)
+        public async Task<ProductDto> Create(ProductRequest value)
         {
             return await _repository.Create(value);
         }

@@ -14,7 +14,9 @@ namespace eCommerceFrontend.Models.REST.Objects.Product
         public double OriginalPrice { get; set; }
         public double ActualPrice { get; set; }
         public bool IsLive { get; set; }
+
+        public string ImagePath { get; set; }
         public Dictionary<string, int> Size { get; set; }
-        public int CathegoryId { get; set; }
+        public int CategoryId { get; set; }
     }
 }

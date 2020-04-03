@@ -30,13 +30,14 @@ namespace farmersAPi.Repositories
             await _context.SaveChangesAsync();
             return value;
         }
-        public async Task<Products> Create(ProductRequest value)
+        public async Task<ProductDto> Create(ProductRequest value)
         {
 
             var product = _mapper.Map<Products>(value);
            _context.Add(product);
             await _context.SaveChangesAsync();
-            return product;
+           var dto= _mapper.Map<ProductDto>(product);
+            return dto;
         }
 
         public async Task<string> Create(IFormFile file)
