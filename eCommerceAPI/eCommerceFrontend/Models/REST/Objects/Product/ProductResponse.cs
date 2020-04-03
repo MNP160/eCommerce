@@ -26,9 +26,12 @@ namespace eCommerceFrontend.Models.REST.Objects
         public string ProductSKU { get; set; }
         public int Quantity { get; set; }
         public bool IsLive { get; set; }
+       /*
         public int SCount { get; set; } 
         public int MCount { get; set; }
         public int LCount { get; set; }
         public int XLCount { get; set; }
+        */
+        public List<Dictionary<string, int>> Size { get; set; }
     }
 }
