@@ -67,7 +67,7 @@ namespace eCommerceFrontend
             services.AddHttpClient(); // Http Client Factory
             services.AddHttpClient("ecoproduce", c =>
             {
-                c.BaseAddress = new Uri("http://ecoproduce.eu/");
+                c.BaseAddress = new Uri("https://localhost:44326/");
             });
         }
 

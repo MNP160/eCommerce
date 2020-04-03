@@ -24,24 +24,28 @@ namespace farmersAPi.Repositories
             _mapper = map;
             _handler = handler;
         }
-
         public async Task<Products> Create(Products value)
         {
-           _context.Add(value);
+            _context.Add(value);
             await _context.SaveChangesAsync();
             return value;
         }
-
-        public async Task<Products> Create(ProductRequest value, IFormFile file)
+        public async Task<Products> Create(ProductRequest value)
         {
 
             var product = _mapper.Map<Products>(value);
-            var path = await _handler.UploadImage(file);
-            product.ImagePath = path;
-            _context.Product.Add(product);
-           
+           _context.Add(product);
             await _context.SaveChangesAsync();
             return product;
+        }
+
+        public async Task<string> Create(IFormFile file)
+        {
+
+           
+            var path = await _handler.UploadImage(file);
+           
+            return path;
         }
 
         public async Task<Products> Delete(Products value)

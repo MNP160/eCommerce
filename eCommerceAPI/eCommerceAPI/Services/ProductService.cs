@@ -32,14 +32,18 @@ namespace eCommerceAPI.Services
         {
             return await _repository.ReadById(Id);
         }
-
-        public async Task<Products> Create(Products value)
+        public async Task<Products> Create (Products value)
         {
             return await _repository.Create(value);
         }
-        public async Task<Products> Create(ProductRequest value, IFormFile file)
+
+        public async Task<Products> Create(ProductRequest value)
         {
-            return await _repository.Create(value, file);
+            return await _repository.Create(value);
+        }
+        public async Task<string> Create(IFormFile file)
+        {
+            return await _repository.Create(file);
         }
 
         public async Task<Products> Update(Products value)

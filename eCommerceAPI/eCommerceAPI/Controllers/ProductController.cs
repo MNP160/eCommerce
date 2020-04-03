@@ -108,13 +108,12 @@ namespace farmersAPi.Controllers
 
 
         [HttpPost("")]
-       [Consumes("multipart/form-data", new[] { "application/problem+json" ,"application/json"})]
        
 
 
-        public async Task<ActionResult<Products>> Post([FromForm]ProductRequest ProductRequest, IFormFile IFormFile)
+        public async Task<ActionResult<Products>> Post([FromBody]ProductRequest ProductRequest)
         {
-           var createdProduct= await _service.Create(ProductRequest, IFormFile);
+           var createdProduct= await _service.Create(ProductRequest);
             if (createdProduct != null)
             {
                 return Ok(createdProduct);
@@ -124,6 +123,30 @@ namespace farmersAPi.Controllers
                 return BadRequest("something broke");
             }
            
+        }
+
+
+        [HttpPost]
+        [Route("addImage")]
+        public async Task<ActionResult<string>> Post(IFormFile file)
+        {
+            string path="";
+           // if (Request.HasFormContentType)
+            {
+            //    var form = Request.Form;
+             //   foreach (var file in form.Files)
+               // {
+                    path = await _service.Create(file);
+                //}
+            }
+            if (!string.IsNullOrEmpty(path))
+            {
+                return Ok(path);
+            }
+            else
+            {
+                return BadRequest("file not written successfully");
+            }
         }
 
     }

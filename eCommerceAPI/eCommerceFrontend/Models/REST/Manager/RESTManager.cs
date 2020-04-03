@@ -111,7 +111,7 @@ namespace eCommerceFrontend.Models.REST.Manager
         }
 
         [HttpPost]
-        public async Task<ProductResponse> Post(ProductRequest product, IFormFile file, string controller, string id)
+        public async Task<ProductResponse> Post(IFormFile file, string controller, string id)
         {
             ProductResponse result = null;
             var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
@@ -123,10 +123,9 @@ namespace eCommerceFrontend.Models.REST.Manager
 
             HttpResponseMessage response;
 
-            var multiContent = new MultipartFormDataContent {
-                {new StringContent(JsonConvert.SerializeObject(product), System.Text.Encoding.UTF8, "multipart/form-data"), "ProductRequest"}
-            };
-            multiContent.Add(bytes, "IFormFile");
+            var multiContent = new MultipartFormDataContent();
+                
+            multiContent.Add(bytes, "file", file.FileName);
             string path = id != null ? $"api/{controller}/{id}" : $"api/{controller}";
             response = await client.PostAsync(path, multiContent).ConfigureAwait(false);
 
