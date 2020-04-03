@@ -90,12 +90,50 @@ namespace eCommerceFrontend.Controllers
             return View(new ProductView(products, categories));
         }
 
+        public IActionResult ViewSizes(string id)
+        {
+            ProductManager pm = new ProductManager(_clientFactory, _contextAccessor);
+            ProductResponse product = pm.Get(id);
+            return View(product);
+        }
+
         #region Redirect 
 
         public IActionResult AddProduct(string name, string longDescription, string shortDescription,
-            double originalPrice, double actualPrice, int quantity, bool isLive, int sCount, int mCount,
-            int lCount, int xlCount, int categoryId, IFormFile file)
+            double originalPrice, double actualPrice, bool isLive, string? size1, string? size2, 
+            string? size3, string? size4, string? size5, int? value1, int? value2, int? value3, int? value4,
+            int? value5, int categoryId, IFormFile file)
         {
+            Dictionary<string, int> size = new Dictionary<string, int>();
+
+            int quantity = 0;
+            if (!String.IsNullOrEmpty(size1) && value1.HasValue)
+            {
+                size.Add(size1, value1.Value);
+                quantity += value1.Value;
+            }
+            if (!String.IsNullOrEmpty(size2) && value2.HasValue)
+            {
+                size.Add(size2, value2.Value);
+                quantity += value2.Value;
+            }
+            if (!String.IsNullOrEmpty(size3) && value3.HasValue)
+            {
+                size.Add(size3, value3.Value);
+                quantity += value3.Value;
+            }
+            if (!String.IsNullOrEmpty(size4) && value4.HasValue)
+            {
+                size.Add(size4, value4.Value);
+                quantity += value4.Value;
+            }
+            if (!String.IsNullOrEmpty(size5) && value5.HasValue)
+            {
+                size.Add(size5, value5.Value);
+                quantity += value5.Value;
+            }
+
+
             ProductRequest request = new ProductRequest
             {
                 Name = name,
@@ -104,20 +142,77 @@ namespace eCommerceFrontend.Controllers
                 ShortDescription = shortDescription,
                 OriginalPrice = originalPrice,
                 ActualPrice = actualPrice,
-                Quantity = quantity,
                 IsLive = isLive,
-                SCount = sCount,
-                MCount = mCount,
-                LCount = lCount,
-                XLCount = xlCount,
+                Size = size,
                 CathegoryId = categoryId
             };
 
             ProductPostRequest productPost = new ProductPostRequest(request, file);
             ProductPostManager ppm = new ProductPostManager(_clientFactory, _contextAccessor);
-            ppm.Post(productPost);
+         
+            ppm.Post(request, file);
 
             return RedirectToAction("ViewProduct");
+        }
+
+        public IActionResult AddSize(int id, string key, int value)
+        {
+            ProductManager pm = new ProductManager(_clientFactory, _contextAccessor);
+            ProductResponse product = pm.Get($"{id}");
+
+            var dictionary = product.Size[0];
+            dictionary.Add(key, value);
+
+            CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
+            var cathegories = cm.Get();
+            int categoryId = cathegories.Where(x => x.Products.Contains(product)).Select(x => x.Id).FirstOrDefault();
+
+            ProductRequest request = new ProductRequest
+            {
+                Name = product.Name,
+                ProductSKU = product.ProductSKU,
+                LongDescription = product.LongDescription,
+                ShortDescription = product.ShortDescription,
+                OriginalPrice = product.OriginalPrice,
+                ActualPrice = product.ActualPrice,
+                IsLive = product.IsLive,
+                Size = dictionary,
+                CathegoryId = categoryId
+            };
+
+            pm.Put(request);
+
+            return RedirectToAction("ViewSizes", "Admin");
+        }
+
+        public IActionResult RemoveSize(string id, string key)
+        {
+            ProductManager pm = new ProductManager(_clientFactory, _contextAccessor);
+            ProductResponse product = pm.Get(id);
+
+            var dictionary = product.Size[0];
+            dictionary.Remove(key);
+
+            CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
+            var cathegories = cm.Get();
+            int categoryId = cathegories.Where(x => x.Products.Contains(product)).Select(x => x.Id).FirstOrDefault();
+
+            ProductRequest request = new ProductRequest
+            {
+                Name = product.Name,
+                ProductSKU = product.ProductSKU,
+                LongDescription = product.LongDescription,
+                ShortDescription = product.ShortDescription,
+                OriginalPrice = product.OriginalPrice,
+                ActualPrice = product.ActualPrice,
+                IsLive = product.IsLive,
+                Size = dictionary,
+                CathegoryId = categoryId
+            };
+
+            pm.Put(request);
+
+            return RedirectToAction("ViewSizes", "Admin");
         }
 
         public IActionResult AddCategory(string name)
