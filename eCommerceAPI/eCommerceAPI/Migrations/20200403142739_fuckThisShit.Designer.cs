@@ -10,8 +10,8 @@ using farmersAPi.Models;
 namespace eCommerceAPI.Migrations
 {
     [DbContext(typeof(APIContext))]
-    [Migration("20200328213725_OrderDetailsModelChanges")]
-    partial class OrderDetailsModelChanges
+    [Migration("20200403142739_fuckThisShit")]
+    partial class fuckThisShit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,9 +34,6 @@ namespace eCommerceAPI.Migrations
                     b.Property<double>("DetailPrice")
                         .HasColumnType("float");
 
-                    b.Property<int>("DetailQuantity")
-                        .HasColumnType("int");
-
                     b.Property<string>("DetailSKU")
                         .HasColumnType("nvarchar(max)");
 
@@ -44,6 +41,9 @@ namespace eCommerceAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<string>("Size")
@@ -140,14 +140,8 @@ namespace eCommerceAPI.Migrations
                     b.Property<bool>("IsLive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LCount")
-                        .HasColumnType("int");
-
                     b.Property<string>("LongDescription")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MCount")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -159,17 +153,11 @@ namespace eCommerceAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SCount")
-                        .HasColumnType("int");
-
                     b.Property<string>("ShortDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("XLCount")
-                        .HasColumnType("int");
+                    b.Property<string>("Size")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

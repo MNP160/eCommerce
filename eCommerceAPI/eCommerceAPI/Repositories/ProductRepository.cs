@@ -95,12 +95,11 @@ namespace farmersAPi.Repositories
             {
                 editedEntity.Name = value.Name;
                 editedEntity.OriginalPrice = value.OriginalPrice;
-                editedEntity.SCount = value.SCount;
+               
                 editedEntity.ShortDescription = value.ShortDescription;
-                editedEntity.XLCount = value.XLCount;
-                editedEntity.MCount = value.MCount;
+              
                 editedEntity.LongDescription = value.LongDescription;
-                editedEntity.LCount = value.LCount;
+                
                 editedEntity.IsLive = value.IsLive;
                 
                 _context.Update(editedEntity);

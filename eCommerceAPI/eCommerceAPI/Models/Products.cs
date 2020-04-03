@@ -27,13 +27,10 @@ namespace farmersAPi.Models
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ProductSKU { get; set; }
-        public int Quantity { get; set; }
+        
         public bool IsLive { get; set; }
-        public int SCount { get; set; } = 0;
-        public int MCount { get; set; } = 0;
-        public int LCount { get; set; } = 0;
-        public int XLCount { get; set; } = 0;
 
+        public Dictionary<string, int> Size { get; set; } = new Dictionary<string, int>();
       
         public int CategoryId { get; set; }
         public  virtual Categories Category { get; set; }

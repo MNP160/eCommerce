@@ -99,7 +99,7 @@ namespace farmersAPi.Controllers
                 var registeredUser = context.Users.FirstOrDefault(x => x.Email == model.Email);
                 
                 var mappedUser = mapper.Map<UserDto>(registeredUser);
-                _mailService.SendEmail(registeredUser.Email, registeredUser.FirstName, "successfulRegistration", "you have registered successfully");
+               // _mailService.SendEmail(registeredUser.Email, registeredUser.FirstName, "successfulRegistration", "you have registered successfully");
                 return Ok(mappedUser);
             }
             catch (Exception ex)
