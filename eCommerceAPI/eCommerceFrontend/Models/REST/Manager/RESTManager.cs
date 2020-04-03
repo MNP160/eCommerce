@@ -81,9 +81,12 @@ namespace eCommerceFrontend.Models.REST.Manager
             HttpResponseMessage response;
             if (postObject.GetType().Name == "ProductPostRequest")
             {
-                var multiContent = new MultipartFormDataContent();
-
-                multiContent.Add(new StringContent(JsonConvert.SerializeObject(postObject), System.Text.Encoding.UTF8)); 
+                var multiContent = new MultipartFormDataContent {
+                    {new StringContent(JsonConvert.SerializeObject(postObject), System.Text.Encoding.UTF8, "multipart/form-data")}
+                };
+                //client.DefaultRequestHeaders.Remove("ContentType");
+                //client.DefaultRequestHeaders.Add("ContentType", "multipart/form-data");
+                //multiContent.Add(new StringContent(JsonConvert.SerializeObject(postObject), System.Text.Encoding.UTF8, "multipart/form-data")); 
                 string path = id != null ? $"api/{controller}/{id}" : $"api/{controller}";
                 response = await client.PostAsync(path, multiContent).ConfigureAwait(false);
             }
@@ -108,6 +111,39 @@ namespace eCommerceFrontend.Models.REST.Manager
         }
 
         [HttpPost]
+        public async Task<ProductResponse> Post(ProductRequest product, IFormFile file, string controller, string id)
+        {
+            ProductResponse result = null;
+            var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
+
+            byte[] data;
+            using (var br = new BinaryReader(file.OpenReadStream()))
+                data = br.ReadBytes((int)file.OpenReadStream().Length);
+            ByteArrayContent bytes = new ByteArrayContent(data);
+
+            HttpResponseMessage response;
+
+            var multiContent = new MultipartFormDataContent {
+                {new StringContent(JsonConvert.SerializeObject(product), System.Text.Encoding.UTF8, "multipart/form-data"), "ProductRequest"}
+            };
+            multiContent.Add(bytes, "IFormFile");
+            string path = id != null ? $"api/{controller}/{id}" : $"api/{controller}";
+            response = await client.PostAsync(path, multiContent).ConfigureAwait(false);
+
+            response.EnsureSuccessStatusCode();
+
+            await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
+            {
+                if (x.IsFaulted)
+                    throw x.Exception;
+
+                result = JsonConvert.DeserializeObject<ProductResponse>(x.Result);
+            });
+
+            return result;
+        }
+
+        /*[HttpPost]
         public async Task<ProductResponce> Post(ProductPostRequest postObject, string controller, string id)
         {
             ProductResponce result = null;
@@ -138,7 +174,7 @@ namespace eCommerceFrontend.Models.REST.Manager
             });
 
             return result;
-        }
+        }*/
 
         [HttpPut]
         public async Task<ProductResponce> Put(U putObject, string controller)

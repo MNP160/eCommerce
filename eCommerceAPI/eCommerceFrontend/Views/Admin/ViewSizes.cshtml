@@ -1,0 +1,51 @@
+﻿@model eCommerceFrontend.Models.REST.Objects.ProductResponse
+
+@{
+    ViewData["Title"] = "ViewSizes";
+}
+
+<h1>View Sizes</h1>
+
+
+    <h3>@Model.Name</h3>
+    @foreach (var size in Model.Size) // Since size is 1 this should execute once. Just failsafe.
+    {
+        <table>
+            <tbody>
+                @foreach (var comp in size)
+                {
+                <tr>
+                    <td>
+                        @comp.Key
+                    </td>
+                    <td>
+                        @comp.Value
+                    </td>
+                    <td>
+                        <a asp-controller="Admin" asp-action="RemoveSize" 
+                           asp-route-id="@Model.Id" asp-route-key="@comp.Key"
+                           class="btn btn-primary" >DELETE</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <form asp-controller="Admin" asp-action="AddSize" method="post">
+        <div class="form-row">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <div class="form-group col-md-4">
+                <label>Name</label>
+                <input type="text" placeholder="Name" name="key"/>
+            </div>
+            <div class="form-group col-md-4">
+                <label>Quantity</label>
+                <input type="number" step="1" placeholder="Quantity" name="value" />
+            </div>
+            <div class="form-group col-md-4">
+                <input type="submit" class="btn btn-primary" value="Submit"/>
+            </div>
+        </div>
+    </form>
+

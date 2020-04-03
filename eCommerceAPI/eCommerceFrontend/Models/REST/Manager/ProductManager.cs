@@ -65,13 +65,10 @@ namespace eCommerceFrontend.Models.REST.Manager
             
         }
 
-        public ProductResponse Post(ProductPostRequest product)
+        public ProductResponse Post(ProductRequest product, IFormFile file)
         {
-          
-
-
-
-            return base.Post(product, "Product", null).Result;
+            return base.Post(product, file, "Product", null).Result;
+            //return base.Post(product, "Product", null).Result;
         }
     }
 }
