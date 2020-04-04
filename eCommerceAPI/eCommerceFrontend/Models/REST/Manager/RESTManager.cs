@@ -131,8 +131,9 @@ namespace eCommerceFrontend.Models.REST.Manager
 
             response1.EnsureSuccessStatusCode();
 
-            var image = await response1.Content.ReadAsStringAsync();
-            request.ImagePath = image.ToString();
+            List<string> image = JsonConvert.DeserializeObject<List<string>>(await response1.Content.ReadAsStringAsync());
+            request.ImagePath = image[1].ToString();
+            request.ThumbnailPath = image[0].ToString();
             string path2 = id != null ? $"api/{controller}" : $"api/{controller}";
             var content = new StringContent(JsonConvert.SerializeObject(request), System.Text.Encoding.UTF8, "application/json");
             response = await client.PostAsync(path2, content).ConfigureAwait(false);

@@ -23,6 +23,7 @@ using eCommerceFrontend.Models.REST.Objects.Cathegory;
 
 namespace eCommerceFrontend.Controllers
 {
+    [Authorize(Roles.ADMIN)]
     public class AdminController : Controller
     {
         private readonly IHttpClientFactory _clientFactory;
@@ -34,7 +35,6 @@ namespace eCommerceFrontend.Controllers
             _contextAccessor = contextAccessor;
         }
 
-        [Authorize(Roles.USER)]
         public IActionResult Index()
         {
             OrderManager orderManager = new OrderManager(_clientFactory, _contextAccessor);
@@ -164,11 +164,11 @@ namespace eCommerceFrontend.Controllers
             List<ProductQuantity> size = product.Size;
             size.Add(new ProductQuantity { Size = key, Quantity = value });
 
-            CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
+            /*CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
             var cathegories = cm.Get();
             var category = cathegories.FirstOrDefault(x => x.Products.Select(y => x.Id).ToList().Contains(product.Id));
             int categoryId = category.Id;
-
+            */
             ProductRequest request = new ProductRequest
             {
                 Name = product.Name,
@@ -177,10 +177,11 @@ namespace eCommerceFrontend.Controllers
                 ShortDescription = product.ShortDescription,
                 OriginalPrice = product.OriginalPrice,
                 ActualPrice = product.ActualPrice,
+                ThumbnailPath = product.ThumbnailPath,
                 ImagePath = product.ImagePath,
                 IsLive = product.IsLive,
                 Size = size,
-                CategoryId = categoryId
+                CategoryId = product.CategoryId
             };
 
             pm.Put(request);
@@ -199,7 +200,7 @@ namespace eCommerceFrontend.Controllers
 
             CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
             var cathegories = cm.Get();
-            int categoryId = cathegories.Where(x => x.Products.Contains(product)).Select(x => x.Id).FirstOrDefault();
+            //int categoryId = cathegories.Where(x => x.Products.Contains(product)).Select(x => x.Id).FirstOrDefault();
 
             ProductRequest request = new ProductRequest
             {
@@ -211,13 +212,14 @@ namespace eCommerceFrontend.Controllers
                 ActualPrice = product.ActualPrice,
                 IsLive = product.IsLive,
                 ImagePath = product.ImagePath,
+                ThumbnailPath = product.ThumbnailPath,
                 Size = size,
-                CategoryId = categoryId
+                CategoryId = product.CategoryId
             };
 
             pm.Put(request);
 
-            return RedirectToAction("ViewSizes", "Admin");
+            return RedirectToAction("ViewSizes", "Admin", new { id = product.Id.ToString() });
         }
 
         public IActionResult AddCategory(string name)

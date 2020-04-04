@@ -28,9 +28,16 @@ namespace eCommerceFrontend.Controllers
         public IActionResult Index()
         {
             var cart = SessionHelper.GetObjectFronJson<List<OrderDetailsRequest>>(HttpContext.Session, "cart");
-            ViewBag.cart = cart;
-            ViewBag.Total = cart.Sum(item=>item.DetailPrice*item.DetailQuantity);
-            return View(cart);
+            if (cart != null)
+            {
+                ViewBag.cart = cart;
+                ViewBag.Total = cart.Sum(item => item.DetailPrice * item.DetailQuantity);
+                return View(cart);
+            }
+            else
+            {
+                return View(cart);
+            }
         }
 
 
@@ -83,7 +90,7 @@ namespace eCommerceFrontend.Controllers
             {
                 
                 List<OrderDetailsRequest> cart = new List<OrderDetailsRequest>();
-                cart.Add(new OrderDetailsRequest { DetailName = name, DetailPrice = (price*quantity), DetailQuantity=quantity, DetailsSKU = sku, Size = size, ImagePath = imagePath});
+                cart.Add(new OrderDetailsRequest { DetailName = name, DetailPrice = (price*quantity), DetailQuantity=quantity, DetailsSKU = sku, Size = size, ThumbnailPath = imagePath});
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
 
             }
@@ -97,7 +104,7 @@ namespace eCommerceFrontend.Controllers
                 }
                 else
                 {
-                    cart.Add(new OrderDetailsRequest { DetailName = name, DetailPrice = (price * quantity), DetailQuantity = quantity, DetailsSKU = sku, Size = size, ImagePath = imagePath });
+                    cart.Add(new OrderDetailsRequest { DetailName = name, DetailPrice = (price * quantity), DetailQuantity = quantity, DetailsSKU = sku, Size = size, ThumbnailPath = imagePath });
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }

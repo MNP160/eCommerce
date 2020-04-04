@@ -16,6 +16,8 @@ namespace eCommerceFrontend.Models.REST.Objects.Product
         public bool IsLive { get; set; }
 
         public string ImagePath { get; set; }
+        public string ThumbnailPath { get; set; }
+
         public List<ProductQuantity> Size { get; set; }
         public int CategoryId { get; set; }
     }

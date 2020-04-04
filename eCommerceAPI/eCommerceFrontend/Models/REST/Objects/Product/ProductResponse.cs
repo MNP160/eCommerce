@@ -22,6 +22,8 @@ namespace eCommerceFrontend.Models.REST.Objects
         public string LongDescription { get; set; }
         public string ShortDescription { get; set; }
         public string ImagePath { get; set; }
+        public string ThumbnailPath { get; set; }
+
         public double OriginalPrice { get; set; }
         public double ActualPrice { get; set; }
         public string ProductSKU { get; set; }
@@ -34,5 +36,7 @@ namespace eCommerceFrontend.Models.REST.Objects
         public int XLCount { get; set; }
         */
         public List<ProductQuantity> Size { get; set; }
+        public int CategoryId { get; set; }
+
     }
 }

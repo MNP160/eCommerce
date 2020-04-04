@@ -4,14 +4,23 @@
     ViewData["Title"] = "ViewSizes";
 }
 
-<h1>View Sizes</h1>
+    <div class="container">
+
+    <h1>View Sizes</h1>
 
 
     <h3>@Model.Name</h3>
-    @foreach (var size in Model.Size) // Since size is 1 this should execute once. Just failsafe.
-    {
-        <table>
-            <tbody>
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Size</th>
+                <th scope="col">Quantity</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var size in Model.Size) // Since size is 1 this should execute once. Just failsafe.
+            {
                 <tr>
                     <td>
                         @size.Size
@@ -20,29 +29,44 @@
                         @size.Quantity
                     </td>
                     <td>
-                        <a asp-controller="Admin" asp-action="RemoveSize" 
-                           asp-route-id="@Model.Id" asp-route-key="@size.Size"
-                           class="btn btn-primary" >DELETE</a>
+                        <a asp-controller="Admin" asp-action="RemoveSize"
+                            asp-route-id="@Model.Id" asp-route-key="@size.Size"
+                            class="btn btn-primary ">DELETE</a>
                     </td>
                 </tr>
-            </tbody>
-        </table>
-    }
+            }
+        </tbody>
+    </table>
+
+    <hr />
 
     <form asp-controller="Admin" asp-action="AddSize" method="post">
         <div class="form-row">
-            <input type="hidden" name="id" value="@Model.Id" />
-            <div class="form-group col-md-4">
-                <label>Name</label>
-                <input type="text" placeholder="Name" name="key"/>
+            <div class="form-group col-3">
+
             </div>
-            <div class="form-group col-md-4">
-                <label>Quantity</label>
-                <input type="number" step="1" placeholder="Quantity" name="value" />
+            <div class="form-group col-6">
+                <div class="form-row">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <div class="form-group col-md-4">
+                        <label>Name</label>
+                        <input type="text" placeholder="Name" name="key" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Quantity</label>
+                        <input type="number" step="1" placeholder="Quantity" name="value" />
+                    </div>
+                    <div class="form-group col-md-4 align-middle">
+                        <input type="submit" class="btn btn-primary " value="CREATE" />
+                    </div>
+                </div>
             </div>
-            <div class="form-group col-md-4">
-                <input type="submit" class="btn btn-primary" value="Submit"/>
+            <div class="form-group col-3">
+
             </div>
+            
         </div>
     </form>
+
+</div>
 

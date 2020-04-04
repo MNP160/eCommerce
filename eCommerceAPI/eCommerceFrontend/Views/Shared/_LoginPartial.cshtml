@@ -1,28 +1,80 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using System.IdentityModel.Tokens.Jwt
 @using eCommerceFrontend.Utility
+@using Microsoft.AspNetCore.Mvc.Filters;
+@using eCommerceFrontend.Helpers;
+@using eCommerceFrontend.Models.REST.Objects;
+@using eCommerceFrontend.Models.REST.Objects.Orders;
+
 @inject IHttpContextAccessor HttpContextAccessor
+
 @{
-}
-    
-        @if (HttpContextAccessor.HttpContext.Session.GetString("JWToken")!=null)
+    HttpContext context;
+
+    bool IsAdmin()
+    {
+        var token = HttpContextAccessor.HttpContext.Session.GetString("JWToken");
+        System.Diagnostics.Debug.WriteLine(token);
+        if (token != null)
         {
-            <li class="nav-item">
-                <a id="manage" class="nav-link text-light"  title="Manage" asp-controller="Users" asp-action="Orders">Profile</a>
-            </li>
-            <li class="nav-item">
-                <form id="logoutForm" class="form-inline" asp-controller="Users" asp-action="Logoff" >
-                    <button id="logout" type="submit" class="nav-link btn btn-link text-light">Logout</button>
-                </form>
-            </li>
+            var handler = new JwtSecurityTokenHandler();
+            var tokenS = handler.ReadToken(token.ToString()) as JwtSecurityToken;
+            // Converting to string from StringValues means taht "role" is actually saved as "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+            var role = tokenS.Claims.First(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
+
+            if (role == "Admin")
+                return true;
+        }
+        return false;
+    }
+
+    int CartCount()
+    {
+        var asd = HttpContextAccessor.HttpContext.Session.GetObjectFronJson<List<OrderDetailsRequest>>("cart");
+        if (asd != null)
+        {
+            return asd.Count;
+
         }
         else
         {
-            <li class="nav-item">
-                <a class="nav-link text-light" id="login" asp-controller="Users" asp-action="Login">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light" id="register" asp-controller="Users" asp-action="Register">Register</a>
-            </li>
+            return 0;
         }
-    
+
+    }
+}
+
+<li class="nav-item">
+    <h1><a asp-controller="Cart" asp-action="Index"><span class="fa fa-shopping-cart text-white"></span><div class="badge badge-primary text-wrap">@CartCount()</div></a></h1>
+</li>
+
+@if (HttpContextAccessor.HttpContext.Session.GetString("JWToken") != null)
+{
+
+
+    @if (IsAdmin())
+    {
+        <li class="nav-item">
+            <a id="manage" class="nav-link text-light" asp-controller="Admin" asp-action="Index">Admin</a>
+        </li>
+    }
+
+
+    <li class="nav-item">
+        <a id="manage" class="nav-link text-light" title="Manage" asp-controller="Users" asp-action="Orders">Profile</a>
+    </li>
+    <li class="nav-item">
+        <form id="logoutForm" class="form-inline " asp-controller="Users" asp-action="Logoff">
+            <button id="logout" type="submit" class="nav-link btn btn-info text-light">Logout</button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-light" id="login" asp-controller="Users" asp-action="Login">Login</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-light" id="register" asp-controller="Users" asp-action="Register">Register</a>
+    </li>
+}
