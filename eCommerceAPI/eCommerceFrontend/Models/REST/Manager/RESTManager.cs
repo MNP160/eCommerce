@@ -16,8 +16,8 @@ using Newtonsoft.Json;
 
 namespace eCommerceFrontend.Models.REST.Manager
 {
-    public abstract class RESTManager<ProductResponce, U>: IRestManager<ProductResponce, U>
-        where ProductResponce: class
+    public abstract class RESTManager<ProductResponse, U>: IRestManager<ProductResponse, U>
+        where ProductResponse: class
         where U : class
     {
         private readonly IHttpClientFactory _clientFactory;
@@ -32,9 +32,9 @@ namespace eCommerceFrontend.Models.REST.Manager
         }
 
         [HttpGet]
-        public async Task<ProductResponce> Get(string controller, string id)
+        public async Task<ProductResponse> Get(string controller, string id)
         {
-            ProductResponce result = null;
+            ProductResponse result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
             string path = id != null ? $"api/{controller}/{id}" : $"api/{controller}";
@@ -45,16 +45,16 @@ namespace eCommerceFrontend.Models.REST.Manager
                 if (x.IsFaulted)
                     throw x.Exception;
 
-                result = JsonConvert.DeserializeObject<ProductResponce>(x.Result);
+                result = JsonConvert.DeserializeObject<ProductResponse>(x.Result);
             });
 
             return result;
         }
         
         [HttpGet]
-        public async Task<IEnumerable<ProductResponce>> Get(string controller)
+        public async Task<IEnumerable<ProductResponse>> Get(string controller)
         {
-            IEnumerable<ProductResponce> result = null;
+            IEnumerable<ProductResponse> result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
             string path = $"api/{controller}";
@@ -65,16 +65,16 @@ namespace eCommerceFrontend.Models.REST.Manager
                 if (x.IsFaulted)
                     throw x.Exception;
 
-                result = JsonConvert.DeserializeObject<IEnumerable<ProductResponce>>(x.Result);
+                result = JsonConvert.DeserializeObject<IEnumerable<ProductResponse>>(x.Result);
             });
 
             return result;
         }
 
         [HttpPost]
-        public async Task<ProductResponce> Post(U postObject, string controller, string id)
+        public async Task<ProductResponse> Post(U postObject, string controller, string id)
         {
-            ProductResponce result = null;
+            ProductResponse result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
 
@@ -104,16 +104,16 @@ namespace eCommerceFrontend.Models.REST.Manager
                 if (x.IsFaulted)
                     throw x.Exception;
 
-                result = JsonConvert.DeserializeObject<ProductResponce>(x.Result);
+                result = JsonConvert.DeserializeObject<ProductResponse>(x.Result);
             });
 
             return result;
         }
 
         [HttpPost]
-        public async Task<ProductResponse> Post(ProductRequest request,IFormFile file, string controller, string id)
+        public async Task<Objects.ProductResponse> Post(ProductRequest request,IFormFile file, string controller, string id)
         {
-            ProductResponse result = null;
+            Objects.ProductResponse result = null;
             var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
 
             byte[] data;
@@ -131,8 +131,9 @@ namespace eCommerceFrontend.Models.REST.Manager
 
             response1.EnsureSuccessStatusCode();
 
-            var image = await response1.Content.ReadAsStringAsync();
-            request.ImagePath = image.ToString();
+            List<string> image = JsonConvert.DeserializeObject<List<string>>(await response1.Content.ReadAsStringAsync());
+            request.ImagePath = image[1].ToString();
+            request.ThumbnailPath = image[0].ToString();
             string path2 = id != null ? $"api/{controller}" : $"api/{controller}";
             var content = new StringContent(JsonConvert.SerializeObject(request), System.Text.Encoding.UTF8, "application/json");
             response = await client.PostAsync(path2, content).ConfigureAwait(false);
@@ -143,7 +144,7 @@ namespace eCommerceFrontend.Models.REST.Manager
                 if (x.IsFaulted)
                     throw x.Exception;
 
-                result = JsonConvert.DeserializeObject<ProductResponse>(x.Result);
+                result = JsonConvert.DeserializeObject<Objects.ProductResponse>(x.Result);
             });
 
             return result;
@@ -183,9 +184,9 @@ namespace eCommerceFrontend.Models.REST.Manager
         }*/
 
         [HttpPut]
-        public async Task<ProductResponce> Put(U putObject, string controller)
+        public async Task<ProductResponse> Put(U putObject, string controller)
         {
-            ProductResponce result = null;
+            ProductResponse result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
             var content = new StringContent(JsonConvert.SerializeObject(putObject), System.Text.Encoding.UTF8, "application/json");
@@ -198,16 +199,16 @@ namespace eCommerceFrontend.Models.REST.Manager
                 if (x.IsFaulted)
                     throw x.Exception;
 
-                result = JsonConvert.DeserializeObject<ProductResponce>(x.Result);
+                result = JsonConvert.DeserializeObject<ProductResponse>(x.Result);
             });
 
             return result;
         }
 
         [HttpDelete]
-        public async Task<ProductResponce> Delete(string controller, string id)
+        public async Task<ProductResponse> Delete(string controller, string id)
         {
-            ProductResponce result = null;
+            ProductResponse result = null;
 
             var client = _clientFactory.CreateClient("ecoproduce").AddJwt(_token);
             string path = $"api/{controller}/{id}";
@@ -219,7 +220,7 @@ namespace eCommerceFrontend.Models.REST.Manager
                 if (x.IsFaulted)
                     throw x.Exception;
 
-                result = JsonConvert.DeserializeObject<ProductResponce>(x.Result);
+                result = JsonConvert.DeserializeObject<ProductResponse>(x.Result);
             });
 
             return result;

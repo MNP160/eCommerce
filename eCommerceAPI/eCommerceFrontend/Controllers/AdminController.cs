@@ -23,6 +23,7 @@ using eCommerceFrontend.Models.REST.Objects.Cathegory;
 
 namespace eCommerceFrontend.Controllers
 {
+    [Authorize(Roles.ADMIN)]
     public class AdminController : Controller
     {
         private readonly IHttpClientFactory _clientFactory;
@@ -34,7 +35,6 @@ namespace eCommerceFrontend.Controllers
             _contextAccessor = contextAccessor;
         }
 
-        [Authorize(Roles.USER)]
         public IActionResult Index()
         {
             OrderManager orderManager = new OrderManager(_clientFactory, _contextAccessor);
@@ -104,32 +104,32 @@ namespace eCommerceFrontend.Controllers
             string? size3, string? size4, string? size5, int? value1, int? value2, int? value3, int? value4,
             int? value5, int categoryId, IFormFile file)
         {
-            Dictionary<string, int> size = new Dictionary<string, int>();
+            List<ProductQuantity> size = new List<ProductQuantity>();
 
             int quantity = 0;
             if (!String.IsNullOrEmpty(size1) && value1.HasValue)
             {
-                size.Add(size1, value1.Value);
+                size.Add(new ProductQuantity { Size = size1, Quantity = value1.Value });
                 quantity += value1.Value;
             }
             if (!String.IsNullOrEmpty(size2) && value2.HasValue)
             {
-                size.Add(size2, value2.Value);
+                size.Add(new ProductQuantity { Size = size2, Quantity = value2.Value });
                 quantity += value2.Value;
             }
             if (!String.IsNullOrEmpty(size3) && value3.HasValue)
             {
-                size.Add(size3, value3.Value);
+                size.Add(new ProductQuantity { Size = size3, Quantity = value3.Value });
                 quantity += value3.Value;
             }
             if (!String.IsNullOrEmpty(size4) && value4.HasValue)
             {
-                size.Add(size4, value4.Value);
+                size.Add(new ProductQuantity { Size = size4, Quantity = value4.Value });
                 quantity += value4.Value;
             }
             if (!String.IsNullOrEmpty(size5) && value5.HasValue)
             {
-                size.Add(size5, value5.Value);
+                size.Add(new ProductQuantity { Size = size5, Quantity = value5.Value });
                 quantity += value5.Value;
             }
 
@@ -143,6 +143,7 @@ namespace eCommerceFrontend.Controllers
                 OriginalPrice = originalPrice,
                 ActualPrice = actualPrice,
                 IsLive = isLive,
+                ImagePath = "",
                 Size = size,
                 CategoryId = categoryId
             };
@@ -152,7 +153,7 @@ namespace eCommerceFrontend.Controllers
          
             ppm.Post(request, file);
 
-            return RedirectToAction("ViewProduct");
+            return RedirectToAction("Index");
         }
 
         public IActionResult AddSize(int id, string key, int value)
@@ -160,13 +161,14 @@ namespace eCommerceFrontend.Controllers
             ProductManager pm = new ProductManager(_clientFactory, _contextAccessor);
             ProductResponse product = pm.Get($"{id}");
 
-            var dictionary = product.Size[0];
-            dictionary.Add(key, value);
+            List<ProductQuantity> size = product.Size;
+            size.Add(new ProductQuantity { Size = key, Quantity = value });
 
-            CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
+            /*CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
             var cathegories = cm.Get();
-            int categoryId = cathegories.Where(x => x.Products.Contains(product)).Select(x => x.Id).FirstOrDefault();
-
+            var category = cathegories.FirstOrDefault(x => x.Products.Select(y => x.Id).ToList().Contains(product.Id));
+            int categoryId = category.Id;
+            */
             ProductRequest request = new ProductRequest
             {
                 Name = product.Name,
@@ -175,14 +177,16 @@ namespace eCommerceFrontend.Controllers
                 ShortDescription = product.ShortDescription,
                 OriginalPrice = product.OriginalPrice,
                 ActualPrice = product.ActualPrice,
+                ThumbnailPath = product.ThumbnailPath,
+                ImagePath = product.ImagePath,
                 IsLive = product.IsLive,
-                Size = dictionary,
-                CategoryId = categoryId
+                Size = size,
+                CategoryId = product.CategoryId
             };
 
             pm.Put(request);
 
-            return RedirectToAction("ViewSizes", "Admin");
+            return RedirectToAction("ViewSizes", "Admin", new { id = product.Id.ToString() });
         }
 
         public IActionResult RemoveSize(string id, string key)
@@ -190,12 +194,13 @@ namespace eCommerceFrontend.Controllers
             ProductManager pm = new ProductManager(_clientFactory, _contextAccessor);
             ProductResponse product = pm.Get(id);
 
-            var dictionary = product.Size[0];
-            dictionary.Remove(key);
+            List<ProductQuantity> size = product.Size;
+            size.RemoveAll(x => x.Size == key);
+
 
             CathegoryManager cm = new CathegoryManager(_clientFactory, _contextAccessor);
             var cathegories = cm.Get();
-            int categoryId = cathegories.Where(x => x.Products.Contains(product)).Select(x => x.Id).FirstOrDefault();
+            //int categoryId = cathegories.Where(x => x.Products.Contains(product)).Select(x => x.Id).FirstOrDefault();
 
             ProductRequest request = new ProductRequest
             {
@@ -206,13 +211,15 @@ namespace eCommerceFrontend.Controllers
                 OriginalPrice = product.OriginalPrice,
                 ActualPrice = product.ActualPrice,
                 IsLive = product.IsLive,
-                Size = dictionary,
-                CategoryId = categoryId
+                ImagePath = product.ImagePath,
+                ThumbnailPath = product.ThumbnailPath,
+                Size = size,
+                CategoryId = product.CategoryId
             };
 
             pm.Put(request);
 
-            return RedirectToAction("ViewSizes", "Admin");
+            return RedirectToAction("ViewSizes", "Admin", new { id = product.Id.ToString() });
         }
 
         public IActionResult AddCategory(string name)

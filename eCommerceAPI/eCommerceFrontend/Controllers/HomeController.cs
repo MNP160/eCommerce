@@ -84,6 +84,11 @@ namespace eCommerceFrontend.Controllers
             return View(new IndexView(allCategories, allProducts, pageNum, pageSize, category, totalPages, search));
         }
 
+        public IActionResult TOS()
+        {
+            return View();
+        }
+
         public IActionResult AddCategory(string pageNum, string pageSize, string categoryId)
         {
             int pageNumInt = Newtonsoft.Json.JsonConvert.DeserializeObject<int>(pageNum);
