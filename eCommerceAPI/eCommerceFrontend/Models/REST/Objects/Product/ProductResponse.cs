@@ -1,4 +1,5 @@
 ﻿using eCommerceFrontend.Models.REST.Objects.Cathegory;
+using eCommerceFrontend.Models.REST.Objects.Product;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -32,6 +33,6 @@ namespace eCommerceFrontend.Models.REST.Objects
         public int LCount { get; set; }
         public int XLCount { get; set; }
         */
-        public List<Dictionary<string, int>> Size { get; set; }
+        public List<ProductQuantity> Size { get; set; }
     }
 }

@@ -12,22 +12,19 @@
     {
         <table>
             <tbody>
-                @foreach (var comp in size)
-                {
                 <tr>
                     <td>
-                        @comp.Key
+                        @size.Size
                     </td>
                     <td>
-                        @comp.Value
+                        @size.Quantity
                     </td>
                     <td>
                         <a asp-controller="Admin" asp-action="RemoveSize" 
-                           asp-route-id="@Model.Id" asp-route-key="@comp.Key"
+                           asp-route-id="@Model.Id" asp-route-key="@size.Size"
                            class="btn btn-primary" >DELETE</a>
                     </td>
                 </tr>
-                }
             </tbody>
         </table>
     }
