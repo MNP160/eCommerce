@@ -41,7 +41,7 @@ namespace eCommerceAPI.Services
         {
             return await _repository.Create(value);
         }
-        public async Task<string> Create(IFormFile file)
+        public async Task<List<string>> Create(IFormFile file)
         {
             return await _repository.Create(file);
         }

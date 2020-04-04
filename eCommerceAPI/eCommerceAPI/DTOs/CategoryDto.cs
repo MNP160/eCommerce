@@ -15,7 +15,7 @@ namespace farmersAPi.DTOs
         public string Name { get; set; }
      
 
-        //public virtual ICollection<ProductDto> products { get; set; }
+        public virtual ICollection<ProductDto> products { get; set; }
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using eCommerceAPI.Interfaces;
 using eCommerceAPI.Models;
+using eCommerceAPI.Utility;
 using farmersAPi.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -29,9 +30,9 @@ namespace farmersAPi.Models
         public string ProductSKU { get; set; }
         
         public bool IsLive { get; set; }
+        public string ThumbnailPath { get; set; }
+        public List<ProductQuantity> Size { get; set; }
 
-        public Dictionary<string, int> Size { get; set; } = new Dictionary<string, int>();
-      
         public int CategoryId { get; set; }
         public  virtual Categories Category { get; set; }
 

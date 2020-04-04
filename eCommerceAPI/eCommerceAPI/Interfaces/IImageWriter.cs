@@ -8,7 +8,7 @@ namespace farmersAPi.Interfaces
 {
     public interface IImageWriter
     {
-        Task<string> UploadImage(IFormFile file);
+        Task<List<string>> UploadImage(IFormFile file);
 
     }
 }

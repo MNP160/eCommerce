@@ -128,20 +128,20 @@ namespace farmersAPi.Controllers
 
         [HttpPost]
         [Route("addImage")]
-        public async Task<ActionResult<string>> Post(IFormFile file)
+        public async Task<ActionResult<List<string>>> Post(IFormFile file)
         {
-            string path="";
+            List<string>paths= new List<string>();
            // if (Request.HasFormContentType)
             {
             //    var form = Request.Form;
              //   foreach (var file in form.Files)
                // {
-                    path = await _service.Create(file);
+                    paths = await _service.Create(file);
                 //}
             }
-            if (!string.IsNullOrEmpty(path))
+            if (paths.Count>0)
             {
-                return Ok(path);
+                return Ok(paths);
             }
             else
             {

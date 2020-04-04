@@ -9,7 +9,7 @@ namespace farmersAPi.Utility
 {
     public interface IImageHandler
     {
-        Task<string> UploadImage(IFormFile file);
+        Task<List<string>> UploadImage(IFormFile file);
 
     }
 }

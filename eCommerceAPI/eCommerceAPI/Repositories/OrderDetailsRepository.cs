@@ -24,30 +24,25 @@ namespace eCommerceAPI.Repositories
             _mapper = map;
         }
 
-       /* private async Task ReduceProductQuantityForOrder(OrderDetails order)
+        private async Task ReduceProductQuantityForOrder(OrderDetails order)
         {
           
            
 
-            Products specificProduct = null;
+                 Products specificProduct = null;
            
             
                 specificProduct = _context.Product.FirstOrDefault(x => x.ProductSKU == order.DetailSKU);
-                switch (order.Size)
+           foreach(var pair in specificProduct.Size)
+            {
+                if (pair.Size == order.Size)
                 {
-                    case "S":
-                        specificProduct.SCount -= order.DetailQuantity;
-                        break;
-                    case "M":
-                        specificProduct.MCount -= order.DetailQuantity;
-                        break;
-                    case "L":
-                        specificProduct.LCount -= order.DetailQuantity;
-                        break;
-                    case "XL":
-                        specificProduct.XLCount -= order.DetailQuantity;
-                        break;
+                    pair.Quantity -= order.Quantity;
                 }
+            }
+            
+
+
                 _context.Product.Update(specificProduct);
 
 
@@ -55,12 +50,12 @@ namespace eCommerceAPI.Repositories
             await _context.SaveChangesAsync();
 
 
-        }*/
+        }
 
 
         public async Task<OrderDetails> Create(OrderDetails value)
         {
-          //  await ReduceProductQuantityForOrder(value);
+            await ReduceProductQuantityForOrder(value);
             _context.Set<OrderDetails>().Add(value);
             await _context.SaveChangesAsync();
             return value;
