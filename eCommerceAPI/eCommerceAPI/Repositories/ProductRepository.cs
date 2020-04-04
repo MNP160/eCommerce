@@ -40,7 +40,7 @@ namespace farmersAPi.Repositories
             return dto;
         }
 
-        public async Task<string> Create(IFormFile file)
+        public async Task<List<string>> Create(IFormFile file)
         {
 
            
@@ -100,13 +100,14 @@ namespace farmersAPi.Repositories
             {
                 editedEntity.Name = value.Name;
                 editedEntity.OriginalPrice = value.OriginalPrice;
-               
+                editedEntity.Size = value.Size;
                 editedEntity.ShortDescription = value.ShortDescription;
-              
+                editedEntity.ActualPrice = value.ActualPrice;
                 editedEntity.LongDescription = value.LongDescription;
-                
                 editedEntity.IsLive = value.IsLive;
-                
+                editedEntity.ImagePath = value.ImagePath;
+                editedEntity.ThumbnailPath = value.ThumbnailPath;
+
                 _context.Update(editedEntity);
                 await _context.SaveChangesAsync();
                 return value;

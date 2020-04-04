@@ -10,8 +10,8 @@ using farmersAPi.Models;
 namespace eCommerceAPI.Migrations
 {
     [DbContext(typeof(APIContext))]
-    [Migration("20200403142739_fuckThisShit")]
-    partial class fuckThisShit
+    [Migration("20200404132429_thumbnails")]
+    partial class thumbnails
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,9 +37,6 @@ namespace eCommerceAPI.Migrations
                     b.Property<string>("DetailSKU")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
@@ -47,6 +44,9 @@ namespace eCommerceAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Size")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ThumbnailPath")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DetailId");
@@ -157,6 +157,9 @@ namespace eCommerceAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Size")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ThumbnailPath")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

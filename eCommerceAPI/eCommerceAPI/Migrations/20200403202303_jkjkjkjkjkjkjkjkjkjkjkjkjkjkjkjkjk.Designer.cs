@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using farmersAPi.Models;
 
 namespace eCommerceAPI.Migrations
 {
     [DbContext(typeof(APIContext))]
-    partial class APIContextModelSnapshot : ModelSnapshot
+    [Migration("20200403202303_jkjkjkjkjkjkjkjkjkjkjkjkjkjkjkjkjk")]
+    partial class jkjkjkjkjkjkjkjkjkjkjkjkjkjkjkjkjk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,6 +37,9 @@ namespace eCommerceAPI.Migrations
                     b.Property<string>("DetailSKU")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
@@ -42,9 +47,6 @@ namespace eCommerceAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Size")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ThumbnailPath")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DetailId");
@@ -155,9 +157,6 @@ namespace eCommerceAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Size")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ThumbnailPath")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

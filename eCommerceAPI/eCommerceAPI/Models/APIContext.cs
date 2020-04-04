@@ -1,4 +1,5 @@
 ﻿using eCommerceAPI.Models;
+using eCommerceAPI.Utility;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json;
@@ -55,7 +56,7 @@ namespace farmersAPi.Models
             modelBuilder.Entity<Products>()
                 .Property(p => p.Size)
                 .HasConversion(s => JsonConvert.SerializeObject(s),
-                s => JsonConvert.DeserializeObject<Dictionary<string, int>>(s));
+                s => JsonConvert.DeserializeObject<List<ProductQuantity>>(s));
                
 
 

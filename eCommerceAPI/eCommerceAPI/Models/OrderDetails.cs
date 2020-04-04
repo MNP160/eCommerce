@@ -22,9 +22,9 @@ namespace eCommerceAPI.Models
         public string Size { get; set; }
         public int Quantity { get; set; }
 
-        public string ImagePath { get; set; }
-        
-                      
+        public string ThumbnailPath { get; set; }
+
+
 
         public int OrderId { get; set; }
         public  virtual Orders Order { get; set; }

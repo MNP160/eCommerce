@@ -18,7 +18,7 @@ namespace farmersAPi.Utility
             _imageWriter = imageWriter;
         }
 
-        public async Task<string> UploadImage(IFormFile file)
+        public async Task<List<string>> UploadImage(IFormFile file)
         {
             var result = await _imageWriter.UploadImage(file);
             return result;

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eCommerceAPI.Migrations
 {
-    public partial class fuckThisShit : Migration
+    public partial class jkjkjkjkjkjkjkjkjkjkjkjkjkjkjkjkjk : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
