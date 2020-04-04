@@ -21,6 +21,6 @@ namespace farmersAPi.Utility
         public string ProductSKU { get; set; }
         public int CategoryId { get; set; }
         public string ImagePath { get; set; }
-
+        public string ThumbnailPath { get; set; }
     }
 }

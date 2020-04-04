@@ -21,10 +21,14 @@ namespace farmersAPi.DTOs
         public string ProductSKU { get; set; }
         public List<ProductQuantity> Size { get; set; }
         public bool IsLive { get; set; }
-
+       public int Quantity { get
+            {
+                return Size.Sum(x => x.Quantity);
+            }
+        }
         public string ThumbnailPath { get; set; }
 
-
+        public int CategoryId { get; set; }
         //public CathegoryDto cathegory { get; set; }
 
 

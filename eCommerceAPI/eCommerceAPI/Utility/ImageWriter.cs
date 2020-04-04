@@ -45,7 +45,7 @@ namespace farmersAPi.Utility
         public async Task<List<string>> WriteFile(IFormFile file)
         {
             List<string> paths = new List<string>();
-            paths.Add(CreateThumbnail(file, 150,100).Result);
+            paths.Add(CreateThumbnail(file, 350,100).Result);
             paths.Add(CreateImage(file, 1000,100).Result);
 
             return paths;
@@ -79,7 +79,7 @@ namespace farmersAPi.Utility
                     data = br.ReadBytes((int)file.OpenReadStream().Length);
                 using (var image = new MagickImage(data))
                 {
-                    
+                    image.Resize(size,size);
                     image.Strip();
                     image.Quality = quality;
                     await Task.Run(() => image.Write(thumbnailPath));
@@ -128,7 +128,7 @@ namespace farmersAPi.Utility
                     data = br.ReadBytes((int)file.OpenReadStream().Length);
                 using (var image = new MagickImage(data))
                 {
-                    image.Resize(size, size);
+                    
                     image.Strip();
                     image.Quality = quality;
                     await Task.Run(() => image.Write(imagePath));
